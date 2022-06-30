@@ -1,17 +1,43 @@
 # CityscapeSprint
 Bright and cheery momentum based platformer that's simple to beat and impossible to perfect.
 
-Development Roadmap
-
-Preproduction
-Goals
-Get the core of the game (the movement) feeling as good as possible.
-Set up the game structure such that I can easily add levels (I'll probably want to add a world select and a level select).
-Add the systems that are essential to my MVP, and that are common to all levels (save game, bronze/silver/gold medal system, options menu).
-Heavily playtest the core of the game.
-Production
-Create all the content, this will mainly be levels, but also things like completion bonuses and other pieces of content that aren't used throughout the whole game.
-Playtest everything as I go to make sure it's fun.
-Make a bunch of levels
-Release
-Create things like steam achievments, steam cloud saving system, steam trading cards, and steam store page graphics.
+## Development Roadmap
+  <ul>
+  <li>Preproduction<ul>
+    <li>Goals<ul>
+      <li>Make the core of the game as good as possible.</li>
+      <li>Build out the bones of the game.</li>
+    </ul></li>
+    <li>Tasks<ul>
+      <li>Get player movement feeling as good as possible.</li>
+      <li>Create the medal system.</li>
+      <li>Create a level select system.</li>
+      <li>Lock levels behind completion criteria.</li>
+      <li>Create a world select system.</li>
+      <li>Create a settings menu.</li>
+      <li>Create a save game system.</li>
+      <li>Add a soundtrack.</li>
+      <li>Add a pause menu.</li>
+      <li>Add a tutorial.</li>
+    </ul></li>
+  </ul></li>
+  <li>Production<ul>
+    <li>Goals<ul>
+      <li>Create the game's content.</li>
+    </ul></li>
+    <li>Tasks<ul>
+      <li>Create 3 worlds of 4-8 levels, each level should take about 5 minutes to beat on average.</li>
+    </ul></li>
+  </ul></li>
+  <li>Release<ul>
+    <li>Goals<ul>
+      <li>Place the game in good stead to release on steam.</li>
+    </ul></li>
+    <li>Tasks<ul>
+      <li>Implement steam achievments.</li>
+      <li>Implement steam cloud for saves.</li>
+      <li>Prepare steam community content.</li>
+      <li>Update store page.</li>
+    </ul></li>
+  </ul></li>
+  </ul>
