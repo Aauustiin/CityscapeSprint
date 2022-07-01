@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     public float JUMP_FALLOFF;
     public float RUN_FORCE;
     public float ROLL_FORCE;
+    public bool cancelledBuff;
     [SerializeField] private float DRAG;
     [SerializeField] private float maxSpeed;
     
@@ -65,6 +66,11 @@ public class PlayerController : MonoBehaviour
 
     public void OnAction(InputAction.CallbackContext value)
     {
+        if (value.canceled)
+        {
+            cancelledBuff = true;
+            StartCoroutine(decayCancelledValue());
+        }
         IPlayerState newState = currentState.HandleAction(value);
         SwapState(newState);
     }
@@ -76,6 +82,12 @@ public class PlayerController : MonoBehaviour
         currentState.OnEntry();
     }
 
+    private IEnumerator decayCancelledValue()
+    {
+        yield return new WaitForSeconds(0.2f);
+        cancelledBuff = false;
+    }
+    
     public event System.Action Grounded;
     public event System.Action Grab;
     public event System.Action Fell;

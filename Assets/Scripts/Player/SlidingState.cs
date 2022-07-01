@@ -45,6 +45,11 @@ public class SlidingState : IPlayerState
             slid = true;
             player.audioSource.PlayOneShot(player.SlideSFX, 0.5f);
         }
+
+        if (player.cancelledBuff)
+        {
+            player.SwapState(new RunningState(player));
+        }
     }
 
     public void OnExit() 
