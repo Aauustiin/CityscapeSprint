@@ -70,15 +70,15 @@ public class PlayerController : MonoBehaviour
     public void SwapState(IPlayerState newState)
     {
         currentState.OnExit();
-        Debug.Log(currentState);
         currentState = newState;
-        Debug.Log(newState);
         currentState.OnEntry();
     }
 
     public event System.Action Grounded;
     public event System.Action Grab;
     public event System.Action Fell;
+    
+    public event System.Action LetGo;
 
     private Collision2D lastSurfaceTouched;
     private ContactPoint2D lastContact;
@@ -126,6 +126,10 @@ public class PlayerController : MonoBehaviour
         if ((layerName == "Ground") && (collisionNormal == Vector2.up))
         {
             Fell?.Invoke();
+        } 
+        else if ((layerName == "Ground") && ( (collisionNormal == Vector2.right) || (collisionNormal == Vector2.left)))
+        {
+            LetGo?.Invoke();
         }
     }
 
