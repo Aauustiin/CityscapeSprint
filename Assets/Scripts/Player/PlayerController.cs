@@ -7,7 +7,9 @@ public class PlayerController : MonoBehaviour
 {
     private IPlayerState currentState;
 
-    public float JUMP_FORCE;
+    public float JUMP_VELOCITY;
+    public float LEAP_VELOCITY;
+    public float JUMP_FALLOFF;
     public float RUN_FORCE;
     public float ROLL_FORCE;
     [SerializeField] private float DRAG;

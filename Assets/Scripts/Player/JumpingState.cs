@@ -11,7 +11,7 @@ public class JumpingState : IPlayerState
     private bool actionCommitted;
     private float JUMP_FORCE;
 
-    public JumpingState(PlayerController player, float jumpForce = 350f)
+    public JumpingState(PlayerController player, float jumpForce = 7.5f)
     {
         this.player = player;
         this.JUMP_FORCE = jumpForce;
@@ -33,7 +33,7 @@ public class JumpingState : IPlayerState
         {
             if (player.GetComponent<Rigidbody2D>().velocity.y > 0f)
             {
-                player.GetComponent<Rigidbody2D>().velocity = new Vector2(player.GetComponent<Rigidbody2D>().velocity.x, 0f);
+                player.GetComponent<Rigidbody2D>().velocity = new Vector2(player.GetComponent<Rigidbody2D>().velocity.x, player.GetComponent<Rigidbody2D>().velocity.y * player.JUMP_FALLOFF);
             }
         }
         
@@ -67,10 +67,10 @@ public class JumpingState : IPlayerState
         player.GetComponent<Animator>().Play("Base Layer.jump", 0, 0);
         if (!jumped)
         {
-            player.GetComponent<Rigidbody2D>().AddForce(new Vector2(0f, JUMP_FORCE));
             jumped = true;
             if (JUMP_FORCE != 0)
             {
+                player.GetComponent<Rigidbody2D>().velocity = new Vector2(player.GetComponent<Rigidbody2D>().velocity.x, JUMP_FORCE);
                 player.audioSource.PlayOneShot(player.JumpSFX, 0.5f);
             }
         }

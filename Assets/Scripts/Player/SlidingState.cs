@@ -32,7 +32,7 @@ public class SlidingState : IPlayerState
 
     public void OnFall()
     {
-        player.SwapState(new JumpingState(player));
+        player.SwapState(new JumpingState(player, player.JUMP_VELOCITY));
     }
 
     public void OnEntry() 

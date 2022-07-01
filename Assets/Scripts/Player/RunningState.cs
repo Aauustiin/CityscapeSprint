@@ -22,7 +22,7 @@ public class RunningState : IPlayerState
         IPlayerState returnValue;
         if (value.started)
         {
-            returnValue = new JumpingState(player);
+            returnValue = new JumpingState(player, player.JUMP_VELOCITY);
         }
         else
         {

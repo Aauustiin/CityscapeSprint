@@ -31,7 +31,7 @@ public class LeapState : IPlayerState
         {
             if (player.GetComponent<Rigidbody2D>().velocity.y > 0f)
             {
-                player.GetComponent<Rigidbody2D>().velocity = new Vector2(player.GetComponent<Rigidbody2D>().velocity.x, 0f);
+                player.GetComponent<Rigidbody2D>().velocity = new Vector2(player.GetComponent<Rigidbody2D>().velocity.x, player.GetComponent<Rigidbody2D>().velocity.y*player.JUMP_FALLOFF);
             }
         }
 
@@ -66,7 +66,7 @@ public class LeapState : IPlayerState
         if (!jumped)
         {
             player.GetComponent<Rigidbody2D>().AddForce(player.runDirection * -75f);
-            player.GetComponent<Rigidbody2D>().AddForce(new Vector2(0f, 300f));
+            player.GetComponent<Rigidbody2D>().velocity = new Vector2(player.GetComponent<Rigidbody2D>().velocity.x, player.LEAP_VELOCITY);
             jumped = true;
             player.audioSource.PlayOneShot(player.JumpSFX, 0.5f);
         }

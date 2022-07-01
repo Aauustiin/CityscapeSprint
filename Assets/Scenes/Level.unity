@@ -6684,7 +6684,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b672a30671434074f85fb7fda3e84140, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  JUMP_FORCE: 350
+  JUMP_VELOCITY: 0
+  LEAP_VELOCITY: 0
+  JUMP_FALLOFF: 0
   RUN_FORCE: 10
   ROLL_FORCE: 500
   DRAG: 0.9
