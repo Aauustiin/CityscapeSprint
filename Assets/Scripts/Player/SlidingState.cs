@@ -41,7 +41,7 @@ public class SlidingState : IPlayerState
         player.GetComponent<Animator>().Play("Base Layer.slide", 0, 0);
         if (!slid)
         {
-            player.GetComponent<Rigidbody2D>().AddForce(player.runDirection * player.ROLL_FORCE);
+            player.GetComponent<Rigidbody2D>().AddForce(player.runDirection * player.ROLL_FORCE, ForceMode2D.Impulse);
             slid = true;
             player.audioSource.PlayOneShot(player.SlideSFX, 0.5f);
         }
