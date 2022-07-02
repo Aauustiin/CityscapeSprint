@@ -9,12 +9,12 @@ public class JumpingState : IPlayerState
     private bool actionBuffer;
     private bool jumped;
     private bool actionCommitted;
-    private float JUMP_FORCE;
+    private float jumpVelocity;
 
-    public JumpingState(PlayerController player, float jumpForce = 7.5f)
+    public JumpingState(PlayerController player, float jumpVelocity = 7.5f)
     {
         this.player = player;
-        this.JUMP_FORCE = jumpForce;
+        this.jumpVelocity = jumpVelocity;
         jumped = false;
         actionCommitted = false;
     }
@@ -27,20 +27,23 @@ public class JumpingState : IPlayerState
         {
             actionBuffer = true;
             actionCommitted = true;
-            player.StartCoroutine(clearAfterSeconds(0.2f));
+            player.StartCoroutine(player.ExecuteAfterSeconds(() => actionBuffer = false, 0.2f));
         }
         else if (value.canceled)
         {
-            if (player.GetComponent<Rigidbody2D>().velocity.y > 0f)
+            Vector2 velocity = player.rb.velocity;
+            
+            if (velocity.y > 0f)
             {
-                player.GetComponent<Rigidbody2D>().velocity = new Vector2(player.GetComponent<Rigidbody2D>().velocity.x, player.GetComponent<Rigidbody2D>().velocity.y * player.JUMP_FALLOFF);
+                velocity = new Vector2(velocity.x, velocity.y * player.JUMP_FALLOFF);
             }
+            
+            player.rb.velocity = velocity;
         }
-        
         return this;
     }
 
-    public void OnLand()
+    private void OnLand()
     {
         IPlayerState newState;
         if (actionBuffer)
@@ -54,7 +57,7 @@ public class JumpingState : IPlayerState
         player.SwapState(newState);
     }
 
-    public void OnGrab()
+    private void OnGrab()
     {
         player.SwapState(new GrabbingState(player));
     }
@@ -63,29 +66,23 @@ public class JumpingState : IPlayerState
     {
         player.Grounded += OnLand;
         player.Grab += OnGrab;
-        player.GetComponent<Rigidbody2D>().drag = 0;
+        player.rb.drag = 0;
         player.GetComponent<Animator>().Play("Base Layer.jump", 0, 0);
-        if (!jumped)
+        
+        if (jumped) return;
+        
+        if (jumpVelocity != 0)
         {
-            jumped = true;
-            if (JUMP_FORCE != 0)
-            {
-                player.GetComponent<Rigidbody2D>().velocity = new Vector2(player.GetComponent<Rigidbody2D>().velocity.x, JUMP_FORCE);
-                player.audioSource.PlayOneShot(player.JumpSFX, 0.5f);
-            }
+            player.rb.velocity = new Vector2(player.rb.velocity.x, jumpVelocity);
+            player.audioSource.PlayOneShot(player.JumpSFX, 0.5f);
         }
+        jumped = true;
     }
 
     public void OnExit()
     {
         player.Grounded -= OnLand;
         player.Grab -= OnGrab;
-        player.GetComponent<Rigidbody2D>().drag = player.GetDrag(); ;
-    }
-
-    private IEnumerator clearAfterSeconds(float seconds)
-    {
-        yield return new WaitForSeconds(seconds);
-        actionBuffer = false;
+        player.rb.drag = player.drag; ;
     }
 }

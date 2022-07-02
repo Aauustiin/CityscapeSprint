@@ -6684,12 +6684,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b672a30671434074f85fb7fda3e84140, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  JUMP_VELOCITY: 0
-  LEAP_VELOCITY: 0
-  JUMP_FALLOFF: 0
+  rb: {fileID: 0}
+  sprite: {fileID: 0}
+  JUMP_VELOCITY: 7.5
+  LEAP_VELOCITY: 5
+  JUMP_FALLOFF: 0.25
   RUN_FORCE: 10
-  ROLL_FORCE: 500
-  DRAG: 0.9
+  RollImpulse: 10
+  inputCancelledBuff: 0
+  drag: 0.75
   maxSpeed: 50
   audioSource: {fileID: 290161791}
   runDirection: {x: 0, y: 0}

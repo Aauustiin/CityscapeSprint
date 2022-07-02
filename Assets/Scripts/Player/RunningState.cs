@@ -40,7 +40,7 @@ public class RunningState : IPlayerState
     {
         player.Fell += OnFall;
         player.GetComponent<Animator>().Play("Base Layer.run", 0, 0);
-        player.StartCoroutine(player.StopAfterSeconds(player.Dust, 0.5f));
+        player.StartCoroutine(player.ExecuteAfterSeconds(() => player.Dust.Stop(), 0.5f));
     }
 
     public void OnExit()

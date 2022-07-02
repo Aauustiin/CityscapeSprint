@@ -1,19 +1,36 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 public class PlayerController : MonoBehaviour
 {
+    public Rigidbody2D rb;
+    public SpriteRenderer sprite;
+    
     private IPlayerState currentState;
 
+    private Vector2 startPosition;
+    
+    //struct MovementParameters
+    //{
+    //    private float jumpVelocity;
+    //    private float leapVelocity;
+    //    private float runForce;
+    //    private float rollImpulse;
+    //    private float drag;
+    //    private float maxSpeed;
+    //}
+    
     public float JUMP_VELOCITY;
     public float LEAP_VELOCITY;
     public float JUMP_FALLOFF;
     public float RUN_FORCE;
-    public float ROLL_FORCE;
-    public bool cancelledBuff;
-    [SerializeField] private float DRAG;
+    public float RollImpulse;
+    public bool inputCancelledBuff;
+    public float drag;
     [SerializeField] private float maxSpeed;
     
     public AudioSource audioSource;
@@ -25,9 +42,12 @@ public class PlayerController : MonoBehaviour
     public AudioClip LandSFX;
     public AudioClip GrabSFX;
 
-    void Start()
+    private void Start()
     {
-        GetComponent<Rigidbody2D>().drag = DRAG;
+        rb = GetComponent<Rigidbody2D>();
+        sprite = GetComponent<SpriteRenderer>();
+        startPosition = rb.position;
+        rb.drag = drag;
         runDirection = Vector2.right;
         currentState = new RunningState(this);
     }
@@ -44,32 +64,37 @@ public class PlayerController : MonoBehaviour
 
     public void Restart()
     {
-        GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-        GetComponent<Rigidbody2D>().position = new Vector2(-5.5f, -4.5f);
-        GetComponent<Rigidbody2D>().drag = DRAG;
-        GetComponent<SpriteRenderer>().flipX = false;
-        
+        rb.velocity = Vector2.zero;
+        rb.position = startPosition;
+        rb.drag = drag;
+        sprite.flipX = false;
         velocityLastFrame = Vector2.zero;
         runDirection = Vector2.right;
         SwapState(new RunningState(this));
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         currentState.StateFixedUpdate();
-        if (GetComponent<Rigidbody2D>().velocity.magnitude > maxSpeed)
+        if (rb.velocity.magnitude > maxSpeed)
         {
-            GetComponent<Rigidbody2D>().velocity = GetComponent<Rigidbody2D>().velocity.normalized * maxSpeed;
+            rb.velocity = rb.velocity.normalized * maxSpeed;
         }
-        velocityLastFrame = GetComponent<Rigidbody2D>().velocity;
+        velocityLastFrame = rb.velocity;
     }
 
+    public IEnumerator ExecuteAfterSeconds(System.Action executable, float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        executable();
+    }
+    
     public void OnAction(InputAction.CallbackContext value)
     {
         if (value.canceled)
         {
-            cancelledBuff = true;
-            StartCoroutine(decayCancelledValue());
+            inputCancelledBuff = true;
+            StartCoroutine(ExecuteAfterSeconds(() => inputCancelledBuff = false, 0.2f));
         }
         IPlayerState newState = currentState.HandleAction(value);
         SwapState(newState);
@@ -82,51 +107,42 @@ public class PlayerController : MonoBehaviour
         currentState.OnEntry();
     }
 
-    private IEnumerator decayCancelledValue()
-    {
-        yield return new WaitForSeconds(0.2f);
-        cancelledBuff = false;
-    }
-    
     public event System.Action Grounded;
     public event System.Action Grab;
     public event System.Action Fell;
-    
     public event System.Action LetGo;
 
     private Collision2D lastSurfaceTouched;
     private ContactPoint2D lastContact;
 
-    public IEnumerator StopAfterSeconds(ParticleSystem p, float seconds)
-    {
-        yield return new WaitForSeconds(seconds);
-        p.Stop();
-    }
-
     private void OnCollisionEnter2D(Collision2D collision)
     {
         string layerName = LayerMask.LayerToName(collision.collider.gameObject.layer);
 
-        if (layerName == "Ground")
+        switch (layerName)
         {
-            Vector2 collisionNormal = collision.GetContact(0).normal;
-            if (collisionNormal == Vector2.up)
+            case "Ground":
             {
-                Grounded?.Invoke();
-                audioSource.PlayOneShot(LandSFX, 0.5f);
-                Dust.Play();
+                Vector2 collisionNormal = collision.GetContact(0).normal;
+            
+                if (collisionNormal == Vector2.up)
+                {
+                    Grounded?.Invoke();
+                    audioSource.PlayOneShot(LandSFX, 0.5f);
+                    Dust.Play();
                 
+                }
+                else if (collisionNormal == -runDirection)
+                {
+                    Grab?.Invoke();
+                    audioSource.PlayOneShot(GrabSFX, 0.5f);
+                }
+                lastContact = collision.GetContact(0);
+                break;
             }
-            else if (collisionNormal == -runDirection)
-            {
-                Grab?.Invoke();
-                audioSource.PlayOneShot(GrabSFX, 0.5f);
-            }
-            lastContact = collision.GetContact(0);
-        }
-        else if (layerName == "Wall")
-        {
-            flip();
+            case "Wall":
+                flip();
+                break;
         }
 
         lastSurfaceTouched = collision;
@@ -137,25 +153,23 @@ public class PlayerController : MonoBehaviour
         string layerName = LayerMask.LayerToName(lastSurfaceTouched.collider.gameObject.layer);
         Vector2 collisionNormal = lastContact.normal;
 
-        if ((layerName == "Ground") && (collisionNormal == Vector2.up))
+        if (layerName == "Ground")
         {
-            Fell?.Invoke();
-        } 
-        else if ((layerName == "Ground") && ( (collisionNormal == Vector2.right) || (collisionNormal == Vector2.left)))
-        {
-            LetGo?.Invoke();
+            if (collisionNormal == Vector2.up)
+            {
+                Fell?.Invoke();
+            }
+            else if ((collisionNormal == Vector2.left) || (collisionNormal == Vector2.right))
+            {
+                LetGo?.Invoke();
+            }
         }
     }
 
     private void flip()
     {
         runDirection = -runDirection;
-        GetComponent<SpriteRenderer>().flipX = !GetComponent<SpriteRenderer>().flipX;
-        GetComponent<Rigidbody2D>().velocity = new Vector2(-velocityLastFrame.x, velocityLastFrame.y);
-    }
-
-    public float GetDrag()
-    {
-        return DRAG;
+        sprite.flipX = !sprite.flipX;
+        rb.velocity = new Vector2(-velocityLastFrame.x, velocityLastFrame.y);
     }
 }

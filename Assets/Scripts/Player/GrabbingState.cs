@@ -16,7 +16,7 @@ public class GrabbingState : IPlayerState
 
     public void StateFixedUpdate()
     {
-        player.GetComponent<Rigidbody2D>().gravityScale = calculateGravity(2, Time.time - startTime);
+        player.rb.gravityScale = calculateGravity(2, Time.time - startTime);
     }
 
     public IPlayerState HandleAction(InputAction.CallbackContext value)

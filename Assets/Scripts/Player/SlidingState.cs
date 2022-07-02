@@ -30,7 +30,7 @@ public class SlidingState : IPlayerState
         return returnValue;
     }
 
-    public void OnFall()
+    private void OnFall()
     {
         player.SwapState(new JumpingState(player, player.JUMP_VELOCITY));
     }
@@ -38,15 +38,16 @@ public class SlidingState : IPlayerState
     public void OnEntry() 
     {
         player.Fell += OnFall;
-        player.GetComponent<Animator>().Play("Base Layer.slide", 0, 0);
+        
         if (!slid)
         {
-            player.GetComponent<Rigidbody2D>().AddForce(player.runDirection * player.ROLL_FORCE, ForceMode2D.Impulse);
-            slid = true;
+            player.rb.AddForce(player.runDirection * player.RollImpulse, ForceMode2D.Impulse);
+            player.GetComponent<Animator>().Play("Base Layer.slide", 0, 0);
             player.audioSource.PlayOneShot(player.SlideSFX, 0.5f);
+            slid = true;
         }
 
-        if (player.cancelledBuff)
+        if (player.inputCancelledBuff)
         {
             player.SwapState(new RunningState(player));
         }

@@ -17,7 +17,7 @@ public class LeapState : IPlayerState
 
     public void StateFixedUpdate()
     {
-        player.GetComponent<Rigidbody2D>().AddForce(player.runDirection * player.RUN_FORCE);
+        player.rb.AddForce(player.runDirection * player.RUN_FORCE);
     }
 
     public IPlayerState HandleAction(InputAction.CallbackContext value)
@@ -25,20 +25,24 @@ public class LeapState : IPlayerState
         if (value.started)
         {
             actionBuffer = true;
-            player.StartCoroutine(clearAfterSeconds(0.1f));
+            player.StartCoroutine(player.ExecuteAfterSeconds(() => actionBuffer = false, 0.2f));
         }
         else if (value.canceled)
         {
-            if (player.GetComponent<Rigidbody2D>().velocity.y > 0f)
+            Vector2 velocity = player.rb.velocity;
+            
+            if (velocity.y > 0f)
             {
-                player.GetComponent<Rigidbody2D>().velocity = new Vector2(player.GetComponent<Rigidbody2D>().velocity.x, player.GetComponent<Rigidbody2D>().velocity.y*player.JUMP_FALLOFF);
+                velocity = new Vector2(velocity.x, velocity.y * player.JUMP_FALLOFF);
             }
+            
+            player.rb.velocity = velocity;
         }
 
         return this;
     }
 
-    public void OnLand()
+    private void OnLand()
     {
         IPlayerState newState;
         if (actionBuffer)
@@ -52,7 +56,7 @@ public class LeapState : IPlayerState
         player.SwapState(newState);
     }
 
-    public void OnGrab()
+    private void OnGrab()
     {
         player.SwapState(new GrabbingState(player));
     }
@@ -76,12 +80,6 @@ public class LeapState : IPlayerState
     {
         player.Grounded -= OnLand;
         player.Grab -= OnGrab;
-        player.GetComponent<Rigidbody2D>().drag = player.GetDrag(); ;
-    }
-
-    private IEnumerator clearAfterSeconds(float seconds)
-    {
-        yield return new WaitForSeconds(seconds);
-        actionBuffer = false;
+        player.GetComponent<Rigidbody2D>().drag = player.drag; ;
     }
 }
