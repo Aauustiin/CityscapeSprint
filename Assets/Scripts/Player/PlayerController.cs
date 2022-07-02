@@ -13,6 +13,8 @@ public class PlayerController : MonoBehaviour
     private IPlayerState currentState;
 
     private Vector2 startPosition;
+
+    public float timeLastGrounded;
     
     //struct MovementParameters
     //{
@@ -32,6 +34,7 @@ public class PlayerController : MonoBehaviour
     public bool inputCancelledBuff;
     public float drag;
     [SerializeField] private float maxSpeed;
+    public float coyoteThreshold;
     
     public AudioSource audioSource;
     private Vector2 velocityLastFrame;
@@ -157,6 +160,7 @@ public class PlayerController : MonoBehaviour
         {
             if (collisionNormal == Vector2.up)
             {
+                timeLastGrounded = Time.time;
                 Fell?.Invoke();
             }
             else if ((collisionNormal == Vector2.left) || (collisionNormal == Vector2.right))

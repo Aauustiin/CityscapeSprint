@@ -23,11 +23,19 @@ public class JumpingState : IPlayerState
 
     public IPlayerState HandleAction(InputAction.CallbackContext value)
     {
-        if (value.started && !actionCommitted)
+        if (value.started)
         {
-            actionBuffer = true;
-            actionCommitted = true;
-            player.StartCoroutine(player.ExecuteAfterSeconds(() => actionBuffer = false, 0.2f));
+            if (Time.time - player.timeLastGrounded < player.coyoteThreshold)
+            {
+                Debug.Log("Coyote time");
+                return new JumpingState(player, 7.5f);
+            }
+            else if (!actionCommitted)
+            {
+                actionBuffer = true;
+                actionCommitted = true;
+                player.StartCoroutine(player.ExecuteAfterSeconds(() => actionBuffer = false, 0.2f));
+            }
         }
         else if (value.canceled)
         {
