@@ -27,7 +27,6 @@ public class JumpingState : IPlayerState
         {
             if (Time.time - player.timeLastGrounded < player.coyoteThreshold)
             {
-                Debug.Log("Coyote time");
                 return new JumpingState(player, 7.5f);
             }
             else if (!actionCommitted)
@@ -76,6 +75,8 @@ public class JumpingState : IPlayerState
         player.Grab += OnGrab;
         player.rb.drag = 0;
         player.GetComponent<Animator>().Play("Base Layer.jump", 0, 0);
+        player.GetComponent<BoxCollider2D>().size = new Vector2(0.0602237172f,0.0696409717f);
+        player.GetComponent<BoxCollider2D>().offset = new Vector2(-5.75240701e-05f, -0.00483418629f);
         
         if (jumped) return;
         

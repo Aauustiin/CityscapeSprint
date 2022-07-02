@@ -50,6 +50,8 @@ public class GrabbingState : IPlayerState
         startTime = Time.time;
         player.GetComponent<Animator>().Play("Base Layer.grab", 0, 0);
         player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        player.GetComponent<BoxCollider2D>().size = new Vector2(0.078961134f,0.0696409717f);
+        player.GetComponent<BoxCollider2D>().offset = new Vector2(3.34531069e-05f,-0.00483418629f);
     }
 
     public void OnExit()

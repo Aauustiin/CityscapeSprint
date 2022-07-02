@@ -14,7 +14,10 @@ public class SlidingState : IPlayerState
         slid = false;
     }
 
-    public void StateFixedUpdate() {}
+    public void StateFixedUpdate()
+    {
+        player.rb.AddForce(player.runDirection * 5f);
+    }
 
     public IPlayerState HandleAction(InputAction.CallbackContext value)
     {
@@ -41,6 +44,8 @@ public class SlidingState : IPlayerState
         
         if (!slid)
         {
+            player.GetComponent<BoxCollider2D>().size = new Vector2(0.0794540942f,0.0597510338f);
+            player.GetComponent<BoxCollider2D>().offset = new Vector2(3.40249389e-05f,-0.00977915525f);
             player.rb.AddForce(player.runDirection * player.RollImpulse, ForceMode2D.Impulse);
             player.GetComponent<Animator>().Play("Base Layer.slide", 0, 0);
             player.audioSource.PlayOneShot(player.SlideSFX, 0.5f);

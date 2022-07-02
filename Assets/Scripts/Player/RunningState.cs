@@ -14,7 +14,7 @@ public class RunningState : IPlayerState
 
     public void StateFixedUpdate()
     {
-        player.GetComponent<Rigidbody2D>().AddForce(player.runDirection * player.RUN_FORCE);
+        player.rb.AddForce(player.runDirection * player.RUN_FORCE);
     }
 
     public IPlayerState HandleAction(InputAction.CallbackContext value)
@@ -41,6 +41,8 @@ public class RunningState : IPlayerState
         player.Fell += OnFall;
         player.GetComponent<Animator>().Play("Base Layer.run", 0, 0);
         player.StartCoroutine(player.ExecuteAfterSeconds(() => player.Dust.Stop(), 0.5f));
+        player.GetComponent<BoxCollider2D>().size = new Vector2(0.0602237172f,0.0696409717f);
+        player.GetComponent<BoxCollider2D>().offset = new Vector2(-5.75240701e-05f, -0.00483418629f);
     }
 
     public void OnExit()
