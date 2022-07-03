@@ -6798,9 +6798,13 @@ MonoBehaviour:
   leapVelocity: 6.25
   jumpFalloff: 0.25
   runForce: 10
+  leapForce: 75
+  grabFallSpeed: 2
+  slideForce: 5
   rollImpulse: 10
   drag: 0.75
   coyoteThreshold: 0.1
+  slideWindow: 0.2
   maxSpeed: 50
   runDirection: {x: 0, y: 0}
   timeLastGrounded: 0

@@ -16,9 +16,13 @@ namespace Player
         public float leapVelocity;
         public float jumpFalloff;
         public float runForce;
+        public float leapForce;
+        public float grabFallSpeed;
+        public float slideForce;
         public float rollImpulse;
         public float drag;
         public float coyoteThreshold;
+        public float slideWindow;
         [SerializeField] private float maxSpeed;
 
         // Mutable state.
@@ -86,18 +90,12 @@ namespace Player
             _velocityLastFrame = rb.velocity;
         }
 
-        public static IEnumerator ExecuteAfterSeconds(System.Action executable, float seconds)
-        {
-            yield return new WaitForSeconds(seconds);
-            executable();
-        }
-
         public void OnAction(InputAction.CallbackContext value)
         {
             if (value.canceled)
             {
                 inputCancelledBuff = true;
-                StartCoroutine(ExecuteAfterSeconds(() => inputCancelledBuff = false, 0.2f));
+                StartCoroutine(Utils.ExecuteAfterSeconds(() => inputCancelledBuff = false, slideWindow));
             }
 
             IPlayerState newState = _currentState.HandleAction(value);

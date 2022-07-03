@@ -16,7 +16,7 @@ namespace Player
 
         public void StateFixedUpdate()
         {
-            _player.rb.AddForce(_player.runDirection * 5f);
+            _player.rb.AddForce(_player.runDirection * _player.slideForce);
         }
 
         public IPlayerState HandleAction(InputAction.CallbackContext value)

@@ -16,7 +16,7 @@ namespace Player
 
         public void StateFixedUpdate()
         {
-            _player.rb.gravityScale = CalculateGravity(2, Time.time - _startTime);
+            _player.rb.gravityScale = CalculateGravity(_player.grabFallSpeed, Time.time - _startTime);
         }
 
         public IPlayerState HandleAction(InputAction.CallbackContext value)

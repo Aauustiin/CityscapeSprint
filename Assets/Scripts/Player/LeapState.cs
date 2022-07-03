@@ -25,7 +25,7 @@ namespace Player
             if (value.started)
             {
                 _actionBuffer = true;
-                _player.StartCoroutine(PlayerController.ExecuteAfterSeconds(() => _actionBuffer = false, 0.2f));
+                _player.StartCoroutine(Utils.ExecuteAfterSeconds(() => _actionBuffer = false, _player.slideWindow));
             }
             else if (value.canceled)
             {
@@ -70,7 +70,7 @@ namespace Player
             _player.GetComponent<Animator>().Play("Base Layer.jump", 0, 0);
             if (!_jumped)
             {
-                _player.rb.AddForce(_player.runDirection * -75f);
+                _player.rb.AddForce(_player.runDirection * -_player.leapForce);
                 _player.rb.velocity = new Vector2(_player.rb.velocity.x, _player.leapVelocity);
                 _jumped = true;
                 _player.audioSource.PlayOneShot(_player.jumpSfx, 0.5f);

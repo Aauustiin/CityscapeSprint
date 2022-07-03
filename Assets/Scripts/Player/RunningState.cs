@@ -47,7 +47,7 @@ namespace Player
             _player.LeftGround += OnFall;
             _player.HitSide += OnHitSide;
             _player.GetComponent<Animator>().Play("Base Layer.run", 0, 0);
-            _player.StartCoroutine(PlayerController.ExecuteAfterSeconds(() => _player.dust.Stop(), 0.5f));
+            _player.StartCoroutine(Utils.ExecuteAfterSeconds(() => _player.dust.Stop(), 0.5f));
         }
 
         public void OnExit()

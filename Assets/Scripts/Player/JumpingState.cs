@@ -27,13 +27,13 @@ namespace Player
             {
                 if (Time.time - _player.timeLastGrounded < _player.coyoteThreshold)
                 {
-                    return new JumpingState(_player, 7.5f);
+                    return new JumpingState(_player);
                 }
                 if (!_actionCommitted)
                 {
                     _actionBuffer = true;
                     _actionCommitted = true;
-                    _player.StartCoroutine(PlayerController.ExecuteAfterSeconds(() => _actionBuffer = false, 0.2f));
+                    _player.StartCoroutine(Utils.ExecuteAfterSeconds(() => _actionBuffer = false, _player.slideWindow));
                 }
             }
             else if (value.canceled)
