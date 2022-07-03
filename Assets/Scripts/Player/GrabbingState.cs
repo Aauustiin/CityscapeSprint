@@ -43,20 +43,26 @@ public class GrabbingState : IPlayerState
         var dGravity = 0.5 + (0.5*Math.Tanh((aggresiveness*x)-2));
         return (float)dGravity;
     }
+
+    private void OnGrounded()
+    {
+        player.flip();
+        player.SwapState(new RunningState(player));
+    }
     
     public void OnEntry()
     {
         player.LetGo += OnLetGo;
+        player.Grounded += OnGrounded;
         startTime = Time.time;
         player.GetComponent<Animator>().Play("Base Layer.grab", 0, 0);
         player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-        player.GetComponent<BoxCollider2D>().size = new Vector2(0.078961134f,0.0696409717f);
-        player.GetComponent<BoxCollider2D>().offset = new Vector2(3.34531069e-05f,-0.00483418629f);
     }
 
     public void OnExit()
     {
         player.LetGo -= OnLetGo;
+        player.Grounded -= OnGrounded;
         player.GetComponent<Rigidbody2D>().gravityScale = 1;
     }
 }

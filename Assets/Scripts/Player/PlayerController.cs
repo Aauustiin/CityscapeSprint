@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
@@ -53,6 +54,7 @@ public class PlayerController : MonoBehaviour
         rb.drag = drag;
         runDirection = Vector2.right;
         currentState = new RunningState(this);
+        currentState.OnEntry();
     }
 
     private void OnEnable()
@@ -153,24 +155,26 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionExit2D(Collision2D collision)
     {
+        
         string layerName = LayerMask.LayerToName(lastSurfaceTouched.collider.gameObject.layer);
-        Vector2 collisionNormal = lastContact.normal;
+        
+        Vector2 collisionNormal = (rb.position - collision.collider.ClosestPoint(rb.position)).normalized;
 
         if (layerName == "Ground")
         {
-            if (collisionNormal == Vector2.up)
+            if ((collisionNormal == Vector2.up) || (collisionNormal.y > 0f))
             {
                 timeLastGrounded = Time.time;
                 Fell?.Invoke();
             }
-            else if ((collisionNormal == Vector2.left) || (collisionNormal == Vector2.right))
+            else if ((collisionNormal == Vector2.left) || (collisionNormal == Vector2.right) || (collisionNormal.y < 0f))
             {
                 LetGo?.Invoke();
             }
         }
     }
 
-    private void flip()
+    public void flip()
     {
         runDirection = -runDirection;
         sprite.flipX = !sprite.flipX;

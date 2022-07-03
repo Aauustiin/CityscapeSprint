@@ -67,8 +67,6 @@ public class LeapState : IPlayerState
         player.Grab += OnGrab;
         player.GetComponent<Rigidbody2D>().drag = 0;
         player.GetComponent<Animator>().Play("Base Layer.jump", 0, 0);
-        player.GetComponent<BoxCollider2D>().size = new Vector2(0.0602237172f,0.0696409717f);
-        player.GetComponent<BoxCollider2D>().offset = new Vector2(-5.75240701e-05f, -0.00483418629f);
         if (!jumped)
         {
             player.GetComponent<Rigidbody2D>().AddForce(player.runDirection * -75f);

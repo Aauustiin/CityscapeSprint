@@ -31,22 +31,27 @@ public class RunningState : IPlayerState
         return returnValue;
     }
 
-    public void OnFall()
+    private void OnFall()
     {
         player.SwapState(new JumpingState(player, 0f));
     }
 
+    private void OnGrab()
+    {
+        player.flip();
+    }
+    
     public void OnEntry()
     {
         player.Fell += OnFall;
+        player.Grab += OnGrab;
         player.GetComponent<Animator>().Play("Base Layer.run", 0, 0);
         player.StartCoroutine(player.ExecuteAfterSeconds(() => player.Dust.Stop(), 0.5f));
-        player.GetComponent<BoxCollider2D>().size = new Vector2(0.0602237172f,0.0696409717f);
-        player.GetComponent<BoxCollider2D>().offset = new Vector2(-5.75240701e-05f, -0.00483418629f);
     }
 
     public void OnExit()
     {
         player.Fell -= OnFall;
+        player.Grab -= OnGrab;
     }
 }
