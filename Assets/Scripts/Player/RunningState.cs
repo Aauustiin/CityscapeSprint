@@ -5,16 +5,16 @@ using UnityEngine.InputSystem;
 
 public class RunningState : IPlayerState
 {
-    private PlayerController player;
+    private PlayerController _player;
 
     public RunningState(PlayerController player)
     {
-        this.player = player;
+        this._player = player;
     }
 
     public void StateFixedUpdate()
     {
-        player.rb.AddForce(player.runDirection * player.RUN_FORCE);
+        _player.rb.AddForce(_player.runDirection * _player.runForce);
     }
 
     public IPlayerState HandleAction(InputAction.CallbackContext value)
@@ -22,7 +22,7 @@ public class RunningState : IPlayerState
         IPlayerState returnValue;
         if (value.started)
         {
-            returnValue = new JumpingState(player, player.JUMP_VELOCITY);
+            returnValue = new JumpingState(_player, _player.jumpVelocity);
         }
         else
         {
@@ -33,25 +33,25 @@ public class RunningState : IPlayerState
 
     private void OnFall()
     {
-        player.SwapState(new JumpingState(player, 0f));
+        _player.SwapState(new JumpingState(_player, 0f));
     }
 
     private void OnGrab()
     {
-        player.flip();
+        _player.Flip();
     }
     
     public void OnEntry()
     {
-        player.Fell += OnFall;
-        player.Grab += OnGrab;
-        player.GetComponent<Animator>().Play("Base Layer.run", 0, 0);
-        player.StartCoroutine(player.ExecuteAfterSeconds(() => player.Dust.Stop(), 0.5f));
+        _player.Fell += OnFall;
+        _player.Grab += OnGrab;
+        _player.GetComponent<Animator>().Play("Base Layer.run", 0, 0);
+        _player.StartCoroutine(_player.ExecuteAfterSeconds(() => _player.dust.Stop(), 0.5f));
     }
 
     public void OnExit()
     {
-        player.Fell -= OnFall;
-        player.Grab -= OnGrab;
+        _player.Fell -= OnFall;
+        _player.Grab -= OnGrab;
     }
 }

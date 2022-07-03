@@ -5,7 +5,7 @@ using LootLocker.Requests;
 
 public static class Leaderboard
 {
-    private const int leaderboardID = 3537;
+    private const int LeaderboardID = 3537;
 
     public static IEnumerator Login()
     {
@@ -50,7 +50,7 @@ public static class Leaderboard
     {
         bool done = false;
         string playerID = PlayerPrefs.GetString("PlayerID");
-        LootLockerSDKManager.SubmitScore(playerID, score, leaderboardID, (response) =>
+        LootLockerSDKManager.SubmitScore(playerID, score, LeaderboardID, (response) =>
         {
             if (response.success)
             {
@@ -65,16 +65,16 @@ public static class Leaderboard
         yield return new WaitWhile(() => done == false);
     }
 
-    public static IEnumerator FetchPlayerRank(GameOverUI UI)
+    public static IEnumerator FetchPlayerRank(GameOverUI ui)
     {
         bool done = false;
         string playerID = PlayerPrefs.GetString("PlayerID");
-        LootLockerSDKManager.GetMemberRank(leaderboardID.ToString(), playerID, (response) =>
+        LootLockerSDKManager.GetMemberRank(LeaderboardID.ToString(), playerID, (response) =>
         {
             if (response.success)
             {
                 Debug.Log("Successfully fetched player rank");
-                UI.DisplayPlayerRank(response.rank, response.score);
+                ui.DisplayPlayerRank(response.rank, response.score);
                 done = true;
             }
             else
@@ -86,10 +86,10 @@ public static class Leaderboard
         yield return new WaitWhile(() => done == false);
     }
 
-    public static IEnumerator FetchLeaderboardHighScores(int numEntries, GameOverUI UI)
+    public static IEnumerator FetchLeaderboardHighScores(int numEntries, GameOverUI ui)
     {
         bool done = false;
-        LootLockerSDKManager.GetScoreListMain(leaderboardID, numEntries, 0, (response) => 
+        LootLockerSDKManager.GetScoreListMain(LeaderboardID, numEntries, 0, (response) => 
         {
             if (response.success)
             {
@@ -112,7 +112,7 @@ public static class Leaderboard
                     result.Add(tempName, m.score);
                 }
 
-                UI.DisplayLeaderboard(result);
+                ui.DisplayLeaderboard(result);
                 done = true;
             }
             else

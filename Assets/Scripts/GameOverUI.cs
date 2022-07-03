@@ -9,11 +9,11 @@ public class GameOverUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI tipText;
     [SerializeField] private TextMeshProUGUI playerRankText;
     [SerializeField] private TextMeshProUGUI leaderboardText;
-    [SerializeField] private GameObject UI;
+    [SerializeField] private GameObject ui;
     [SerializeField] private AudioSource audioSource;
-    [SerializeField] private AudioClip gameOverSFX;
+    [SerializeField] private AudioClip gameOverSfx;
     [SerializeField] private List<string> tips;
-    private int lastTip;
+    private int _lastTip;
  
 
     private void OnEnable()
@@ -29,11 +29,11 @@ public class GameOverUI : MonoBehaviour
     public void OnGameOver()
     {
         StartCoroutine(Leaderboard.SubmitPlayerScore(FindObjectOfType<CollectableManager>().GetCollectablesGrabbed()));
-        UI.SetActive(true);
-        displayPlayerScore();
+        ui.SetActive(true);
+        DisplayPlayerScore();
         System.Random random = new System.Random();
         int index = random.Next(tips.Count);
-        if (index == lastTip)
+        if (index == _lastTip)
         {
             index++;
         }
@@ -42,13 +42,13 @@ public class GameOverUI : MonoBehaviour
             index -= 2;
         }
         tipText.text = tips[index];
-        lastTip = index;
+        _lastTip = index;
         StartCoroutine(Leaderboard.FetchLeaderboardHighScores(3, this));
         StartCoroutine(Leaderboard.FetchPlayerRank(this));
-        audioSource.PlayOneShot(gameOverSFX, 0.5f);
+        audioSource.PlayOneShot(gameOverSfx, 0.5f);
     }
 
-    private void displayPlayerScore()
+    private void DisplayPlayerScore()
     {
         int score = FindObjectOfType<CollectableManager>().GetCollectablesGrabbed();
         playerScoreText.text = "Score:  " + score;
@@ -71,7 +71,7 @@ public class GameOverUI : MonoBehaviour
 
     public void CloseUI()
     {
-        UI.SetActive(false);
+        ui.SetActive(false);
     }
 
     public void Restart()

@@ -7,12 +7,12 @@ public class Timer : MonoBehaviour
 {
     [SerializeField] private int duration;
     [SerializeField] private TextMeshProUGUI timer;
-    private float startTime;
+    private float _startTime;
 
     private void OnEnable()
     {
         EventManager.Restart += Restart;
-        startTimer();
+        StartTimer();
     }
 
     private void OnDisable()
@@ -20,20 +20,20 @@ public class Timer : MonoBehaviour
         EventManager.Restart -= Restart;
     }
 
-    private void startTimer()
+    private void StartTimer()
     {
-        StartCoroutine(gameOverAfterSeconds(duration));
-        startTime = Time.time;
+        StartCoroutine(GameOverAfterSeconds(duration));
+        _startTime = Time.time;
     }
 
     private void Update()
     {
-        float displayTime = duration - (Time.time - startTime);
+        float displayTime = duration - (Time.time - _startTime);
         int roundedTime = Mathf.RoundToInt(displayTime);
         timer.text = roundedTime.ToString();
     }
 
-    private IEnumerator gameOverAfterSeconds(int seconds)
+    private IEnumerator GameOverAfterSeconds(int seconds)
     {
         yield return new WaitForSeconds(seconds);
         EventManager.TriggerGameOver();
@@ -41,6 +41,6 @@ public class Timer : MonoBehaviour
 
     public void Restart()
     {
-        startTimer();
+        StartTimer();
     }
 }

@@ -6,17 +6,17 @@ using UnityEngine.InputSystem;
 
 public class GrabbingState : IPlayerState
 {
-    private PlayerController player;
-    private float startTime;
+    private PlayerController _player;
+    private float _startTime;
 
     public GrabbingState(PlayerController player)
     {
-        this.player = player;
+        this._player = player;
     }
 
     public void StateFixedUpdate()
     {
-        player.rb.gravityScale = calculateGravity(2, Time.time - startTime);
+        _player.rb.gravityScale = CalculateGravity(2, Time.time - _startTime);
     }
 
     public IPlayerState HandleAction(InputAction.CallbackContext value)
@@ -24,7 +24,7 @@ public class GrabbingState : IPlayerState
         IPlayerState returnValue;
         if (value.started)
         {
-            returnValue = new LeapState(player);
+            returnValue = new LeapState(_player);
         }
         else
         {
@@ -35,10 +35,10 @@ public class GrabbingState : IPlayerState
 
     private void OnLetGo()
     {
-        player.SwapState(new JumpingState(player, 0));
+        _player.SwapState(new JumpingState(_player, 0));
     }
 
-    private float calculateGravity(double aggresiveness, double x)
+    private float CalculateGravity(double aggresiveness, double x)
     {
         var dGravity = 0.5 + (0.5*Math.Tanh((aggresiveness*x)-2));
         return (float)dGravity;
@@ -46,23 +46,23 @@ public class GrabbingState : IPlayerState
 
     private void OnGrounded()
     {
-        player.flip();
-        player.SwapState(new RunningState(player));
+        _player.Flip();
+        _player.SwapState(new RunningState(_player));
     }
     
     public void OnEntry()
     {
-        player.LetGo += OnLetGo;
-        player.Grounded += OnGrounded;
-        startTime = Time.time;
-        player.GetComponent<Animator>().Play("Base Layer.grab", 0, 0);
-        player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        _player.LetGo += OnLetGo;
+        _player.Grounded += OnGrounded;
+        _startTime = Time.time;
+        _player.GetComponent<Animator>().Play("Base Layer.grab", 0, 0);
+        _player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
     }
 
     public void OnExit()
     {
-        player.LetGo -= OnLetGo;
-        player.Grounded -= OnGrounded;
-        player.GetComponent<Rigidbody2D>().gravityScale = 1;
+        _player.LetGo -= OnLetGo;
+        _player.Grounded -= OnGrounded;
+        _player.GetComponent<Rigidbody2D>().gravityScale = 1;
     }
 }

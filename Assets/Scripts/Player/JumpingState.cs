@@ -5,18 +5,18 @@ using UnityEngine.InputSystem;
 
 public class JumpingState : IPlayerState
 {
-    private PlayerController player;
-    private bool actionBuffer;
-    private bool jumped;
-    private bool actionCommitted;
-    private float jumpVelocity;
+    private PlayerController _player;
+    private bool _actionBuffer;
+    private bool _jumped;
+    private bool _actionCommitted;
+    private float _jumpVelocity;
 
     public JumpingState(PlayerController player, float jumpVelocity = 7.5f)
     {
-        this.player = player;
-        this.jumpVelocity = jumpVelocity;
-        jumped = false;
-        actionCommitted = false;
+        this._player = player;
+        this._jumpVelocity = jumpVelocity;
+        _jumped = false;
+        _actionCommitted = false;
     }
 
     public void StateFixedUpdate() {}
@@ -25,27 +25,27 @@ public class JumpingState : IPlayerState
     {
         if (value.started)
         {
-            if (Time.time - player.timeLastGrounded < player.coyoteThreshold)
+            if (Time.time - _player.timeLastGrounded < _player.coyoteThreshold)
             {
-                return new JumpingState(player, 7.5f);
+                return new JumpingState(_player, 7.5f);
             }
-            else if (!actionCommitted)
+            else if (!_actionCommitted)
             {
-                actionBuffer = true;
-                actionCommitted = true;
-                player.StartCoroutine(player.ExecuteAfterSeconds(() => actionBuffer = false, 0.2f));
+                _actionBuffer = true;
+                _actionCommitted = true;
+                _player.StartCoroutine(_player.ExecuteAfterSeconds(() => _actionBuffer = false, 0.2f));
             }
         }
         else if (value.canceled)
         {
-            Vector2 velocity = player.rb.velocity;
+            Vector2 velocity = _player.rb.velocity;
             
             if (velocity.y > 0f)
             {
-                velocity = new Vector2(velocity.x, velocity.y * player.JUMP_FALLOFF);
+                velocity = new Vector2(velocity.x, velocity.y * _player.jumpFalloff);
             }
             
-            player.rb.velocity = velocity;
+            _player.rb.velocity = velocity;
         }
         return this;
     }
@@ -53,43 +53,43 @@ public class JumpingState : IPlayerState
     private void OnLand()
     {
         IPlayerState newState;
-        if (actionBuffer)
+        if (_actionBuffer)
         {
-            newState = new SlidingState(player);
+            newState = new SlidingState(_player);
         }
         else
         {
-            newState = new RunningState(player);
+            newState = new RunningState(_player);
         }
-        player.SwapState(newState);
+        _player.SwapState(newState);
     }
 
     private void OnGrab()
     {
-        player.SwapState(new GrabbingState(player));
+        _player.SwapState(new GrabbingState(_player));
     }
 
     public void OnEntry()
     {
-        player.Grounded += OnLand;
-        player.Grab += OnGrab;
-        player.rb.drag = 0;
-        player.GetComponent<Animator>().Play("Base Layer.jump", 0, 0);
+        _player.Grounded += OnLand;
+        _player.Grab += OnGrab;
+        _player.rb.drag = 0;
+        _player.GetComponent<Animator>().Play("Base Layer.jump", 0, 0);
 
-        if (jumped) return;
+        if (_jumped) return;
         
-        if (jumpVelocity != 0)
+        if (_jumpVelocity != 0)
         {
-            player.rb.velocity = new Vector2(player.rb.velocity.x, jumpVelocity);
-            player.audioSource.PlayOneShot(player.JumpSFX, 0.5f);
+            _player.rb.velocity = new Vector2(_player.rb.velocity.x, _jumpVelocity);
+            _player.audioSource.PlayOneShot(_player.jumpSfx, 0.5f);
         }
-        jumped = true;
+        _jumped = true;
     }
 
     public void OnExit()
     {
-        player.Grounded -= OnLand;
-        player.Grab -= OnGrab;
-        player.rb.drag = player.drag; ;
+        _player.Grounded -= OnLand;
+        _player.Grab -= OnGrab;
+        _player.rb.drag = _player.drag; ;
     }
 }

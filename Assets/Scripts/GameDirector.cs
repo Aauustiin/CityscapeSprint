@@ -8,8 +8,8 @@ public class GameDirector : MonoBehaviour
 {
     [SerializeField] private TMP_InputField playerInput;
     [SerializeField] private AudioSource audioSource;
-    [SerializeField] private AudioClip startSFX;
-    [SerializeField] private AudioClip mainMenuSFX;
+    [SerializeField] private AudioClip startSfx;
+    [SerializeField] private AudioClip mainMenuSfx;
 
     void Start()
     {
@@ -36,7 +36,7 @@ public class GameDirector : MonoBehaviour
     public void Restart()
     {
         Time.timeScale = 1f;
-        audioSource.PlayOneShot(startSFX, 0.5f);
+        audioSource.PlayOneShot(startSfx, 0.5f);
     }
 
     public void SetPlayerName()
@@ -58,7 +58,7 @@ public class GameDirector : MonoBehaviour
         collectable.SetActive(true);
         mainMenuUI.SetActive(false);
         player.Restart();
-        audioSource.PlayOneShot(startSFX, 0.5f);
+        audioSource.PlayOneShot(startSfx, 0.5f);
     }
 
     public void LoadMainMenu()
@@ -68,6 +68,6 @@ public class GameDirector : MonoBehaviour
         mainMenuUI.SetActive(true);
         player.Restart();
         Time.timeScale = 1f;
-        audioSource.PlayOneShot(mainMenuSFX, 0.5f);
+        audioSource.PlayOneShot(mainMenuSfx, 0.5f);
     }
 }

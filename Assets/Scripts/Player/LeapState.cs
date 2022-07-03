@@ -5,38 +5,38 @@ using UnityEngine.InputSystem;
 
 public class LeapState : IPlayerState
 {
-    private PlayerController player;
-    private bool actionBuffer;
-    private bool jumped;
+    private PlayerController _player;
+    private bool _actionBuffer;
+    private bool _jumped;
 
     public LeapState(PlayerController player)
     {
-        this.player = player;
-        jumped = false;
+        this._player = player;
+        _jumped = false;
     }
 
     public void StateFixedUpdate()
     {
-        player.rb.AddForce(player.runDirection * player.RUN_FORCE);
+        _player.rb.AddForce(_player.runDirection * _player.runForce);
     }
 
     public IPlayerState HandleAction(InputAction.CallbackContext value)
     {
         if (value.started)
         {
-            actionBuffer = true;
-            player.StartCoroutine(player.ExecuteAfterSeconds(() => actionBuffer = false, 0.2f));
+            _actionBuffer = true;
+            _player.StartCoroutine(_player.ExecuteAfterSeconds(() => _actionBuffer = false, 0.2f));
         }
         else if (value.canceled)
         {
-            Vector2 velocity = player.rb.velocity;
+            Vector2 velocity = _player.rb.velocity;
             
             if (velocity.y > 0f)
             {
-                velocity = new Vector2(velocity.x, velocity.y * player.JUMP_FALLOFF);
+                velocity = new Vector2(velocity.x, velocity.y * _player.jumpFalloff);
             }
             
-            player.rb.velocity = velocity;
+            _player.rb.velocity = velocity;
         }
 
         return this;
@@ -45,41 +45,41 @@ public class LeapState : IPlayerState
     private void OnLand()
     {
         IPlayerState newState;
-        if (actionBuffer)
+        if (_actionBuffer)
         {
-            newState = new SlidingState(player);
+            newState = new SlidingState(_player);
         }
         else
         {
-            newState = new RunningState(player);
+            newState = new RunningState(_player);
         }
-        player.SwapState(newState);
+        _player.SwapState(newState);
     }
 
     private void OnGrab()
     {
-        player.SwapState(new GrabbingState(player));
+        _player.SwapState(new GrabbingState(_player));
     }
 
     public void OnEntry()
     {
-        player.Grounded += OnLand;
-        player.Grab += OnGrab;
-        player.GetComponent<Rigidbody2D>().drag = 0;
-        player.GetComponent<Animator>().Play("Base Layer.jump", 0, 0);
-        if (!jumped)
+        _player.Grounded += OnLand;
+        _player.Grab += OnGrab;
+        _player.GetComponent<Rigidbody2D>().drag = 0;
+        _player.GetComponent<Animator>().Play("Base Layer.jump", 0, 0);
+        if (!_jumped)
         {
-            player.GetComponent<Rigidbody2D>().AddForce(player.runDirection * -75f);
-            player.GetComponent<Rigidbody2D>().velocity = new Vector2(player.GetComponent<Rigidbody2D>().velocity.x, player.LEAP_VELOCITY);
-            jumped = true;
-            player.audioSource.PlayOneShot(player.JumpSFX, 0.5f);
+            _player.GetComponent<Rigidbody2D>().AddForce(_player.runDirection * -75f);
+            _player.GetComponent<Rigidbody2D>().velocity = new Vector2(_player.GetComponent<Rigidbody2D>().velocity.x, _player.leapVelocity);
+            _jumped = true;
+            _player.audioSource.PlayOneShot(_player.jumpSfx, 0.5f);
         }
     }
 
     public void OnExit()
     {
-        player.Grounded -= OnLand;
-        player.Grab -= OnGrab;
-        player.GetComponent<Rigidbody2D>().drag = player.drag; ;
+        _player.Grounded -= OnLand;
+        _player.Grab -= OnGrab;
+        _player.GetComponent<Rigidbody2D>().drag = _player.drag; ;
     }
 }

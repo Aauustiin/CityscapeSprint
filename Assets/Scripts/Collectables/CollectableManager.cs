@@ -8,14 +8,14 @@ public class CollectableManager : MonoBehaviour
     [SerializeField] private List<Vector2> spawnLocations;
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private GameObject scoreTextParent;
-    private int collectablesGrabbed;
+    private int _collectablesGrabbed;
 
     [SerializeField] private AudioSource audioSource;
-    [SerializeField] private AudioClip collectSFX;
+    [SerializeField] private AudioClip collectSfx;
 
     private void Start()
     {
-        collectablesGrabbed = 0;
+        _collectablesGrabbed = 0;
     }
 
     private void OnEnable()
@@ -30,44 +30,44 @@ public class CollectableManager : MonoBehaviour
 
     public void Restart()
     {
-        collectablesGrabbed = 0;
+        _collectablesGrabbed = 0;
     }
 
     public void OnCollectableGrabbed(Vector2 location, Collectable c)
     {
-        collectablesGrabbed++;
-        StartCoroutine(activateScoreText(c));
-        Vector2 spawnLocation = pickRandomSpawnLocation();
-        spawnCollectable(spawnLocation, c);
+        _collectablesGrabbed++;
+        StartCoroutine(ActivateScoreText(c));
+        Vector2 spawnLocation = PickRandomSpawnLocation();
+        SpawnCollectable(spawnLocation, c);
         spawnLocations.Remove(spawnLocation);
-        audioSource.PlayOneShot(collectSFX, 0.5f);
+        audioSource.PlayOneShot(collectSfx, 0.5f);
         spawnLocations.Add(location);
     }
 
-    private IEnumerator activateScoreText(Collectable c)
+    private IEnumerator ActivateScoreText(Collectable c)
     {
         scoreTextParent.SetActive(true);
-        scoreText.text = collectablesGrabbed.ToString();
+        scoreText.text = _collectablesGrabbed.ToString();
         scoreTextParent.GetComponent<RectTransform>().position = Camera.main.WorldToScreenPoint((Vector2)c.transform.position + new Vector2(0f, 0.5f));
         scoreTextParent.GetComponent<Animator>().Play("Base Layer.score", 0, 0);
         yield return new WaitForSeconds(0.5f);
         scoreTextParent.SetActive(false);
     }
 
-    private Vector2 pickRandomSpawnLocation()
+    private Vector2 PickRandomSpawnLocation()
     {
         System.Random random = new System.Random();
         int index = random.Next(spawnLocations.Count);
         return spawnLocations[index];
     }
 
-    private void spawnCollectable(Vector2 spawnLocation, Collectable c)
+    private void SpawnCollectable(Vector2 spawnLocation, Collectable c)
     {
         c.transform.position = spawnLocation;
     }
 
     public int GetCollectablesGrabbed()
     {
-        return collectablesGrabbed;
+        return _collectablesGrabbed;
     }
 }

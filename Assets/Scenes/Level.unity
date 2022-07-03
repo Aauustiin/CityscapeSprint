@@ -558,9 +558,9 @@ MonoBehaviour:
   tipText: {fileID: 1467332259}
   playerRankText: {fileID: 1718211092}
   leaderboardText: {fileID: 1873936594}
-  UI: {fileID: 626724804}
+  ui: {fileID: 626724804}
   audioSource: {fileID: 290161791}
-  gameOverSFX: {fileID: 8300000, guid: e20bf517f50eef242b3f131d40d50a0b, type: 3}
+  gameOverSfx: {fileID: 8300000, guid: e20bf517f50eef242b3f131d40d50a0b, type: 3}
   tips:
   - 'Tip: Pressing space just before you hit the ground makes you slide!'
   - 'Tip: Sliding off of a platform makes you jump!'
@@ -625,7 +625,7 @@ MonoBehaviour:
   scoreText: {fileID: 95178479}
   scoreTextParent: {fileID: 1830867335}
   audioSource: {fileID: 290161791}
-  collectSFX: {fileID: 8300000, guid: bf5aeb63c79ae9c4896d72beff8b7448, type: 3}
+  collectSfx: {fileID: 8300000, guid: bf5aeb63c79ae9c4896d72beff8b7448, type: 3}
 --- !u!4 &158312314
 Transform:
   m_ObjectHideFlags: 0
@@ -6687,22 +6687,22 @@ MonoBehaviour:
   rb: {fileID: 0}
   sprite: {fileID: 0}
   timeLastGrounded: 0
-  JUMP_VELOCITY: 7.5
-  LEAP_VELOCITY: 5
-  JUMP_FALLOFF: 0.25
-  RUN_FORCE: 10
-  RollImpulse: 10
+  jumpVelocity: 7.5
+  leapVelocity: 6.25
+  jumpFalloff: 0.25
+  runForce: 10
+  rollImpulse: 10
   inputCancelledBuff: 0
   drag: 0.75
   maxSpeed: 50
   coyoteThreshold: 0.1
   audioSource: {fileID: 290161791}
   runDirection: {x: 0, y: 0}
-  Dust: {fileID: 1754672612}
-  JumpSFX: {fileID: 8300000, guid: a4a09fd30386a104786a6ea4022ed9cd, type: 3}
-  SlideSFX: {fileID: 8300000, guid: bd8c80c7b13ca5949b68ff1b8e14edbe, type: 3}
-  LandSFX: {fileID: 8300000, guid: f2b225a0cfaeced478af84df000b0691, type: 3}
-  GrabSFX: {fileID: 8300000, guid: ab4ce81fc477fa24fa410bf57569f389, type: 3}
+  dust: {fileID: 1754672612}
+  jumpSfx: {fileID: 8300000, guid: a4a09fd30386a104786a6ea4022ed9cd, type: 3}
+  slideSfx: {fileID: 8300000, guid: bd8c80c7b13ca5949b68ff1b8e14edbe, type: 3}
+  landSfx: {fileID: 8300000, guid: f2b225a0cfaeced478af84df000b0691, type: 3}
+  grabSfx: {fileID: 8300000, guid: ab4ce81fc477fa24fa410bf57569f389, type: 3}
 --- !u!50 &922214790
 Rigidbody2D:
   serializedVersion: 4
@@ -6861,8 +6861,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerInput: {fileID: 1847236134}
   audioSource: {fileID: 290161791}
-  startSFX: {fileID: 8300000, guid: 0e0796d4eb51f764bac8e107fb478702, type: 3}
-  mainMenuSFX: {fileID: 8300000, guid: e20bf517f50eef242b3f131d40d50a0b, type: 3}
+  startSfx: {fileID: 8300000, guid: 0e0796d4eb51f764bac8e107fb478702, type: 3}
+  mainMenuSfx: {fileID: 8300000, guid: 0e0796d4eb51f764bac8e107fb478702, type: 3}
   timer: {fileID: 465611295}
   collectable: {fileID: 8787202}
   mainMenuUI: {fileID: 670015596}
