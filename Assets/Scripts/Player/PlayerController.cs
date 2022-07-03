@@ -49,6 +49,7 @@ namespace Player
 
         private void Start()
         {
+            audioSource = GameObject.Find("AudioSource").GetComponent<AudioSource>();
             rb = GetComponent<Rigidbody2D>();
             sprite = GetComponent<SpriteRenderer>();
             _startPosition = rb.position;

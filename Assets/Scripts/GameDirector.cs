@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GameDirector : MonoBehaviour
 {
@@ -8,7 +9,7 @@ public class GameDirector : MonoBehaviour
     [SerializeField] private AudioClip startSfx;
     [SerializeField] private AudioClip mainMenuSfx;
 
-    void Start()
+    private void Start()
     {
         StartCoroutine(Leaderboard.Login());
     }
@@ -25,18 +26,18 @@ public class GameDirector : MonoBehaviour
         EventManager.Restart -= Restart;
     }
 
-    public void GameOver()
+    private static void GameOver()
     {
         Time.timeScale = 0f;
     }
 
-    public void Restart()
+    private void Restart()
     {
         Time.timeScale = 1f;
         audioSource.PlayOneShot(startSfx, 0.5f);
     }
 
-    public void SetPlayerName()
+    private void SetPlayerName()
     {
         string playerName = playerInput.text;
         if (playerName != "")
@@ -51,19 +52,15 @@ public class GameDirector : MonoBehaviour
     public void StartGame()
     {
         SetPlayerName();
-        timer.SetActive(true);
-        collectable.SetActive(true);
+        SceneManager.LoadScene("Level", LoadSceneMode.Additive);
         mainMenuUI.SetActive(false);
-        player.Restart();
         audioSource.PlayOneShot(startSfx, 0.5f);
     }
 
     public void LoadMainMenu()
     {
-        timer.SetActive(false);
-        collectable.SetActive(false);
+        SceneManager.UnloadSceneAsync("Level");
         mainMenuUI.SetActive(true);
-        player.Restart();
         Time.timeScale = 1f;
         audioSource.PlayOneShot(mainMenuSfx, 0.5f);
     }

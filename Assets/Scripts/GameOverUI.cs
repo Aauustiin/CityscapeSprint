@@ -14,7 +14,11 @@ public class GameOverUI : MonoBehaviour
     [SerializeField] private AudioClip gameOverSfx;
     [SerializeField] private List<string> tips;
     private int _lastTip;
- 
+
+    private void Start()
+    {
+        audioSource = GameObject.Find("AudioSource").GetComponent<AudioSource>();
+    }
 
     private void OnEnable()
     {
@@ -74,6 +78,12 @@ public class GameOverUI : MonoBehaviour
         ui.SetActive(false);
     }
 
+    public void ExitLevel()
+    {
+        CloseUI();
+        FindObjectOfType<GameDirector>().LoadMainMenu();
+    }
+    
     public void Restart()
     {
         EventManager.TriggerRestart();

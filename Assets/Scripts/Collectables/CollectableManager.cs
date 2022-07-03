@@ -16,6 +16,7 @@ public class CollectableManager : MonoBehaviour
     private void Start()
     {
         _collectablesGrabbed = 0;
+        audioSource = GameObject.Find("AudioSource").GetComponent<AudioSource>();
     }
 
     private void OnEnable()
