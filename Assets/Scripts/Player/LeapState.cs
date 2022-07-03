@@ -1,85 +1,88 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class LeapState : IPlayerState
+namespace Player
 {
-    private PlayerController _player;
-    private bool _actionBuffer;
-    private bool _jumped;
-
-    public LeapState(PlayerController player)
+    public class LeapState : IPlayerState
     {
-        this._player = player;
-        _jumped = false;
-    }
+        private readonly PlayerController _player;
+        private bool _actionBuffer;
+        private bool _jumped;
 
-    public void StateFixedUpdate()
-    {
-        _player.rb.AddForce(_player.runDirection * _player.runForce);
-    }
-
-    public IPlayerState HandleAction(InputAction.CallbackContext value)
-    {
-        if (value.started)
+        public LeapState(PlayerController player)
         {
-            _actionBuffer = true;
-            _player.StartCoroutine(_player.ExecuteAfterSeconds(() => _actionBuffer = false, 0.2f));
+            _player = player;
+            _jumped = false;
         }
-        else if (value.canceled)
+
+        public void StateFixedUpdate()
         {
-            Vector2 velocity = _player.rb.velocity;
-            
-            if (velocity.y > 0f)
+            _player.rb.AddForce(_player.runDirection * _player.runForce);
+        }
+
+        public IPlayerState HandleAction(InputAction.CallbackContext value)
+        {
+            if (value.started)
             {
-                velocity = new Vector2(velocity.x, velocity.y * _player.jumpFalloff);
+                _actionBuffer = true;
+                _player.StartCoroutine(PlayerController.ExecuteAfterSeconds(() => _actionBuffer = false, 0.2f));
             }
-            
-            _player.rb.velocity = velocity;
+            else if (value.canceled)
+            {
+                Vector2 velocity = _player.rb.velocity;
+
+                if (velocity.y > 0f)
+                {
+                    velocity = new Vector2(velocity.x, velocity.y * _player.jumpFalloff);
+                }
+
+                _player.rb.velocity = velocity;
+            }
+
+            return this;
         }
 
-        return this;
-    }
-
-    private void OnLand()
-    {
-        IPlayerState newState;
-        if (_actionBuffer)
+        private void OnLand()
         {
-            newState = new SlidingState(_player);
+            IPlayerState newState;
+            if (_actionBuffer)
+            {
+                newState = new SlidingState(_player);
+            }
+            else
+            {
+                newState = new RunningState(_player);
+            }
+
+            _player.SwapState(newState);
         }
-        else
+
+        private void OnHitSide()
         {
-            newState = new RunningState(_player);
+            _player.SwapState(new GrabbingState(_player));
         }
-        _player.SwapState(newState);
-    }
 
-    private void OnGrab()
-    {
-        _player.SwapState(new GrabbingState(_player));
-    }
-
-    public void OnEntry()
-    {
-        _player.Grounded += OnLand;
-        _player.Grab += OnGrab;
-        _player.GetComponent<Rigidbody2D>().drag = 0;
-        _player.GetComponent<Animator>().Play("Base Layer.jump", 0, 0);
-        if (!_jumped)
+        public void OnEntry()
         {
-            _player.GetComponent<Rigidbody2D>().AddForce(_player.runDirection * -75f);
-            _player.GetComponent<Rigidbody2D>().velocity = new Vector2(_player.GetComponent<Rigidbody2D>().velocity.x, _player.leapVelocity);
-            _jumped = true;
-            _player.audioSource.PlayOneShot(_player.jumpSfx, 0.5f);
+            _player.HitGround += OnLand;
+            _player.HitSide += OnHitSide;
+            _player.rb.drag = 0;
+            _player.GetComponent<Animator>().Play("Base Layer.jump", 0, 0);
+            if (!_jumped)
+            {
+                _player.rb.AddForce(_player.runDirection * -75f);
+                _player.rb.velocity = new Vector2(_player.rb.velocity.x, _player.leapVelocity);
+                _jumped = true;
+                _player.audioSource.PlayOneShot(_player.jumpSfx, 0.5f);
+            }
         }
-    }
 
-    public void OnExit()
-    {
-        _player.Grounded -= OnLand;
-        _player.Grab -= OnGrab;
-        _player.GetComponent<Rigidbody2D>().drag = _player.drag; ;
+        public void OnExit()
+        {
+            _player.HitGround -= OnLand;
+            _player.HitSide -= OnHitSide;
+            _player.rb.drag = _player.drag;
+            ;
+        }
     }
 }

@@ -1,57 +1,59 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class RunningState : IPlayerState
+namespace Player
 {
-    private PlayerController _player;
-
-    public RunningState(PlayerController player)
+    public class RunningState : IPlayerState
     {
-        this._player = player;
-    }
+        private readonly PlayerController _player;
 
-    public void StateFixedUpdate()
-    {
-        _player.rb.AddForce(_player.runDirection * _player.runForce);
-    }
-
-    public IPlayerState HandleAction(InputAction.CallbackContext value)
-    {
-        IPlayerState returnValue;
-        if (value.started)
+        public RunningState(PlayerController player)
         {
-            returnValue = new JumpingState(_player, _player.jumpVelocity);
+            _player = player;
         }
-        else
+
+        public void StateFixedUpdate()
         {
-            returnValue = this;
+            _player.rb.AddForce(_player.runDirection * _player.runForce);
         }
-        return returnValue;
-    }
 
-    private void OnFall()
-    {
-        _player.SwapState(new JumpingState(_player, 0f));
-    }
+        public IPlayerState HandleAction(InputAction.CallbackContext value)
+        {
+            IPlayerState returnValue;
+            if (value.started)
+            {
+                returnValue = new JumpingState(_player, _player.jumpVelocity);
+            }
+            else
+            {
+                returnValue = this;
+            }
 
-    private void OnGrab()
-    {
-        _player.Flip();
-    }
-    
-    public void OnEntry()
-    {
-        _player.Fell += OnFall;
-        _player.Grab += OnGrab;
-        _player.GetComponent<Animator>().Play("Base Layer.run", 0, 0);
-        _player.StartCoroutine(_player.ExecuteAfterSeconds(() => _player.dust.Stop(), 0.5f));
-    }
+            return returnValue;
+        }
 
-    public void OnExit()
-    {
-        _player.Fell -= OnFall;
-        _player.Grab -= OnGrab;
+        private void OnFall()
+        {
+            _player.SwapState(new JumpingState(_player, 0f));
+        }
+
+        private void OnHitSide()
+        {
+            _player.Flip();
+        }
+
+        public void OnEntry()
+        {
+            _player.LeftGround += OnFall;
+            _player.HitSide += OnHitSide;
+            _player.GetComponent<Animator>().Play("Base Layer.run", 0, 0);
+            _player.StartCoroutine(PlayerController.ExecuteAfterSeconds(() => _player.dust.Stop(), 0.5f));
+        }
+
+        public void OnExit()
+        {
+            _player.LeftGround -= OnFall;
+            _player.HitSide -= OnHitSide;
+        }
     }
 }

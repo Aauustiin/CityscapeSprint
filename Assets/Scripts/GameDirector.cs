@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using LootLocker.Requests;
 using TMPro;
 
 public class GameDirector : MonoBehaviour
@@ -49,7 +46,7 @@ public class GameDirector : MonoBehaviour
     }
 
     [SerializeField] private GameObject timer, collectable, mainMenuUI;
-    [SerializeField] private PlayerController player;
+    [SerializeField] private Player.PlayerController player;
 
     public void StartGame()
     {
