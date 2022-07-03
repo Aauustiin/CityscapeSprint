@@ -598,7 +598,7 @@ GameObject:
   - component: {fileID: 157489837}
   - component: {fileID: 157489839}
   - component: {fileID: 157489838}
-  m_Layer: 3
+  m_Layer: 6
   m_Name: Middle Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
