@@ -41,7 +41,7 @@ public class CollectableManager : MonoBehaviour
         Vector2 spawnLocation = PickRandomSpawnLocation();
         SpawnCollectable(spawnLocation, c);
         spawnLocations.Remove(spawnLocation);
-        audioSource.PlayOneShot(collectSfx, 0.5f);
+        EventManager.TriggerSoundEffect(collectSfx);
         spawnLocations.Add(location);
     }
 

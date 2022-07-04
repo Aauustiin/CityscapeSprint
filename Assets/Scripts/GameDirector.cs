@@ -34,7 +34,7 @@ public class GameDirector : MonoBehaviour
     private void Restart()
     {
         Time.timeScale = 1f;
-        audioSource.PlayOneShot(startSfx, 0.5f);
+        EventManager.TriggerSoundEffect(startSfx);
     }
 
     private void SetPlayerName()
@@ -54,7 +54,7 @@ public class GameDirector : MonoBehaviour
         SetPlayerName();
         SceneManager.LoadScene("Level", LoadSceneMode.Additive);
         mainMenuUI.SetActive(false);
-        audioSource.PlayOneShot(startSfx, 0.5f);
+        EventManager.TriggerSoundEffect(startSfx);
     }
 
     public void LoadMainMenu()
@@ -62,6 +62,6 @@ public class GameDirector : MonoBehaviour
         SceneManager.UnloadSceneAsync("Level");
         mainMenuUI.SetActive(true);
         Time.timeScale = 1f;
-        audioSource.PlayOneShot(mainMenuSfx, 0.5f);
+        EventManager.TriggerSoundEffect(mainMenuSfx);
     }
 }

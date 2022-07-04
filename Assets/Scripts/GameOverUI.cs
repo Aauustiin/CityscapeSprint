@@ -49,7 +49,7 @@ public class GameOverUI : MonoBehaviour
         _lastTip = index;
         StartCoroutine(Leaderboard.FetchLeaderboardHighScores(3, this));
         StartCoroutine(Leaderboard.FetchPlayerRank(this));
-        audioSource.PlayOneShot(gameOverSfx, 0.5f);
+        EventManager.TriggerSoundEffect(gameOverSfx);
     }
 
     private void DisplayPlayerScore()

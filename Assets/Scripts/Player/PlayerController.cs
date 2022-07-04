@@ -123,14 +123,14 @@ namespace Player
                     if (collisionNormal == Vector2.up)
                     {
                         HitGround?.Invoke();
-                        audioSource.PlayOneShot(landSfx, 0.5f);
+                        EventManager.TriggerSoundEffect(landSfx);
                         dust.Play();
 
                     }
                     else if (collisionNormal == -runDirection)
                     {
                         HitSide?.Invoke();
-                        audioSource.PlayOneShot(grabSfx, 0.5f);
+                        EventManager.TriggerSoundEffect(grabSfx);
                     }
 
                     break;

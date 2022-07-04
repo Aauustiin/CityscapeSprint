@@ -73,7 +73,7 @@ namespace Player
                 _player.rb.AddForce(_player.runDirection * -_player.leapForce);
                 _player.rb.velocity = new Vector2(_player.rb.velocity.x, _player.leapVelocity);
                 _jumped = true;
-                _player.audioSource.PlayOneShot(_player.jumpSfx, 0.5f);
+                EventManager.TriggerSoundEffect(_player.jumpSfx);
             }
         }
 

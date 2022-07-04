@@ -17,4 +17,11 @@ public static class EventManager
     {
         Restart?.Invoke();
     }
+
+    public static event System.Action<AudioClip> SoundEffectEvent;
+
+    public static void TriggerSoundEffect(AudioClip soundEffect)
+    {
+        SoundEffectEvent?.Invoke(soundEffect);
+    }
 }

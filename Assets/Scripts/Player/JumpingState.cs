@@ -83,7 +83,7 @@ namespace Player
             if (_jumpVelocity != 0)
             {
                 _player.rb.velocity = new Vector2(_player.rb.velocity.x, _jumpVelocity);
-                _player.audioSource.PlayOneShot(_player.jumpSfx, 0.5f);
+                EventManager.TriggerSoundEffect(_player.jumpSfx);
             }
 
             _jumped = true;
