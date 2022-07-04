@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: d0b255e6d93ed0f44b4b38dd7a48930b
+guid: d1bafcc9ad44f7841966e7949631bd46
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,7 +9,7 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - Marlboro
+  - Bebas Neue
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0

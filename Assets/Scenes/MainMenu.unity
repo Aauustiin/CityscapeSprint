@@ -501,8 +501,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u200B"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: e541acc3cdee9ad449d106c09f280c89, type: 2}
-  m_sharedMaterial: {fileID: -5580582602369242562, guid: e541acc3cdee9ad449d106c09f280c89, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 6b9d6b8434a9b914bb53963827b41a0a, type: 2}
+  m_sharedMaterial: {fileID: -2895642049318428941, guid: 6b9d6b8434a9b914bb53963827b41a0a, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -687,8 +687,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Enter your name for the leaderboard...
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: e541acc3cdee9ad449d106c09f280c89, type: 2}
-  m_sharedMaterial: {fileID: -5580582602369242562, guid: e541acc3cdee9ad449d106c09f280c89, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 6b9d6b8434a9b914bb53963827b41a0a, type: 2}
+  m_sharedMaterial: {fileID: -2895642049318428941, guid: 6b9d6b8434a9b914bb53963827b41a0a, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -947,8 +947,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Cityscape Sprint
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: e541acc3cdee9ad449d106c09f280c89, type: 2}
-  m_sharedMaterial: {fileID: -5580582602369242562, guid: e541acc3cdee9ad449d106c09f280c89, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 6b9d6b8434a9b914bb53963827b41a0a, type: 2}
+  m_sharedMaterial: {fileID: -2895642049318428941, guid: 6b9d6b8434a9b914bb53963827b41a0a, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -972,8 +972,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 75
-  m_fontSizeBase: 75
+  m_fontSize: 85
+  m_fontSizeBase: 85
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1698,8 +1698,8 @@ MonoBehaviour:
 
 '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: e541acc3cdee9ad449d106c09f280c89, type: 2}
-  m_sharedMaterial: {fileID: -5580582602369242562, guid: e541acc3cdee9ad449d106c09f280c89, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 6b9d6b8434a9b914bb53963827b41a0a, type: 2}
+  m_sharedMaterial: {fileID: -2895642049318428941, guid: 6b9d6b8434a9b914bb53963827b41a0a, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
