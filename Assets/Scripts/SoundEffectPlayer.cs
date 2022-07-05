@@ -6,7 +6,7 @@ public class SoundEffectPlayer : MonoBehaviour
     
     private void Start()
     {
-        _audioSource = GetComponent<AudioSource>();
+        SetMusicVolume();
     }
     
     private void OnEnable()
@@ -27,7 +27,11 @@ public class SoundEffectPlayer : MonoBehaviour
     public void SetMusicVolume()
     {
         _audioSource = GetComponent<AudioSource>();
-        Debug.Log(_audioSource);
         _audioSource.volume = PlayerPrefs.GetFloat("MusicVolume");
+    }
+
+    public void PlaySoundtrack(AudioClip soundtrack)
+    {
+        _audioSource.clip = soundtrack;
     }
 }
