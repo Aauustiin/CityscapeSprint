@@ -5,9 +5,11 @@ using UnityEngine.SceneManagement;
 public class GameDirector : MonoBehaviour
 {
     [SerializeField] private TMP_InputField playerInput;
-    [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip startSfx;
     [SerializeField] private AudioClip mainMenuSfx;
+    [SerializeField] private GameObject mainMenuUI;
+    [SerializeField] private GameObject mainUI;
+    [SerializeField] private GameObject settingsUI;
 
     private void Start()
     {
@@ -46,9 +48,6 @@ public class GameDirector : MonoBehaviour
         }
     }
 
-    [SerializeField] private GameObject timer, collectable, mainMenuUI;
-    [SerializeField] private Player.PlayerController player;
-
     public void StartGame()
     {
         SetPlayerName();
@@ -57,6 +56,12 @@ public class GameDirector : MonoBehaviour
         EventManager.TriggerSoundEffect(startSfx);
     }
 
+    public void OpenSettingsMenu()
+    {
+        mainUI.SetActive(false);
+        settingsUI.SetActive(true);
+    }
+    
     public void LoadMainMenu()
     {
         SceneManager.UnloadSceneAsync("Level");

@@ -29,7 +29,7 @@ public class CollectableManager : MonoBehaviour
         EventManager.Restart -= Restart;
     }
 
-    public void Restart()
+    private void Restart()
     {
         _collectablesGrabbed = 0;
     }
