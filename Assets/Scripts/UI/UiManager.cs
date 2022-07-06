@@ -7,7 +7,6 @@ namespace UI
     public class UiManager : MonoBehaviour
     {
         private GameObject _currentMenu;
-        private GameObject _prevMenu;
 
         [SerializeField] private GameObject mainMenu;
         [SerializeField] private GameObject settingsMenu;
@@ -19,17 +18,21 @@ namespace UI
         private void Start()
         {
             _currentMenu = mainMenu;
-            _prevMenu = null;
         }
         
         private void OpenMenu(GameObject menu)
         {
             _currentMenu.SetActive(false);
             menu.SetActive(true);
-            _prevMenu = _currentMenu;
             _currentMenu = menu;
         }
 
+        public void CloseMenu()
+        {
+            _currentMenu.SetActive(false);
+            _currentMenu = null;
+        }
+        
         public void OpenSettingsMenu()
         {
             OpenMenu(settingsMenu);
@@ -59,10 +62,6 @@ namespace UI
         {
             OpenMenu(pauseMenu);
         }
-
-        public void CloseMenu()
-        {
-            OpenMenu(null);
-        }
+        
     }
 }

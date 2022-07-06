@@ -52,7 +52,6 @@ public class GameDirector : MonoBehaviour
     {
         SetPlayerName();
         SceneManager.LoadScene("Level", LoadSceneMode.Additive);
-        mainMenuUI.SetActive(false);
         EventManager.TriggerSoundEffect(startSfx);
     }
 
@@ -65,7 +64,6 @@ public class GameDirector : MonoBehaviour
     public void LoadMainMenu()
     {
         SceneManager.UnloadSceneAsync("Level");
-        mainMenuUI.SetActive(true);
         Time.timeScale = 1f;
         EventManager.TriggerSoundEffect(mainMenuSfx);
     }

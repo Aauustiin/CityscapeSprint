@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UI;
 
 public class GameOverUI : MonoBehaviour
 {
@@ -82,6 +83,7 @@ public class GameOverUI : MonoBehaviour
     {
         CloseUI();
         FindObjectOfType<GameDirector>().LoadMainMenu();
+        FindObjectOfType<UiManager>().OpenMainMenu();
     }
     
     public void Restart()
