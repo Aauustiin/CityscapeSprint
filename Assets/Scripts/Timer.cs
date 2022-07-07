@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
@@ -12,17 +10,20 @@ public class Timer : MonoBehaviour
     private void OnEnable()
     {
         EventManager.Restart += Restart;
+        EventManager.GameOver += GameOver;
         StartTimer();
     }
 
     private void OnDisable()
     {
         EventManager.Restart -= Restart;
+        EventManager.GameOver -= GameOver;
     }
 
     private void StartTimer()
     {
-        StartCoroutine(GameOverAfterSeconds(duration));
+        StartCoroutine(Utils.ExecuteAfterSeconds(EventManager.TriggerGameOver, duration));
+        timer.gameObject.SetActive(true);
         _startTime = Time.time;
     }
 
@@ -33,13 +34,12 @@ public class Timer : MonoBehaviour
         timer.text = roundedTime.ToString();
     }
 
-    private IEnumerator GameOverAfterSeconds(int seconds)
+    private void GameOver()
     {
-        yield return new WaitForSeconds(seconds);
-        EventManager.TriggerGameOver();
+        timer.gameObject.SetActive(false);
     }
-
-    public void Restart()
+    
+    private void Restart()
     {
         StartTimer();
     }

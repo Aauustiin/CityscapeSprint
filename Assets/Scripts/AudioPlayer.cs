@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class SoundEffectPlayer : MonoBehaviour
+public class AudioPlayer : MonoBehaviour
 {
     private AudioSource _audioSource;
     

@@ -22,13 +22,20 @@ public class CollectableManager : MonoBehaviour
     private void OnEnable()
     {
         EventManager.Restart += Restart;
+        EventManager.GameOver += GameOver;
     }
 
     private void OnDisable()
     {
         EventManager.Restart -= Restart;
+        EventManager.GameOver -= GameOver;
     }
 
+    private void GameOver()
+    {
+        scoreTextParent.SetActive(false);
+    }
+    
     private void Restart()
     {
         _collectablesGrabbed = 0;

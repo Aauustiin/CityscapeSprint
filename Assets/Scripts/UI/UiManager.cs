@@ -1,12 +1,14 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using UnityEngine;
 
 namespace UI
 {
     public class UiManager : MonoBehaviour
     {
-        private GameObject _currentMenu;
+        private Stack<GameObject> _menuHistory;
 
         [SerializeField] private GameObject mainMenu;
         [SerializeField] private GameObject settingsMenu;
@@ -14,23 +16,48 @@ namespace UI
         [SerializeField] private GameObject videoMenu;
         [SerializeField] private GameObject controlsMenu;
         [SerializeField] private GameObject pauseMenu;
+        [SerializeField] private GameObject finishMenu;
+        [SerializeField] private GameObject commonBackground;
+
+        private void OnEnable()
+        {
+            EventManager.GameOver += OpenFinishMenu;
+        }
+
+        private void OnDisable()
+        {
+            EventManager.GameOver -= OpenFinishMenu;
+        }
 
         private void Start()
         {
-            _currentMenu = mainMenu;
+            _menuHistory = new Stack<GameObject>();
+            _menuHistory.Push(mainMenu);
         }
         
         private void OpenMenu(GameObject menu)
         {
-            _currentMenu.SetActive(false);
+            if (_menuHistory.Count > 0) _menuHistory.Peek().SetActive(false);
             menu.SetActive(true);
-            _currentMenu = menu;
+            _menuHistory.Push(menu);
+            Time.timeScale = 0f;
+            commonBackground.SetActive(true);
         }
 
         public void CloseMenu()
         {
-            _currentMenu.SetActive(false);
-            _currentMenu = null;
+            _menuHistory.Pop().SetActive(false);
+            Time.timeScale = 1f;
+            commonBackground.SetActive(false);
+        }
+
+        public void Back()
+        {
+            _menuHistory.Pop().SetActive(false);
+            if (_menuHistory.Count == 0)
+                CloseMenu();
+            else
+                _menuHistory.Peek().SetActive(true);
         }
         
         public void OpenSettingsMenu()
@@ -63,5 +90,9 @@ namespace UI
             OpenMenu(pauseMenu);
         }
         
+        public void OpenFinishMenu()
+        {
+            OpenMenu(finishMenu);
+        }
     }
 }

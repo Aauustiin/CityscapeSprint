@@ -8,6 +8,7 @@ namespace UI
         [SerializeField] private Slider musicSlider;
         [SerializeField] private Slider sfxSlider;
         [SerializeField] private float defaultSfxVolume, defaultMusicVolume;
+        [SerializeField] private AudioPlayer audioPlayer;
 
         private void OnEnable()
         {
@@ -47,7 +48,7 @@ namespace UI
         {
             PlayerPrefs.SetFloat("MusicVolume", musicSlider.value);
             PlayerPrefs.SetInt("MusicSet", 1);
-            FindObjectOfType<SoundEffectPlayer>().SetMusicVolume();
+            audioPlayer.SetMusicVolume();
         }
     }
 }
