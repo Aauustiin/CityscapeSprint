@@ -41,7 +41,11 @@ namespace UI
             if (_menuHistory.Count > 0) 
                 _menuHistory.Peek().SetActive(false);
             else
+            {
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
                 EventManager.TriggerMenuOpen();
+            }
             menu.SetActive(true);
             _menuHistory.Push(menu);
             Time.timeScale = 0f;
@@ -54,6 +58,8 @@ namespace UI
             _menuHistory = new Stack<GameObject>();
             Time.timeScale = 1f;
             commonBackground.SetActive(false);
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
             EventManager.TriggerMenuClose();
         }
 
