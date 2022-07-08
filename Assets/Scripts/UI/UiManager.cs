@@ -17,6 +17,7 @@ namespace UI
         [SerializeField] private GameObject controlsMenu;
         [SerializeField] private GameObject pauseMenu;
         [SerializeField] private GameObject finishMenu;
+        [SerializeField] private GameObject levelSelectMenu;
         [SerializeField] private GameObject commonBackground;
 
         private void OnEnable()
@@ -50,6 +51,7 @@ namespace UI
         public void CloseMenu()
         {
             _menuHistory.Pop().SetActive(false);
+            _menuHistory = new Stack<GameObject>();
             Time.timeScale = 1f;
             commonBackground.SetActive(false);
             EventManager.TriggerMenuClose();
@@ -95,8 +97,15 @@ namespace UI
                 OpenMenu(pauseMenu);
             else if (_menuHistory.Peek() == pauseMenu)
                 CloseMenu();
-            else if (_menuHistory.Peek() != mainMenu)
+            else if (_menuHistory.Peek() == mainMenu)
+                Application.Quit();
+            else if (_menuHistory.Count > 1)
                 Back();
+        }
+
+        public void OpenLevelSelect()
+        {
+            OpenMenu(levelSelectMenu);
         }
         
         public void OpenFinishMenu()

@@ -38,11 +38,8 @@ namespace UI
             if (actionToRebind == _action)
                 actionText.text = "...";
             else pauseText.text = "...";
-            
             actionToRebind.Disable();
-            
             var rebindOperation = actionToRebind.PerformInteractiveRebinding()
-                // To avoid accidental input from mouse motion
                 .WithControlsExcluding("Mouse")
                 .OnMatchWaitForAnother(0.1f)
                 .Start();
@@ -50,7 +47,6 @@ namespace UI
             actionToRebind.Enable();
             actionText.text = _action.controls[0].name;
             pauseText.text = _pause.controls[0].name;
-            
         }
     }
 }

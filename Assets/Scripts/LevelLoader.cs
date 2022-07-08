@@ -11,6 +11,12 @@ public class LevelLoader : MonoBehaviour
         SceneManager.LoadSceneAsync(level.scene, LoadSceneMode.Additive);
         currentLevel = System.Array.IndexOf(levels, level);
     }
+    
+    public void LoadLevel(int levelIndex)
+    {
+        SceneManager.LoadSceneAsync(levels[levelIndex].scene, LoadSceneMode.Additive);
+        currentLevel = levelIndex;
+    }
 
     public void UnloadLevel()
     {
