@@ -34,7 +34,6 @@ namespace Player
         public bool inputCancelledBuff;
 
         // Assets
-        public AudioSource audioSource;
         public ParticleSystem dust;
         public AudioClip jumpSfx;
         public AudioClip slideSfx;
@@ -49,7 +48,6 @@ namespace Player
 
         private void Start()
         {
-            audioSource = GameObject.Find("AudioSource").GetComponent<AudioSource>();
             rb = GetComponent<Rigidbody2D>();
             sprite = GetComponent<SpriteRenderer>();
             _startPosition = rb.position;
@@ -115,12 +113,13 @@ namespace Player
         private void OnCollisionEnter2D(Collision2D collision)
         {
             string layerName = LayerMask.LayerToName(collision.collider.gameObject.layer);
+            Vector2 collisionNormal = collision.GetContact(0).normal;
 
             switch (layerName)
             {
                 case "Ground":
                 {
-                    Vector2 collisionNormal = collision.GetContact(0).normal;
+                    
 
                     if (collisionNormal == Vector2.up)
                     {
@@ -138,8 +137,11 @@ namespace Player
                     break;
                 }
                 case "Wall":
-                    Flip();
+                {
+                    if (collisionNormal != Vector2.down)
+                        Flip();
                     break;
+                }
             }
 
             _lastSurfaceTouched = collision;

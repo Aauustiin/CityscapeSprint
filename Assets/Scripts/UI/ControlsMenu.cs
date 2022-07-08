@@ -47,6 +47,7 @@ namespace UI
             actionToRebind.Enable();
             actionText.text = _action.controls[0].name;
             pauseText.text = _pause.controls[0].name;
+            rebindOperation.Dispose();
         }
     }
 }
