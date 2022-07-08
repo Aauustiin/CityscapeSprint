@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -12,12 +10,10 @@ public class LevelLoader : MonoBehaviour
     {
         SceneManager.LoadSceneAsync(level.scene, LoadSceneMode.Additive);
         currentLevel = System.Array.IndexOf(levels, level);
-        Debug.Log(currentLevel);
     }
 
     public void UnloadLevel()
     {
-        Debug.Log(currentLevel);
         SceneManager.UnloadSceneAsync(levels[currentLevel].scene);
     }
     
@@ -25,8 +21,8 @@ public class LevelLoader : MonoBehaviour
     {
         SceneManager.UnloadSceneAsync(levels[currentLevel].scene);
         currentLevel++;
-        if (currentLevel >= levels.Length) return;
-        SceneManager.LoadSceneAsync(levels[currentLevel].scene, LoadSceneMode.Additive);
+        if (currentLevel < levels.Length)
+            SceneManager.LoadSceneAsync(levels[currentLevel].scene, LoadSceneMode.Additive);
     }
 
     public int GetTargetScore()

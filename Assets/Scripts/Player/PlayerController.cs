@@ -62,11 +62,13 @@ namespace Player
         private void OnEnable()
         {
             EventManager.Restart += Restart;
+            EventManager.ActionInput += OnAction;
         }
 
         private void OnDisable()
         {
             EventManager.Restart -= Restart;
+            EventManager.ActionInput -= OnAction;
         }
 
         public void Restart()

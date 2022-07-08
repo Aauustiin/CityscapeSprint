@@ -37,7 +37,10 @@ namespace UI
         
         private void OpenMenu(GameObject menu)
         {
-            if (_menuHistory.Count > 0) _menuHistory.Peek().SetActive(false);
+            if (_menuHistory.Count > 0) 
+                _menuHistory.Peek().SetActive(false);
+            else
+                EventManager.TriggerMenuOpen();
             menu.SetActive(true);
             _menuHistory.Push(menu);
             Time.timeScale = 0f;
@@ -49,6 +52,7 @@ namespace UI
             _menuHistory.Pop().SetActive(false);
             Time.timeScale = 1f;
             commonBackground.SetActive(false);
+            EventManager.TriggerMenuClose();
         }
 
         public void Back()
@@ -85,9 +89,14 @@ namespace UI
             OpenMenu(controlsMenu);
         }
 
-        public void OpenPauseMenu()
+        public void OnPause()
         {
-            OpenMenu(pauseMenu);
+            if (_menuHistory.Count == 0)
+                OpenMenu(pauseMenu);
+            else if (_menuHistory.Peek() == pauseMenu)
+                CloseMenu();
+            else if (_menuHistory.Peek() != mainMenu)
+                Back();
         }
         
         public void OpenFinishMenu()

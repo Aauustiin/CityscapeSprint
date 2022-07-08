@@ -9,14 +9,11 @@ public class CollectableManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private GameObject scoreTextParent;
     private int _collectablesGrabbed;
-
-    [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip collectSfx;
 
     private void Start()
     {
         _collectablesGrabbed = 0;
-        audioSource = GameObject.Find("AudioSource").GetComponent<AudioSource>();
     }
 
     private void OnEnable()

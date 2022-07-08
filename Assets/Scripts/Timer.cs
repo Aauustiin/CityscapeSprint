@@ -11,6 +11,8 @@ public class Timer : MonoBehaviour
     {
         EventManager.Restart += Restart;
         EventManager.GameOver += GameOver;
+        EventManager.MenuOpen += OnMenuOpen;
+        EventManager.MenuClose += OnMenuClose;
         StartTimer();
     }
 
@@ -18,6 +20,8 @@ public class Timer : MonoBehaviour
     {
         EventManager.Restart -= Restart;
         EventManager.GameOver -= GameOver;
+        EventManager.MenuOpen -= OnMenuOpen;
+        EventManager.MenuClose -= OnMenuClose;
     }
 
     private void StartTimer()
@@ -34,6 +38,16 @@ public class Timer : MonoBehaviour
         timer.text = roundedTime.ToString();
     }
 
+    private void OnMenuOpen()
+    {
+        timer.gameObject.SetActive(false);
+    }
+
+    private void OnMenuClose()
+    {
+        timer.gameObject.SetActive(true);
+    }
+    
     private void GameOver()
     {
         timer.gameObject.SetActive(false);
