@@ -15,7 +15,15 @@ public class BackgroundCharacter : MonoBehaviour
 
     private void OnEnable()
     {
-        _walking = false;
+        _startPosition = new Vector3(Random.Range(minX, maxX), transform.position.y, transform.position.z);
+        transform.position = _startPosition;
+        _destination = new Vector3(Random.Range(minX, maxX), transform.position.y, transform.position.z);
+        _distance = Mathf.Abs(transform.position.x - _destination.x);
+        _speed = Random.Range(minSpeed, maxSpeed);
+        _startTime = Time.time - Random.Range(0, _distance / _speed);
+        GetComponent<Animator>().Play("Base Layer.walk", 0, 0);
+        GetComponent<SpriteRenderer>().flipX = transform.position.x > _destination.x;
+        _walking = true;
         _waiting = false;
     }
 
