@@ -10,5 +10,10 @@ namespace UI
         {
             FindObjectOfType<LevelLoader>().LoadLevel(0);
         }
+
+        public void LoadLevelTwo()
+        {
+            FindObjectOfType<LevelLoader>().LoadLevel(1);
+        }
     }
 }
