@@ -57,6 +57,7 @@ namespace UI
             _menuHistory.Pop().SetActive(false);
             _menuHistory = new Stack<GameObject>();
             Time.timeScale = 1f;
+            Debug.Log("removing cursor");
             commonBackground.SetActive(false);
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
