@@ -16,9 +16,13 @@ namespace UI
         private void Start()
         {
             InitialiseDropdown();
-            windowedToggle.isOn = PlayerPrefs.GetInt("Windowed") != 0;
-            borderlessOption.SetActive(windowedToggle.isOn);
-            borderlessToggle.isOn = PlayerPrefs.GetInt("Borderless") != 0;
+
+            StartCoroutine(Utils.ExecuteWhenTrue(() => {
+                windowedToggle.isOn = SaveSystem.Instance.Data.Windowed;
+                borderlessOption.SetActive(windowedToggle.isOn);
+                borderlessToggle.isOn = SaveSystem.Instance.Data.Borderless;
+            },
+            SaveSystem.Instance.FinishedInitialising));
         }
 
         private void InitialiseDropdown()
@@ -67,11 +71,8 @@ namespace UI
         public void ApplySettings()
         {
             Vector2 res = GetSelectedResolution();
-            
-            PlayerPrefs.SetInt("ResolutionX", (int)res.x);
-            PlayerPrefs.SetInt("ResolutionY", (int)res.y);
-            PlayerPrefs.SetInt("Windowed", windowedToggle.isOn ? 1 : 0);
-            PlayerPrefs.SetInt("Borderless", borderlessToggle.isOn ? 1 : 0);
+
+            SaveSystem.Instance.SaveVideoSettings((int)res.x, (int)res.y, windowedToggle.isOn, borderlessToggle.isOn);
 
             FullScreenMode fullScreenMode;
             

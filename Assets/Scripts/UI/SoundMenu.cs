@@ -7,48 +7,28 @@ namespace UI
     {
         [SerializeField] private Slider musicSlider;
         [SerializeField] private Slider sfxSlider;
-        [SerializeField] private float defaultSfxVolume, defaultMusicVolume;
         [SerializeField] private AudioPlayer audioPlayer;
 
         private void OnEnable()
         {
-            if (PlayerPrefs.GetInt("SfxSet") == 0)
-            {
-                PlayerPrefs.SetFloat("SfxVolume", defaultSfxVolume);
-                PlayerPrefs.SetInt("SfxSet", 1);
-            }
-
-            if (PlayerPrefs.GetInt("MusicSet") == 0)
-            {
-                PlayerPrefs.SetFloat("MusicVolume", defaultSfxVolume);
-                PlayerPrefs.SetInt("MusicSet", 1);
-            }
-
-            musicSlider.value = PlayerPrefs.GetFloat("MusicVolume");
-            sfxSlider.value = PlayerPrefs.GetFloat("SfxVolume");
+            StartCoroutine(Utils.ExecuteWhenTrue(() => {
+                musicSlider.value = SaveSystem.Instance.Data.MusicVolume;
+                sfxSlider.value = SaveSystem.Instance.Data.EffectsVolume;
+            },
+            SaveSystem.Instance.FinishedInitialising));
         }
 
         public void ResetVolume()
         {
-            PlayerPrefs.SetFloat("SfxVolume", defaultSfxVolume);
-            PlayerPrefs.SetInt("SfxSet", 1);
-            PlayerPrefs.SetFloat("MusicVolume", defaultMusicVolume);
-            PlayerPrefs.SetInt("MusicSet", 1);
-            musicSlider.value = PlayerPrefs.GetFloat("MusicVolume");
-            sfxSlider.value = PlayerPrefs.GetFloat("SfxVolume");
+            musicSlider.value = audioPlayer.defaultMusicVolume;
+            sfxSlider.value = audioPlayer.defaultEffectsVolume;
         }
 
-        public void SetSfxVolume()
+        public void Save()
         {
-            PlayerPrefs.SetFloat("SfxVolume", sfxSlider.value);
-            PlayerPrefs.SetInt("SfxSet", 1);
-        }
-
-        public void SetMusicVolume()
-        {
-            PlayerPrefs.SetFloat("MusicVolume", musicSlider.value);
-            PlayerPrefs.SetInt("MusicSet", 1);
-            audioPlayer.SetMusicVolume();
+            SaveSystem.Instance.SaveSoundSettings(musicSlider.value, sfxSlider.value);
+            audioPlayer.SetMusicVolume(musicSlider.value);
+            audioPlayer.SetEffectsVolume(sfxSlider.value);
         }
     }
 }

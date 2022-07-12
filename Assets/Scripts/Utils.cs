@@ -9,4 +9,10 @@ public static class Utils
         yield return new WaitForSeconds(seconds);
         executable();
     }
+
+    public static IEnumerator ExecuteWhenTrue(System.Action executable, bool condition)
+    {
+        yield return new WaitUntil(() => condition);
+        executable();
+    }
 }

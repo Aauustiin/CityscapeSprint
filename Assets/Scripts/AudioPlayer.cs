@@ -3,10 +3,16 @@ using UnityEngine;
 public class AudioPlayer : MonoBehaviour
 {
     private AudioSource _audioSource;
+    private float _sfxVolume;
+    [SerializeField] public float defaultMusicVolume, defaultEffectsVolume;
     
     private void Start()
     {
-        SetMusicVolume();
+        Utils.ExecuteWhenTrue(() => {
+            SetEffectsVolume(SaveSystem.Instance.Data.EffectsVolume);
+            SetMusicVolume(SaveSystem.Instance.Data.MusicVolume);
+        },
+        SaveSystem.Instance.FinishedInitialising);
     }
     
     private void OnEnable()
@@ -21,13 +27,18 @@ public class AudioPlayer : MonoBehaviour
 
     private void HandleSoundEffect(AudioClip soundEffect)
     {
-        _audioSource.PlayOneShot(soundEffect, PlayerPrefs.GetFloat("SfxVolume"));
+        _audioSource.PlayOneShot(soundEffect, _sfxVolume);
     }
 
-    public void SetMusicVolume()
+    public void SetEffectsVolume(float volume)
+    {
+        _sfxVolume = volume;
+    }
+
+    public void SetMusicVolume(float volume)
     {
         _audioSource = GetComponent<AudioSource>();
-        _audioSource.volume = PlayerPrefs.GetFloat("MusicVolume");
+        _audioSource.volume = volume;
     }
 
     public void PlaySoundtrack(AudioClip soundtrack)

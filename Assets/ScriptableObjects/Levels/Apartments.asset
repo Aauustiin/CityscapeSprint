@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe73ac635d649d744aa41cf21bdcd0fb, type: 3}
-  m_Name: Level3
+  m_Name: Apartments
   m_EditorClassIdentifier: 
-  targetScore: 0
-  scene: Level 3
+  targetScore: 10
+  scene: Level 2
