@@ -49,5 +49,6 @@ namespace UI
             pauseText.text = _pause.controls[0].name;
             rebindOperation.Dispose();
         }
+
     }
 }

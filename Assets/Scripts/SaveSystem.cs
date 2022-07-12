@@ -1,11 +1,14 @@
 using UnityEngine;
 using System;
 using System.IO;
+using UnityEngine.InputSystem;
 
 public class SaveSystem : MonoBehaviour
 {
     public static SaveSystem Instance;
+
     public bool FinishedInitialising;
+
     [SerializeField] private AudioPlayer audioPlayer;
 
     private string _path;
@@ -16,12 +19,7 @@ public class SaveSystem : MonoBehaviour
         if (Instance != null)
             Destroy(gameObject);
         else Instance = this;
-    }
 
-    public SaveData Data;
-
-    private void Start()
-    {
         FinishedInitialising = false;
         SetPaths();
         if (File.Exists(_path))
@@ -43,6 +41,8 @@ public class SaveSystem : MonoBehaviour
         FinishedInitialising = true;
     }
 
+    public SaveData Data;
+
     private void SetPaths()
     {
         _path = Application.dataPath + Path.AltDirectorySeparatorChar + "SaveData.json";
@@ -56,14 +56,6 @@ public class SaveSystem : MonoBehaviour
         SaveData();
     }
 
-    private void SaveData()
-    {
-        string savePath = _path;
-        string json = JsonUtility.ToJson(Data);
-        using StreamWriter writer = new StreamWriter(savePath);
-        writer.Write(json);
-    }
-
     public void SaveVideoSettings(int ResolutionX, int ResolutionY, bool Windowed, bool Borderless)
     {
         Data.ResolutionX = ResolutionX;
@@ -71,6 +63,14 @@ public class SaveSystem : MonoBehaviour
         Data.Windowed = Windowed;
         Data.Borderless = Borderless;
         SaveData();
+    }
+
+    private void SaveData()
+    {
+        string savePath = _path;
+        string json = JsonUtility.ToJson(Data);
+        using StreamWriter writer = new StreamWriter(savePath);
+        writer.Write(json);
     }
 }
 

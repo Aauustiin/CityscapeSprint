@@ -8,11 +8,11 @@ public class AudioPlayer : MonoBehaviour
     
     private void Start()
     {
-        Utils.ExecuteWhenTrue(() => {
+        StartCoroutine(Utils.ExecuteWhenTrue(() => {
             SetEffectsVolume(SaveSystem.Instance.Data.EffectsVolume);
             SetMusicVolume(SaveSystem.Instance.Data.MusicVolume);
         },
-        SaveSystem.Instance.FinishedInitialising);
+        SaveSystem.Instance.FinishedInitialising));
     }
     
     private void OnEnable()

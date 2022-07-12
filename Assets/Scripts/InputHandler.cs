@@ -6,6 +6,8 @@ using UnityEngine.InputSystem;
 
 public class InputHandler : MonoBehaviour
 {
+    [SerializeField] public InputActionAsset defaultControls;
+
     public void OnAction(InputAction.CallbackContext value)
     {
         EventManager.TriggerActionInput(value);

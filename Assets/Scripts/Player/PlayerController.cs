@@ -174,7 +174,6 @@ namespace Player
         {
             runDirection = -runDirection;
             sprite.flipX = !sprite.flipX;
-            sprite.flipX = !sprite.flipX;
             rb.velocity = new Vector2(-_velocityLastFrame.x, _velocityLastFrame.y);
         }
     }
