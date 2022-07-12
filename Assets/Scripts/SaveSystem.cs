@@ -34,8 +34,12 @@ public class SaveSystem : MonoBehaviour
             Data.ResolutionY = Screen.currentResolution.height;
             Data.Windowed = false;
             Data.Borderless = false;
+
             Data.MusicVolume = audioPlayer.defaultMusicVolume;
             Data.EffectsVolume = audioPlayer.defaultEffectsVolume;
+
+            Data.Bindings = "";
+
             SaveData();
         }
         FinishedInitialising = true;
@@ -65,6 +69,12 @@ public class SaveSystem : MonoBehaviour
         SaveData();
     }
 
+    public void SaveControlSettings(string bindings)
+    {
+        Data.Bindings = bindings;
+        SaveData();
+    }
+
     private void SaveData()
     {
         string savePath = _path;
@@ -83,4 +93,6 @@ public class SaveSystem : MonoBehaviour
 
     public float MusicVolume;
     public float EffectsVolume;
+
+    public string Bindings;
 }

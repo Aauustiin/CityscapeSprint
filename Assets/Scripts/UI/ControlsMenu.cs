@@ -15,7 +15,7 @@ namespace UI
         private InputAction _action;
         private InputAction _pause;
 
-        private void Start()
+        private void OnEnable()
         {
             _action = inputActionAsset.FindAction("Action");
             _pause = inputActionAsset.FindAction("Pause");
@@ -48,7 +48,7 @@ namespace UI
             actionText.text = _action.controls[0].name;
             pauseText.text = _pause.controls[0].name;
             rebindOperation.Dispose();
+            SaveSystem.Instance.SaveControlSettings(inputActionAsset.SaveBindingOverridesAsJson());
         }
-
     }
 }

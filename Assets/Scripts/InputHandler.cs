@@ -6,7 +6,16 @@ using UnityEngine.InputSystem;
 
 public class InputHandler : MonoBehaviour
 {
-    [SerializeField] public InputActionAsset defaultControls;
+    private void Start()
+    {
+        PlayerInput playerInput = GetComponent<PlayerInput>();
+        InputActionAsset inputActionAsset = playerInput.actions;
+
+        StartCoroutine(Utils.ExecuteWhenTrue(() => {
+            inputActionAsset.LoadBindingOverridesFromJson(SaveSystem.Instance.Data.Bindings);
+        },
+        SaveSystem.Instance.FinishedInitialising));
+    }
 
     public void OnAction(InputAction.CallbackContext value)
     {

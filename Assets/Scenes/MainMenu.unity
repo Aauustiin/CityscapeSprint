@@ -3716,7 +3716,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FinishedInitialising: 0
   audioPlayer: {fileID: 290161793}
-  inputHandler: {fileID: 1888186723}
   Data:
     ResolutionX: 0
     ResolutionY: 0
@@ -3724,7 +3723,8 @@ MonoBehaviour:
     Borderless: 0
     MusicVolume: 0
     EffectsVolume: 0
-    Controls: {fileID: 0}
+    ActionBindingPath: 
+    PauseBindingPath: 
 --- !u!4 &669823588
 Transform:
   m_ObjectHideFlags: 0
@@ -11333,7 +11333,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64a820379a128ba409452bb71c9cea5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultControls: {fileID: -944628639613478452, guid: a3a0c4d830c10294ba71a53e9089aa8c, type: 3}
+  DefaultActionBindingPath: <Keyboard>/space
+  DefaultPauseBindingPath: <Keyboard>/escape
 --- !u!1 &1893367276
 GameObject:
   m_ObjectHideFlags: 0
