@@ -13,12 +13,32 @@ namespace UI
         [SerializeField] private RawImage targetScoreBackground;
         [SerializeField] private TextMeshProUGUI scoreText;
         [SerializeField] private TextMeshProUGUI highScoreText;
+
+        [SerializeField] private LevelLoader levelLoader;
+
         private void OnEnable()
         {
-            targetScoreText.text = FindObjectOfType<LevelLoader>().GetTargetScore().ToString();
-            scoreText.text = FindObjectOfType<CollectableManager>().GetCollectablesGrabbed().ToString();
-            // Get highscore from somewhere
-            // Set opacity based on high score and target score
+            int targetScore = levelLoader.GetTargetScore();
+            targetScoreText.text = targetScore.ToString();
+            
+            CollectableManager collectableManager = FindObjectOfType<CollectableManager>();
+            int score = collectableManager.GetCollectablesGrabbed();
+            scoreText.text = score.ToString();
+            int currentLevel = levelLoader.GetCurrentLevel();
+            int oldHighScore = SaveSystem.Instance.Data.HighScores[currentLevel];
+            int newHighScore;
+            if (score > oldHighScore) newHighScore = score;
+            else newHighScore = oldHighScore;
+            highScoreText.text = "Best: " + newHighScore.ToString();
+            bool beatHighScore = newHighScore > oldHighScore;
+            if (beatHighScore)
+            {
+                SaveSystem.Instance.SaveHighScore(currentLevel, newHighScore);
+            }
+            float opacity;
+            if (newHighScore >= targetScore) opacity = 1f;
+            else opacity = 0.5f;
+            targetScoreBackground.color = new Color(targetScoreBackground.color.r, targetScoreBackground.color.g, targetScoreBackground.color.b, opacity);
         }
 
         public void Restart()

@@ -31,6 +31,16 @@ public class LevelLoader : MonoBehaviour
             SceneManager.LoadSceneAsync(levels[currentLevel].scene, LoadSceneMode.Additive);
     }
 
+    public int GetCurrentLevel()
+    {
+        return currentLevel;
+    }
+
+    public int GetLevelCount()
+    {
+        return levels.Length;
+    }
+
     public int GetTargetScore()
     {
         return levels[currentLevel].targetScore;

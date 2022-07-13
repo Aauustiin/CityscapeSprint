@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using UnityEngine.InputSystem;
 
@@ -10,6 +11,7 @@ public class SaveSystem : MonoBehaviour
     public bool FinishedInitialising;
 
     [SerializeField] private AudioPlayer audioPlayer;
+    [SerializeField] private LevelLoader levelLoader;
 
     private string _path;
     private string _persistentPath;
@@ -27,7 +29,6 @@ public class SaveSystem : MonoBehaviour
             using StreamReader reader = new StreamReader(_path);
             string json = reader.ReadToEnd();
             Data = JsonUtility.FromJson<SaveData>(json);
-            Debug.Log(Data.EffectsVolume);
         }
         else
         {
@@ -56,6 +57,14 @@ public class SaveSystem : MonoBehaviour
 
         Data.Bindings = "";
 
+        List<int> highScores = new List<int>() { };
+        int levelCount = levelLoader.GetLevelCount();
+        for(int i = 0; i < levelCount; i++)
+        {
+            highScores.Add(0);
+        }
+        Data.HighScores = highScores.ToArray();
+
         SaveData();
     }
 
@@ -81,6 +90,12 @@ public class SaveSystem : MonoBehaviour
         SaveData();
     }
 
+    public void SaveHighScore(int level, int score)
+    {
+        Data.HighScores[level] = score;
+        SaveData();
+    }
+
     private void SaveData()
     {
         string savePath = _path;
@@ -101,4 +116,6 @@ public class SaveSystem : MonoBehaviour
     public float EffectsVolume;
 
     public string Bindings;
+
+    public int[] HighScores;
 }

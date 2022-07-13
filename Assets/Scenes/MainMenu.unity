@@ -3849,6 +3849,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FinishedInitialising: 0
   audioPlayer: {fileID: 290161793}
+  levelLoader: {fileID: 1485583035}
   Data:
     ResolutionX: 0
     ResolutionY: 0
@@ -3857,6 +3858,7 @@ MonoBehaviour:
     MusicVolume: 0
     EffectsVolume: 0
     Bindings: 
+    HighScores: 
 --- !u!4 &669823588
 Transform:
   m_ObjectHideFlags: 0
@@ -3930,6 +3932,7 @@ MonoBehaviour:
   targetScoreBackground: {fileID: 1653147118}
   scoreText: {fileID: 2052257192}
   highScoreText: {fileID: 82831256}
+  levelLoader: {fileID: 1485583035}
 --- !u!1 &714050876
 GameObject:
   m_ObjectHideFlags: 0
