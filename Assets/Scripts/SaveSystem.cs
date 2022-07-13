@@ -27,20 +27,11 @@ public class SaveSystem : MonoBehaviour
             using StreamReader reader = new StreamReader(_path);
             string json = reader.ReadToEnd();
             Data = JsonUtility.FromJson<SaveData>(json);
+            Debug.Log(Data.EffectsVolume);
         }
         else
         {
-            Data.ResolutionX = Screen.currentResolution.width;
-            Data.ResolutionY = Screen.currentResolution.height;
-            Data.Windowed = false;
-            Data.Borderless = false;
-
-            Data.MusicVolume = audioPlayer.defaultMusicVolume;
-            Data.EffectsVolume = audioPlayer.defaultEffectsVolume;
-
-            Data.Bindings = "";
-
-            SaveData();
+            SaveDefaultData();
         }
         FinishedInitialising = true;
     }
@@ -51,6 +42,21 @@ public class SaveSystem : MonoBehaviour
     {
         _path = Application.dataPath + Path.AltDirectorySeparatorChar + "SaveData.json";
         _persistentPath = Application.persistentDataPath + Path.AltDirectorySeparatorChar + "SaveData.json";
+    }
+
+    public void SaveDefaultData()
+    {
+        Data.ResolutionX = Screen.currentResolution.width;
+        Data.ResolutionY = Screen.currentResolution.height;
+        Data.Windowed = false;
+        Data.Borderless = false;
+
+        Data.MusicVolume = audioPlayer.defaultMusicVolume;
+        Data.EffectsVolume = audioPlayer.defaultEffectsVolume;
+
+        Data.Bindings = "";
+
+        SaveData();
     }
 
     public void SaveSoundSettings(float MusicVolume, float EffectsVolume)

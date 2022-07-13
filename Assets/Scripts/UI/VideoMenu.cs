@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 namespace UI
 {
@@ -10,8 +11,11 @@ namespace UI
     {
         [SerializeField] private Dropdown resolutionDropdown;
         [SerializeField] private Toggle windowedToggle;
-        [SerializeField] private GameObject borderlessOption;
+
         [SerializeField] private Toggle borderlessToggle;
+        [SerializeField] private TextMeshProUGUI borderlessLabel;
+        [SerializeField] private Image borderlessBackground;
+        [SerializeField] private Image borderlessCheckmark;
 
         private void Start()
         {
@@ -19,10 +23,27 @@ namespace UI
 
             StartCoroutine(Utils.ExecuteWhenTrue(() => {
                 windowedToggle.isOn = SaveSystem.Instance.Data.Windowed;
-                borderlessOption.SetActive(windowedToggle.isOn);
+                if (windowedToggle.isOn) EnableBorderlessOption();
+                else DisableBorderlessOption();
                 borderlessToggle.isOn = SaveSystem.Instance.Data.Borderless;
             },
             SaveSystem.Instance.FinishedInitialising));
+        }
+
+        private void DisableBorderlessOption()
+        {
+            borderlessToggle.interactable = false;
+            borderlessLabel.alpha = 0.5f;
+            borderlessBackground.color = new Color(borderlessBackground.color.r, borderlessBackground.color.g, borderlessBackground.color.b, 0.5f);
+            borderlessCheckmark.color = new Color(borderlessCheckmark.color.r, borderlessCheckmark.color.g, borderlessCheckmark.color.b, 0.5f);
+        }
+
+        private void EnableBorderlessOption()
+        {
+            borderlessToggle.interactable = true;
+            borderlessLabel.alpha = 1f;
+            borderlessBackground.color = new Color(borderlessBackground.color.r, borderlessBackground.color.g, borderlessBackground.color.b, 1f);
+            borderlessCheckmark.color = new Color(borderlessCheckmark.color.r, borderlessCheckmark.color.g, borderlessCheckmark.color.b, 1f);
         }
 
         private void InitialiseDropdown()
@@ -65,7 +86,8 @@ namespace UI
         
         public void ToggleBorderlessOption()
         {
-            borderlessOption.SetActive(windowedToggle.isOn);
+            if (windowedToggle.isOn) EnableBorderlessOption();
+            else DisableBorderlessOption();
         }
 
         public void ApplySettings()
