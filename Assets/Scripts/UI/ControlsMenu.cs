@@ -33,6 +33,17 @@ namespace UI
             StartCoroutine(RemapButtonClicked(_action));
         }
         
+        public void Reset()
+        {
+            SaveSystem.Instance.SaveControlSettings("");
+            inputActionAsset.LoadBindingOverridesFromJson("");
+
+            _action = inputActionAsset.FindAction("Action");
+            _pause = inputActionAsset.FindAction("Pause");
+            actionText.text = _action.controls[0].name;
+            pauseText.text = _pause.controls[0].name;
+        }
+
         private IEnumerator RemapButtonClicked(InputAction actionToRebind)
         {
             if (actionToRebind == _action)
