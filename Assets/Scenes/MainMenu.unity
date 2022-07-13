@@ -3987,7 +3987,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Main Menu
+  m_text: Level Select
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a10fff7193f152944b707f2c0d88db2b, type: 2}
   m_sharedMaterial: {fileID: -8881213223600750196, guid: a10fff7193f152944b707f2c0d88db2b, type: 2}
@@ -4210,7 +4210,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Main Menu
+  m_text: Level Select
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a10fff7193f152944b707f2c0d88db2b, type: 2}
   m_sharedMaterial: {fileID: -8881213223600750196, guid: a10fff7193f152944b707f2c0d88db2b, type: 2}
@@ -5335,7 +5335,7 @@ GameObject:
   - component: {fileID: 1023447055}
   - component: {fileID: 1023447054}
   m_Layer: 5
-  m_Name: MainMenuButton
+  m_Name: LevelSelectButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5407,7 +5407,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 188781919}
         m_TargetAssemblyTypeName: UI.UiManager, Assembly-CSharp
-        m_MethodName: OpenMainMenu
+        m_MethodName: OpenLevelSelect
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7668,7 +7668,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 188781919}
         m_TargetAssemblyTypeName: UI.UiManager, Assembly-CSharp
-        m_MethodName: Back
+        m_MethodName: OpenMainMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -12203,7 +12203,7 @@ GameObject:
   - component: {fileID: 2002599422}
   - component: {fileID: 2002599421}
   m_Layer: 5
-  m_Name: MainMenuButton
+  m_Name: LevelSelectButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12275,7 +12275,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 188781919}
         m_TargetAssemblyTypeName: UI.UiManager, Assembly-CSharp
-        m_MethodName: OpenMainMenu
+        m_MethodName: OpenLevelSelect
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
