@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe73ac635d649d744aa41cf21bdcd0fb, type: 3}
   m_Name: Suburbs
   m_EditorClassIdentifier: 
-  targetScore: 9
+  targetScore: 10
   scene: Level 3
