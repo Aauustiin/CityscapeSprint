@@ -5,6 +5,7 @@ public class LevelLoader : MonoBehaviour
 {
     [SerializeField] private LevelScriptableObject[] levels;
     [SerializeField] private int currentLevel;
+    [SerializeField] private UI.UiManager uiManager;
 
     public void LoadLevel(LevelScriptableObject level)
     {
@@ -28,7 +29,15 @@ public class LevelLoader : MonoBehaviour
         SceneManager.UnloadSceneAsync(levels[currentLevel].scene);
         currentLevel++;
         if (currentLevel < levels.Length)
+        {
+            uiManager.CloseMenu();
             SceneManager.LoadSceneAsync(levels[currentLevel].scene, LoadSceneMode.Additive);
+        }
+        else
+        {
+            uiManager.OpenMainMenu();
+            Debug.Log("Opening main menu");
+        }
     }
 
     public int GetCurrentLevel()
