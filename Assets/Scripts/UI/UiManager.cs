@@ -20,6 +20,9 @@ namespace UI
         [SerializeField] private GameObject levelSelectMenu;
         [SerializeField] private GameObject commonBackground;
 
+        [SerializeField] private AudioClip selectSound;
+        [SerializeField] private AudioClip interactSound;
+
         private void OnEnable()
         {
             EventManager.GameOver += OpenFinishMenu;
@@ -35,7 +38,17 @@ namespace UI
             _menuHistory = new Stack<GameObject>();
             _menuHistory.Push(mainMenu);
         }
-        
+
+        public void PlaySelectSound()
+        {
+            EventManager.TriggerSoundEffect(selectSound);
+        }
+
+        public void PlayInteractSound()
+        {
+            EventManager.TriggerSoundEffect(interactSound);
+        }
+
         private void OpenMenu(GameObject menu)
         {
             if (_menuHistory.Count > 0) 
