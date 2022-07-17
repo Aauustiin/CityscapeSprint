@@ -36,7 +36,6 @@ public class LevelLoader : MonoBehaviour
         else
         {
             uiManager.OpenMainMenu();
-            Debug.Log("Opening main menu");
         }
     }
 
