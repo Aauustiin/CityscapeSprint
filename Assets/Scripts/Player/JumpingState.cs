@@ -46,6 +46,11 @@ namespace Player
                 }
 
                 _player.rb.velocity = velocity;
+
+                if (_actionCommitted)
+                {
+                    _player.SetInputCancelledBuff();
+                }
             }
 
             return this;

@@ -61,8 +61,8 @@ namespace Player
 
             if (_player.inputCancelledBuff)
             {
-                _player.GetComponent<BoxCollider2D>().size = new Vector2(0.08f, 0.08f);
-                _player.GetComponent<BoxCollider2D>().offset = new Vector2(0f, 0f);
+                //_player.GetComponent<BoxCollider2D>().size = new Vector2(0.08f, 0.08f);
+                //_player.GetComponent<BoxCollider2D>().offset = new Vector2(0f, 0f);
                 _player.SwapState(new RunningState(_player));
             }
         }

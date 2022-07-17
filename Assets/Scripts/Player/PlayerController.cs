@@ -77,7 +77,8 @@ namespace Player
             sprite.flipX = false;
             _velocityLastFrame = Vector2.zero;
             runDirection = Vector2.right;
-            SwapState(new RunningState(this));
+            _currentState = new RunningState(this);
+            _currentState.OnEntry();
         }
 
         private void FixedUpdate()
@@ -87,18 +88,17 @@ namespace Player
             {
                 rb.velocity = rb.velocity.normalized * maxSpeed;
             }
-
             _velocityLastFrame = rb.velocity;
+        }
+
+        public void SetInputCancelledBuff()
+        {
+            inputCancelledBuff = true;
+            StartCoroutine(Utils.ExecuteAfterSeconds(() => inputCancelledBuff = false, slideWindow));
         }
 
         public void OnAction(InputAction.CallbackContext value)
         {
-            if (value.canceled)
-            {
-                inputCancelledBuff = true;
-                StartCoroutine(Utils.ExecuteAfterSeconds(() => inputCancelledBuff = false, slideWindow));
-            }
-
             IPlayerState newState = _currentState.HandleAction(value);
             SwapState(newState);
         }
@@ -119,21 +119,17 @@ namespace Player
             {
                 case "Ground":
                 {
-                    
-
                     if (collisionNormal == Vector2.up)
                     {
                         HitGround?.Invoke();
                         EventManager.TriggerSoundEffect(landSfx);
                         dust.Play();
-
                     }
                     else if (collisionNormal == -runDirection)
                     {
                         HitSide?.Invoke();
                         EventManager.TriggerSoundEffect(grabSfx);
                     }
-
                     break;
                 }
                 case "Wall":
