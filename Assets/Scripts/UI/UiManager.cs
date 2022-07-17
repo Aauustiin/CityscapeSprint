@@ -112,6 +112,8 @@ namespace UI
 
         public void OnPause()
         {
+            EventManager.TriggerSoundEffect(interactSound);
+
             if (_menuHistory.Count == 0)
                 OpenMenu(pauseMenu);
             else if (_menuHistory.Peek() == pauseMenu)
