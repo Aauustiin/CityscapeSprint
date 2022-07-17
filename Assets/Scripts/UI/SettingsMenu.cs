@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace UI
 {
-    public class PauseMenu : MonoBehaviour
+    public class SettingsMenu : MonoBehaviour
     {
         [SerializeField] private Button firstSelected;
 
@@ -13,10 +13,6 @@ namespace UI
         {
             firstSelected.Select();
         }
-
-        public void Retry()
-        {
-            EventManager.TriggerRestart();
-        }
     }
 }
+

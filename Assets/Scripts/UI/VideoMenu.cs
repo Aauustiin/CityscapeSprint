@@ -11,11 +11,15 @@ namespace UI
     {
         [SerializeField] private Dropdown resolutionDropdown;
         [SerializeField] private Toggle windowedToggle;
-
         [SerializeField] private Toggle borderlessToggle;
         [SerializeField] private TextMeshProUGUI borderlessLabel;
         [SerializeField] private Image borderlessBackground;
         [SerializeField] private Image borderlessCheckmark;
+
+        private void OnEnable()
+        {
+            resolutionDropdown.Select();
+        }
 
         private void Start()
         {

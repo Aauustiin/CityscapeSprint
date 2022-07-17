@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 namespace UI
 {
@@ -12,11 +13,13 @@ namespace UI
         [SerializeField] private InputActionAsset inputActionAsset;
         [SerializeField] private TextMeshProUGUI actionText;
         [SerializeField] private TextMeshProUGUI pauseText;
+        [SerializeField] private Button firstSelected;
         private InputAction _action;
         private InputAction _pause;
 
         private void OnEnable()
         {
+            firstSelected.Select();
             _action = inputActionAsset.FindAction("Action");
             _pause = inputActionAsset.FindAction("Pause");
             actionText.text = _action.controls[0].name;

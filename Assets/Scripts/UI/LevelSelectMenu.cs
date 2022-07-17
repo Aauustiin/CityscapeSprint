@@ -1,11 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace UI
 {
     public class LevelSelectMenu : MonoBehaviour
     {
+        [SerializeField] private Button firstSelected;
+
+        private void OnEnable()
+        {
+            firstSelected.Select();
+        }
+
         public void LoadLevelOne()
         {
             FindObjectOfType<LevelLoader>().LoadLevel(0);

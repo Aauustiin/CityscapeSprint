@@ -2,22 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace UI
 {
     public class MainMenu : MonoBehaviour
     {
-        [SerializeField] private LevelLoader levelLoader;
-        [SerializeField] private LevelScriptableObject level;
+        [SerializeField] private Button firstSelected;
         
+        private void OnEnable()
+        {
+            firstSelected.Select();
+        }
+
         public void QuitGame()
         {
             Application.Quit();
-        }
-
-        public void Play()
-        {
-            levelLoader.LoadLevel(level);
         }
 
         public void Steam()

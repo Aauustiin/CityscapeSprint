@@ -11,6 +11,11 @@ namespace UI
 
         private bool _finishedInitialising = false;
 
+        private void OnEnable()
+        {
+            musicSlider.Select();
+        }
+
         private void Start()
         {
             StartCoroutine(Utils.ExecuteWhenTrue(() => {

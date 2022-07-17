@@ -13,11 +13,12 @@ namespace UI
         [SerializeField] private RawImage targetScoreBackground;
         [SerializeField] private TextMeshProUGUI scoreText;
         [SerializeField] private TextMeshProUGUI highScoreText;
-
+        [SerializeField] private Button firstSelected;
         [SerializeField] private LevelLoader levelLoader;
 
         private void OnEnable()
         {
+            firstSelected.Select();
             int targetScore = levelLoader.GetTargetScore();
             targetScoreText.text = targetScore.ToString();
             
