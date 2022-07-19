@@ -59,6 +59,8 @@ public class SaveSystem : MonoBehaviour
 
         Data.Bindings = "";
 
+        Data.PlayerId = "";
+
         List<int> highScores = new List<int>() { };
         int levelCount = levelLoader.GetLevelCount();
         for(int i = 0; i < levelCount; i++)
@@ -98,6 +100,12 @@ public class SaveSystem : MonoBehaviour
         SaveData();
     }
 
+    public void SavePlayerId(string playerId)
+    {
+        Data.PlayerId = playerId;
+        SaveData();
+    }
+
     private void SaveData()
     {
         string savePath = _path;
@@ -120,4 +128,6 @@ public class SaveSystem : MonoBehaviour
     public string Bindings;
 
     public int[] HighScores;
+
+    public string PlayerId;
 }

@@ -29,7 +29,7 @@ public class Leaderboard : MonoBehaviour
     {
         bool done = false;
         int LeaderboardID = levelLoader.GetLeaderboardId();
-        string playerID = PlayerPrefs.GetString("PlayerID");
+        string playerID = SaveSystem.Instance.Data.PlayerId;
         LootLockerSDKManager.SubmitScore(playerID, score, LeaderboardID, (response) =>
         {
             if (response.success)
@@ -53,7 +53,7 @@ public class Leaderboard : MonoBehaviour
             if (response.success)
             {
                 Debug.Log("Successfully started lootlocker session.");
-                PlayerPrefs.SetString("PlayerID", response.player_id.ToString());
+                SaveSystem.Instance.SavePlayerId(response.player_id.ToString());
                 done = true;
             }
             else
