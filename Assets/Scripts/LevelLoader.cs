@@ -45,19 +45,17 @@ public class LevelLoader : MonoBehaviour
     
     public void Continue()
     {
-        if (CanLoadLevel(currentLevel + 1))
+        if (currentLevel + 1 == levels.Length)
+        {
+            SceneManager.UnloadSceneAsync(levels[currentLevel].scene);
+            uiManager.OpenDemoEndMenu();
+        }
+        else if (CanLoadLevel(currentLevel + 1))
         {
             SceneManager.UnloadSceneAsync(levels[currentLevel].scene);
             currentLevel++;
-            if (currentLevel < levels.Length)
-            {
-                uiManager.CloseMenu();
-                SceneManager.LoadSceneAsync(levels[currentLevel].scene, LoadSceneMode.Additive);
-            }
-            else
-            {
-                uiManager.OpenDemoEndMenu();
-            }
+            SceneManager.LoadSceneAsync(levels[currentLevel].scene, LoadSceneMode.Additive);
+            uiManager.CloseMenu();
         }
     }
 
