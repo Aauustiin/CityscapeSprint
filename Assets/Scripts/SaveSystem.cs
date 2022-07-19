@@ -25,9 +25,9 @@ public class SaveSystem : MonoBehaviour
 
         FinishedInitialising = false;
         SetPaths();
-        if (File.Exists(_persistentPath))
+        if (File.Exists(_path))
         {
-            using StreamReader reader = new StreamReader(_persistentPath);
+            using StreamReader reader = new StreamReader(_path);
             string json = reader.ReadToEnd();
             Data = JsonUtility.FromJson<SaveData>(json);
         }
@@ -108,7 +108,7 @@ public class SaveSystem : MonoBehaviour
 
     private void SaveData()
     {
-        string savePath = _persistentPath;
+        string savePath = _path;
         string json = JsonUtility.ToJson(Data);
         using StreamWriter writer = new StreamWriter(savePath);
         writer.Write(json);
