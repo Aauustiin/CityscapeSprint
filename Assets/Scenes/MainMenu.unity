@@ -19421,7 +19421,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2536de8b15e4a0044a9418585b893348, type: 2}
   currentLevel: 0
   uiManager: {fileID: 188781919}
-  development: 1
+  development: 0
 --- !u!1 &1540856213
 GameObject:
   m_ObjectHideFlags: 0
