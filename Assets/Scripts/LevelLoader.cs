@@ -14,10 +14,28 @@ public class LevelLoader : MonoBehaviour
         currentLevel = System.Array.IndexOf(levels, level);
     }
     
-    public void LoadLevel(int levelIndex)
+    public bool LoadLevel(int levelIndex)
     {
-        SceneManager.LoadSceneAsync(levels[levelIndex].scene, LoadSceneMode.Additive);
-        currentLevel = levelIndex;
+        if (CanLoadLevel(levelIndex))
+        {
+            SceneManager.LoadSceneAsync(levels[levelIndex].scene, LoadSceneMode.Additive);
+            currentLevel = levelIndex;
+        }
+        return CanLoadLevel(levelIndex);
+    }
+
+    public bool CanLoadLevel(int levelIndex)
+    {
+        bool canLoadLevel = false;
+        if (levelIndex == 0)
+        {
+            canLoadLevel = true;
+        }
+        else if (levels[levelIndex].targetScore <= SaveSystem.Instance.Data.HighScores[levelIndex - 1])
+        {
+            canLoadLevel = true;
+        }
+        return canLoadLevel;
     }
 
     public void UnloadLevel()
@@ -27,16 +45,19 @@ public class LevelLoader : MonoBehaviour
     
     public void Continue()
     {
-        SceneManager.UnloadSceneAsync(levels[currentLevel].scene);
-        currentLevel++;
-        if (currentLevel < levels.Length)
+        if (CanLoadLevel(currentLevel + 1))
         {
-            uiManager.CloseMenu();
-            SceneManager.LoadSceneAsync(levels[currentLevel].scene, LoadSceneMode.Additive);
-        }
-        else
-        {
-            uiManager.OpenDemoEndMenu();
+            SceneManager.UnloadSceneAsync(levels[currentLevel].scene);
+            currentLevel++;
+            if (currentLevel < levels.Length)
+            {
+                uiManager.CloseMenu();
+                SceneManager.LoadSceneAsync(levels[currentLevel].scene, LoadSceneMode.Additive);
+            }
+            else
+            {
+                uiManager.OpenDemoEndMenu();
+            }
         }
     }
 

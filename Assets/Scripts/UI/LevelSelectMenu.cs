@@ -8,50 +8,78 @@ namespace UI
     public class LevelSelectMenu : MonoBehaviour
     {
         [SerializeField] private Button firstSelected;
+        [SerializeField] private Image[] levelGraphics;
+        [SerializeField] private UI.UiManager uiManager;
+        [SerializeField] private LevelLoader levelLoader;
 
         private void OnEnable()
         {
             firstSelected.Select();
+
+            for(int i = 0; i < levelGraphics.Length; i++)
+            {
+                bool levelUnlocked = levelLoader.CanLoadLevel(i);
+                if (levelUnlocked)
+                    levelGraphics[i].color = new Color(levelGraphics[i].color.r, levelGraphics[i].color.g, levelGraphics[i].color.b, 1f);
+                else
+                    levelGraphics[i].color = new Color(levelGraphics[i].color.r, levelGraphics[i].color.g, levelGraphics[i].color.b, 0.5f);
+            }
         }
 
         public void LoadLevelOne()
         {
-            FindObjectOfType<LevelLoader>().LoadLevel(0);
+            bool loadedLevel = FindObjectOfType<LevelLoader>().LoadLevel(0);
+            if (loadedLevel)
+                uiManager.CloseMenu();
         }
 
         public void LoadLevelTwo()
         {
-            FindObjectOfType<LevelLoader>().LoadLevel(1);
+            bool loadedLevel = FindObjectOfType<LevelLoader>().LoadLevel(1);
+            if (loadedLevel)
+                uiManager.CloseMenu();
         }
 
         public void LoadLevelThree()
         {
-            FindObjectOfType<LevelLoader>().LoadLevel(2);
+            bool loadedLevel = FindObjectOfType<LevelLoader>().LoadLevel(2);
+            if (loadedLevel)
+                uiManager.CloseMenu();
         }
 
         public void LoadLevelFour()
         {
-            FindObjectOfType<LevelLoader>().LoadLevel(3);
+            bool loadedLevel = FindObjectOfType<LevelLoader>().LoadLevel(3);
+            if (loadedLevel)
+                uiManager.CloseMenu();
         }
 
         public void LoadLevelFive()
         {
-            FindObjectOfType<LevelLoader>().LoadLevel(4);
+            bool loadedLevel = FindObjectOfType<LevelLoader>().LoadLevel(4);
+            if (loadedLevel)
+                uiManager.CloseMenu();
         }
 
         public void LoadLevelSix()
         {
-            FindObjectOfType<LevelLoader>().LoadLevel(5);
+            bool loadedLevel = FindObjectOfType<LevelLoader>().LoadLevel(5);
+            if (loadedLevel)
+                uiManager.CloseMenu();
         }
 
         public void LoadLevelSeven()
         {
-            FindObjectOfType<LevelLoader>().LoadLevel(6);
+            bool loadedLevel = FindObjectOfType<LevelLoader>().LoadLevel(6);
+            if (loadedLevel)
+                uiManager.CloseMenu();
         }
 
         public void LoadLevelEight()
         {
-            FindObjectOfType<LevelLoader>().LoadLevel(7);
+            bool loadedLevel = FindObjectOfType<LevelLoader>().LoadLevel(7);
+            if (loadedLevel)
+                uiManager.CloseMenu();
         }
     }
 }

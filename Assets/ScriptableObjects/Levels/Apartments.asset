@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe73ac635d649d744aa41cf21bdcd0fb, type: 3}
   m_Name: Apartments
   m_EditorClassIdentifier: 
-  targetScore: 10
+  targetScore: 8
   scene: Level 2
   testLeaderboardId: 4815
   leaderboardId: 0

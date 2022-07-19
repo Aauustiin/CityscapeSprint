@@ -15,6 +15,7 @@ namespace UI
         [SerializeField] private TextMeshProUGUI highScoreText;
         [SerializeField] private Button firstSelected;
         [SerializeField] private LevelLoader levelLoader;
+        [SerializeField] private Image continueGraphic;
 
         private void OnEnable()
         {
@@ -40,6 +41,7 @@ namespace UI
             if (newHighScore >= targetScore) opacity = 1f;
             else opacity = 0.5f;
             targetScoreBackground.color = new Color(targetScoreBackground.color.r, targetScoreBackground.color.g, targetScoreBackground.color.b, opacity);
+            continueGraphic.color = new Color(continueGraphic.color.r, continueGraphic.color.g, continueGraphic.color.b, opacity);
         }
 
         public void Restart()
