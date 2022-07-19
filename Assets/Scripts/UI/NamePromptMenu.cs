@@ -20,9 +20,11 @@ namespace UI
         public void OnSubmit()
         {
             string name = nameInput.text;
-            // Check name is okay
-            StartCoroutine(Leaderboard.SetPlayerName(nameInput.text));
-            uiManager.Back();
+            if (nameInput.text != "")
+            {
+                StartCoroutine(Leaderboard.SetPlayerName(nameInput.text));
+                uiManager.Back();
+            }
         }
     }
 }
