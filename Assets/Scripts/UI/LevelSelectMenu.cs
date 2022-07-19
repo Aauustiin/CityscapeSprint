@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 namespace UI
 {
@@ -11,6 +12,7 @@ namespace UI
         [SerializeField] private Image[] levelGraphics;
         [SerializeField] private UI.UiManager uiManager;
         [SerializeField] private LevelLoader levelLoader;
+        [SerializeField] private TextMeshProUGUI[] highScoreText;
 
         private void OnEnable()
         {
@@ -20,9 +22,17 @@ namespace UI
             {
                 bool levelUnlocked = levelLoader.CanLoadLevel(i);
                 if (levelUnlocked)
+                {
                     levelGraphics[i].color = new Color(levelGraphics[i].color.r, levelGraphics[i].color.g, levelGraphics[i].color.b, 1f);
+                    highScoreText[i].color = new Color(highScoreText[i].color.r, highScoreText[i].color.g, highScoreText[i].color.b, 1f);
+                }
                 else
+                {
                     levelGraphics[i].color = new Color(levelGraphics[i].color.r, levelGraphics[i].color.g, levelGraphics[i].color.b, 0.5f);
+                    highScoreText[i].color = new Color(highScoreText[i].color.r, highScoreText[i].color.g, highScoreText[i].color.b, 0.5f);
+                }
+                int score = SaveSystem.Instance.Data.HighScores[i];
+                highScoreText[i].text = score.ToString();
             }
         }
 
