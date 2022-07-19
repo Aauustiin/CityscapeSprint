@@ -41,7 +41,7 @@ public class LeaderboardMenu : MonoBehaviour
 
         if (!response.error)
         {
-            for(int i = 0; i < 8; i++)
+            for(int i = 0; i < response.data.Length; i++)
             {
                 ranks[i].text = response.data[i].rank.ToString() + ".";
                 string playerName = response.data[i].player.name;
