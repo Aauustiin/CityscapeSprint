@@ -7,4 +7,6 @@ public class LevelScriptableObject : ScriptableObject
 {
     public int targetScore;
     public string scene;
+    public int testLeaderboardId;
+    public int leaderboardId;
 }

@@ -18,6 +18,9 @@ namespace UI
         [SerializeField] private GameObject pauseMenu;
         [SerializeField] private GameObject finishMenu;
         [SerializeField] private GameObject levelSelectMenu;
+        [SerializeField] private GameObject namePrompt;
+        [SerializeField] private GameObject leaderboardMenu;
+        [SerializeField] private GameObject demoEndMenu;
         [SerializeField] private GameObject commonBackground;
 
         [SerializeField] private AudioClip selectSound;
@@ -108,6 +111,21 @@ namespace UI
         public void OpenControlsMenu()
         {
             OpenMenu(controlsMenu);
+        }
+
+        public void OpenNamePrompt()
+        {
+            OpenMenu(namePrompt);
+        }
+
+        public void OpenLeaderboardMenu()
+        {
+            OpenMenu(leaderboardMenu);
+        }
+
+        public void OpenDemoEndMenu()
+        {
+            OpenMenu(demoEndMenu);
         }
 
         public void OnPause()

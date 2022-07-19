@@ -35,7 +35,7 @@ public class LevelLoader : MonoBehaviour
         }
         else
         {
-            uiManager.OpenMainMenu();
+            uiManager.OpenDemoEndMenu();
         }
     }
 
