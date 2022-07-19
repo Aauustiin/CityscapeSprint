@@ -12,6 +12,7 @@ public class SaveSystem : MonoBehaviour
 
     [SerializeField] private AudioPlayer audioPlayer;
     [SerializeField] private LevelLoader levelLoader;
+    [SerializeField] private UI.UiManager uiManager;
 
     private string _path;
     private string _persistentPath;
@@ -33,6 +34,7 @@ public class SaveSystem : MonoBehaviour
         else
         {
             SaveDefaultData();
+            uiManager.OpenNamePrompt();
         }
         FinishedInitialising = true;
     }

@@ -14,3 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetScore: 10
   scene: Level 3
+  testLeaderboardId: 4816
+  leaderboardId: 0

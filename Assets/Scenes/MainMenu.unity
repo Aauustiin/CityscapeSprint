@@ -180,7 +180,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Terry
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a10fff7193f152944b707f2c0d88db2b, type: 2}
   m_sharedMaterial: {fileID: -8881213223600750196, guid: a10fff7193f152944b707f2c0d88db2b, type: 2}
@@ -266,6 +266,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 15856600}
+  - component: {fileID: 15856601}
   m_Layer: 0
   m_Name: Leaderboard
   m_TagString: Untagged
@@ -287,6 +288,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &15856601
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 15856599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e22af61335ebb4a49ba591fe06ca3f12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelLoader: {fileID: 1485583035}
 --- !u!1 &30637800
 GameObject:
   m_ObjectHideFlags: 0
@@ -724,7 +738,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &57415570
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1178,7 +1192,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Terry
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a10fff7193f152944b707f2c0d88db2b, type: 2}
   m_sharedMaterial: {fileID: -8881213223600750196, guid: a10fff7193f152944b707f2c0d88db2b, type: 2}
@@ -1310,10 +1324,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 4
     m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
+    m_SelectOnUp: {fileID: 983743609}
+    m_SelectOnDown: {fileID: 1039527072}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
@@ -1595,10 +1609,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 4
     m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
+    m_SelectOnUp: {fileID: 660125161}
+    m_SelectOnDown: {fileID: 497530069}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
@@ -1787,7 +1801,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 3.
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a10fff7193f152944b707f2c0d88db2b, type: 2}
   m_sharedMaterial: {fileID: -8881213223600750196, guid: a10fff7193f152944b707f2c0d88db2b, type: 2}
@@ -2205,10 +2219,10 @@ MonoBehaviour:
   m_Navigation:
     m_Mode: 4
     m_WrapAround: 0
-    m_SelectOnUp: {fileID: 1945142211}
-    m_SelectOnDown: {fileID: 1233518765}
-    m_SelectOnLeft: {fileID: 771864255}
-    m_SelectOnRight: {fileID: 771864255}
+    m_SelectOnUp: {fileID: 511849743}
+    m_SelectOnDown: {fileID: 123628798}
+    m_SelectOnLeft: {fileID: 660125161}
+    m_SelectOnRight: {fileID: 660125161}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -2722,9 +2736,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '25
-
-'
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a10fff7193f152944b707f2c0d88db2b, type: 2}
   m_sharedMaterial: {fileID: -8881213223600750196, guid: a10fff7193f152944b707f2c0d88db2b, type: 2}
@@ -3259,8 +3271,8 @@ MonoBehaviour:
   m_Navigation:
     m_Mode: 4
     m_WrapAround: 0
-    m_SelectOnUp: {fileID: 1254701364}
-    m_SelectOnDown: {fileID: 1254526202}
+    m_SelectOnUp: {fileID: 993013180}
+    m_SelectOnDown: {fileID: 993013180}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
@@ -3395,7 +3407,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 5.
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a10fff7193f152944b707f2c0d88db2b, type: 2}
   m_sharedMaterial: {fileID: -8881213223600750196, guid: a10fff7193f152944b707f2c0d88db2b, type: 2}
@@ -3933,7 +3945,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 4.
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a10fff7193f152944b707f2c0d88db2b, type: 2}
   m_sharedMaterial: {fileID: -8881213223600750196, guid: a10fff7193f152944b707f2c0d88db2b, type: 2}
@@ -4473,9 +4485,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '6.
-
-'
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a10fff7193f152944b707f2c0d88db2b, type: 2}
   m_sharedMaterial: {fileID: -8881213223600750196, guid: a10fff7193f152944b707f2c0d88db2b, type: 2}
@@ -4832,9 +4842,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '2.
-
-'
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a10fff7193f152944b707f2c0d88db2b, type: 2}
   m_sharedMaterial: {fileID: -8881213223600750196, guid: a10fff7193f152944b707f2c0d88db2b, type: 2}
@@ -5577,10 +5585,10 @@ MonoBehaviour:
   m_Navigation:
     m_Mode: 4
     m_WrapAround: 0
-    m_SelectOnUp: {fileID: 1254701364}
-    m_SelectOnDown: {fileID: 1254526202}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
+    m_SelectOnUp: {fileID: 221228236}
+    m_SelectOnDown: {fileID: 221228236}
+    m_SelectOnLeft: {fileID: 993013180}
+    m_SelectOnRight: {fileID: 1807704466}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -7225,10 +7233,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 4
     m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
+    m_SelectOnUp: {fileID: 497530069}
+    m_SelectOnDown: {fileID: 660125161}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
@@ -8419,7 +8427,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Terry
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a10fff7193f152944b707f2c0d88db2b, type: 2}
   m_sharedMaterial: {fileID: -8881213223600750196, guid: a10fff7193f152944b707f2c0d88db2b, type: 2}
@@ -8689,7 +8697,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 1.
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a10fff7193f152944b707f2c0d88db2b, type: 2}
   m_sharedMaterial: {fileID: -8881213223600750196, guid: a10fff7193f152944b707f2c0d88db2b, type: 2}
@@ -9166,10 +9174,10 @@ MonoBehaviour:
   m_Navigation:
     m_Mode: 4
     m_WrapAround: 0
-    m_SelectOnUp: {fileID: 1945142211}
-    m_SelectOnDown: {fileID: 1233518765}
-    m_SelectOnLeft: {fileID: 474921636}
-    m_SelectOnRight: {fileID: 474921636}
+    m_SelectOnUp: {fileID: 511849743}
+    m_SelectOnDown: {fileID: 123628798}
+    m_SelectOnLeft: {fileID: 154489147}
+    m_SelectOnRight: {fileID: 154489147}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -9411,6 +9419,7 @@ MonoBehaviour:
   FinishedInitialising: 0
   audioPlayer: {fileID: 290161793}
   levelLoader: {fileID: 1485583035}
+  uiManager: {fileID: 188781919}
   Data:
     ResolutionX: 0
     ResolutionY: 0
@@ -9491,9 +9500,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '25
-
-'
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a10fff7193f152944b707f2c0d88db2b, type: 2}
   m_sharedMaterial: {fileID: -8881213223600750196, guid: a10fff7193f152944b707f2c0d88db2b, type: 2}
@@ -9586,7 +9593,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &673781719
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9611,7 +9618,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 59}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &673781720
@@ -10344,12 +10351,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 4
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
+    m_SelectOnLeft: {fileID: 1173673454}
+    m_SelectOnRight: {fileID: 1173673454}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -10949,7 +10956,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Terry
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a10fff7193f152944b707f2c0d88db2b, type: 2}
   m_sharedMaterial: {fileID: -8881213223600750196, guid: a10fff7193f152944b707f2c0d88db2b, type: 2}
@@ -11487,7 +11494,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Terry
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a10fff7193f152944b707f2c0d88db2b, type: 2}
   m_sharedMaterial: {fileID: -8881213223600750196, guid: a10fff7193f152944b707f2c0d88db2b, type: 2}
@@ -11621,9 +11628,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '25
-
-'
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a10fff7193f152944b707f2c0d88db2b, type: 2}
   m_sharedMaterial: {fileID: -8881213223600750196, guid: a10fff7193f152944b707f2c0d88db2b, type: 2}
@@ -11733,7 +11738,7 @@ RectTransform:
   m_Children:
   - {fileID: 166195394}
   m_Father: {fileID: 1398493424}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -11753,12 +11758,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: -1
+    m_Mode: 4
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 1040830756}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
+    m_SelectOnDown: {fileID: 117707000}
+    m_SelectOnLeft: {fileID: 1588109785}
+    m_SelectOnRight: {fileID: 1588109785}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -12043,10 +12048,10 @@ MonoBehaviour:
   m_Navigation:
     m_Mode: 4
     m_WrapAround: 0
-    m_SelectOnUp: {fileID: 1254701364}
-    m_SelectOnDown: {fileID: 1254526202}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
+    m_SelectOnUp: {fileID: 221228236}
+    m_SelectOnDown: {fileID: 221228236}
+    m_SelectOnLeft: {fileID: 1807704466}
+    m_SelectOnRight: {fileID: 438698379}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -12772,19 +12777,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 188781919}
         m_TargetAssemblyTypeName: UI.UiManager, Assembly-CSharp
-        m_MethodName: OpenLevelSelect
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1485583035}
-        m_TargetAssemblyTypeName: LevelLoader, Assembly-CSharp
-        m_MethodName: UnloadLevel
+        m_MethodName: OpenLeaderboardMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -12851,7 +12844,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 188781919}
           m_TargetAssemblyTypeName: UI.UiManager, Assembly-CSharp
-          m_MethodName: OpenLeaderboardMenu
+          m_MethodName: PlaySelectSound
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -13035,10 +13028,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 4
     m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
+    m_SelectOnUp: {fileID: 117707000}
+    m_SelectOnDown: {fileID: 1040830756}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
@@ -13210,10 +13203,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 4
     m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
+    m_SelectOnUp: {fileID: 1039527072}
+    m_SelectOnDown: {fileID: 983743609}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
@@ -14239,9 +14232,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '25
-
-'
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a10fff7193f152944b707f2c0d88db2b, type: 2}
   m_sharedMaterial: {fileID: -8881213223600750196, guid: a10fff7193f152944b707f2c0d88db2b, type: 2}
@@ -14730,7 +14721,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Terry
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a10fff7193f152944b707f2c0d88db2b, type: 2}
   m_sharedMaterial: {fileID: -8881213223600750196, guid: a10fff7193f152944b707f2c0d88db2b, type: 2}
@@ -15589,10 +15580,10 @@ MonoBehaviour:
   m_Navigation:
     m_Mode: 4
     m_WrapAround: 0
-    m_SelectOnUp: {fileID: 1254701364}
-    m_SelectOnDown: {fileID: 1254526202}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 781493714}
+    m_SelectOnRight: {fileID: 781493714}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -15618,9 +15609,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 188781919}
-        m_TargetAssemblyTypeName: UI.UiManager, Assembly-CSharp
-        m_MethodName: Back
+      - m_Target: {fileID: 1825633700}
+        m_TargetAssemblyTypeName: UI.NamePromptMenu, Assembly-CSharp
+        m_MethodName: OnSubmit
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -17042,7 +17033,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 188781919}
         m_TargetAssemblyTypeName: UI.UiManager, Assembly-CSharp
-        m_MethodName: Back
+        m_MethodName: OpenMainMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -17656,9 +17647,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '25
-
-'
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a10fff7193f152944b707f2c0d88db2b, type: 2}
   m_sharedMaterial: {fileID: -8881213223600750196, guid: a10fff7193f152944b707f2c0d88db2b, type: 2}
@@ -17769,8 +17758,8 @@ Transform:
   - {fileID: 1426696935}
   - {fileID: 1039527071}
   - {fileID: 1685475728}
-  - {fileID: 1588109784}
   - {fileID: 983743608}
+  - {fileID: 1588109784}
   m_Father: {fileID: 1649735679}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -17935,6 +17924,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1408472524}
+  - component: {fileID: 1408472525}
   m_Layer: 5
   m_Name: DemoEnd
   m_TagString: Untagged
@@ -17968,6 +17958,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1408472525
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1408472523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25b56bc01b1860641b23cdb27f4cb7bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  firstSelected: {fileID: 123628798}
 --- !u!1 &1416085563
 GameObject:
   m_ObjectHideFlags: 0
@@ -18025,7 +18028,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 25555
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a10fff7193f152944b707f2c0d88db2b, type: 2}
   m_sharedMaterial: {fileID: -8881213223600750196, guid: a10fff7193f152944b707f2c0d88db2b, type: 2}
@@ -18697,9 +18700,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '25
-
-'
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a10fff7193f152944b707f2c0d88db2b, type: 2}
   m_sharedMaterial: {fileID: -8881213223600750196, guid: a10fff7193f152944b707f2c0d88db2b, type: 2}
@@ -19036,6 +19037,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2536de8b15e4a0044a9418585b893348, type: 2}
   currentLevel: 0
   uiManager: {fileID: 188781919}
+  development: 1
 --- !u!1 &1540856213
 GameObject:
   m_ObjectHideFlags: 0
@@ -19661,7 +19663,7 @@ RectTransform:
   m_Children:
   - {fileID: 282287443}
   m_Father: {fileID: 1398493424}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -19681,12 +19683,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 4
     m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
+    m_SelectOnUp: {fileID: 1040830756}
+    m_SelectOnDown: {fileID: 117707000}
+    m_SelectOnLeft: {fileID: 983743609}
+    m_SelectOnRight: {fileID: 983743609}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -20448,7 +20450,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 8.
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a10fff7193f152944b707f2c0d88db2b, type: 2}
   m_sharedMaterial: {fileID: -8881213223600750196, guid: a10fff7193f152944b707f2c0d88db2b, type: 2}
@@ -20988,7 +20990,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Terry
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a10fff7193f152944b707f2c0d88db2b, type: 2}
   m_sharedMaterial: {fileID: -8881213223600750196, guid: a10fff7193f152944b707f2c0d88db2b, type: 2}
@@ -22614,7 +22616,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Terry
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a10fff7193f152944b707f2c0d88db2b, type: 2}
   m_sharedMaterial: {fileID: -8881213223600750196, guid: a10fff7193f152944b707f2c0d88db2b, type: 2}
@@ -22918,10 +22920,10 @@ MonoBehaviour:
   m_Navigation:
     m_Mode: 4
     m_WrapAround: 0
-    m_SelectOnUp: {fileID: 1254701364}
-    m_SelectOnDown: {fileID: 1254526202}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
+    m_SelectOnUp: {fileID: 221228236}
+    m_SelectOnDown: {fileID: 221228236}
+    m_SelectOnLeft: {fileID: 438698379}
+    m_SelectOnRight: {fileID: 993013180}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -23042,6 +23044,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1825633699}
+  - component: {fileID: 1825633700}
   m_Layer: 5
   m_Name: NamePrompt
   m_TagString: Untagged
@@ -23073,6 +23076,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1825633700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1825633698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c2df80dd4a33804da49232be0d13730, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leaderboard: {fileID: 15856601}
+  uiManager: {fileID: 188781919}
+  nameInput: {fileID: 781493714}
 --- !u!1 &1834047403
 GameObject:
   m_ObjectHideFlags: 0
@@ -24761,9 +24779,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '25
-
-'
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a10fff7193f152944b707f2c0d88db2b, type: 2}
   m_sharedMaterial: {fileID: -8881213223600750196, guid: a10fff7193f152944b707f2c0d88db2b, type: 2}
@@ -25157,9 +25173,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '7.
-
-'
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a10fff7193f152944b707f2c0d88db2b, type: 2}
   m_sharedMaterial: {fileID: -8881213223600750196, guid: a10fff7193f152944b707f2c0d88db2b, type: 2}
@@ -25694,6 +25708,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f18a6d68fe57084eaed20f39079b6b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  leaderboard: {fileID: 15856601}
   ranks:
   - {fileID: 587537318}
   - {fileID: 327723566}
@@ -25721,6 +25736,7 @@ MonoBehaviour:
   - {fileID: 1118079916}
   - {fileID: 1443686913}
   - {fileID: 2022074873}
+  firstSelected: {fileID: 993013180}
 --- !u!1 &2100159687
 GameObject:
   m_ObjectHideFlags: 0

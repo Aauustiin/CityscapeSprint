@@ -6,6 +6,7 @@ public class LevelLoader : MonoBehaviour
     [SerializeField] private LevelScriptableObject[] levels;
     [SerializeField] private int currentLevel;
     [SerializeField] private UI.UiManager uiManager;
+    [SerializeField] private bool development;
 
     public void LoadLevel(LevelScriptableObject level)
     {
@@ -52,5 +53,10 @@ public class LevelLoader : MonoBehaviour
     public int GetTargetScore()
     {
         return levels[currentLevel].targetScore;
+    }
+
+    public int GetLeaderboardId()
+    {
+        return development ? levels[currentLevel].testLeaderboardId : levels[currentLevel].leaderboardId;
     }
 }

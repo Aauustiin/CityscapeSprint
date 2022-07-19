@@ -29,17 +29,13 @@ namespace UI
         private void OnEnable()
         {
             EventManager.GameOver += OpenFinishMenu;
+            _menuHistory = new Stack<GameObject>();
+            _menuHistory.Push(mainMenu);
         }
 
         private void OnDisable()
         {
             EventManager.GameOver -= OpenFinishMenu;
-        }
-
-        private void Start()
-        {
-            _menuHistory = new Stack<GameObject>();
-            _menuHistory.Push(mainMenu);
         }
 
         public void PlaySelectSound()
