@@ -10,6 +10,7 @@ public class CollectableManager : MonoBehaviour
     [SerializeField] private GameObject scoreTextParent;
     private int _collectablesGrabbed;
     [SerializeField] private AudioClip collectSfx;
+    [SerializeField] private ParticleSystem p;
 
     private void Start()
     {
@@ -38,15 +39,28 @@ public class CollectableManager : MonoBehaviour
         _collectablesGrabbed = 0;
     }
 
+    //private IEnumerator MiniFreeze(float seconds)
+    //{
+    //    Time.timeScale = 0f;
+    //    yield return new WaitForSecondsRealtime(seconds);
+    //    Time.timeScale = 1f;
+    //}
+
     public void OnCollectableGrabbed(Vector2 location, Collectable c)
     {
         _collectablesGrabbed++;
-        StartCoroutine(ActivateScoreText(c));
         Vector2 spawnLocation = PickRandomSpawnLocation();
+
+        //StartCoroutine(MiniFreeze(0.05f));
+
+        StartCoroutine(ActivateScoreText(c));
+        p.transform.position = location;
+        p.Play();
+        EventManager.TriggerSoundEffect(collectSfx);
+
         SpawnCollectable(spawnLocation, c);
         spawnLocations.Remove(spawnLocation);
-        EventManager.TriggerSoundEffect(collectSfx);
-        spawnLocations.Add(location);
+        spawnLocations.Add(location); 
     }
 
     private IEnumerator ActivateScoreText(Collectable c)

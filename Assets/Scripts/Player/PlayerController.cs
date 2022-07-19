@@ -77,8 +77,7 @@ namespace Player
             sprite.flipX = false;
             _velocityLastFrame = Vector2.zero;
             runDirection = Vector2.right;
-            _currentState = new RunningState(this);
-            _currentState.OnEntry();
+            SwapState(new RunningState(this));
         }
 
         private void FixedUpdate()
