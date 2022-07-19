@@ -586,7 +586,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43f0740e2d67ad44d9afaea209be3ff4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  duration: 10
+  duration: 60
   timer: {fileID: 80609959}
 --- !u!4 &465611297
 Transform:
