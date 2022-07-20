@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class AudioPlayer : MonoBehaviour
 {
-    private AudioSource _audioSource;
+    [SerializeField] private AudioSource musicAudioSource;
+    [SerializeField] private AudioSource effectsAudioSource;
     private float _sfxVolume;
     [SerializeField] public float defaultMusicVolume, defaultEffectsVolume;
     
@@ -27,7 +28,7 @@ public class AudioPlayer : MonoBehaviour
 
     private void HandleSoundEffect(AudioClip soundEffect)
     {
-        _audioSource.PlayOneShot(soundEffect, _sfxVolume);
+        effectsAudioSource.PlayOneShot(soundEffect, _sfxVolume);
     }
 
     public void SetEffectsVolume(float volume)
@@ -37,12 +38,11 @@ public class AudioPlayer : MonoBehaviour
 
     public void SetMusicVolume(float volume)
     {
-        _audioSource = GetComponent<AudioSource>();
-        _audioSource.volume = volume;
+        musicAudioSource.volume = volume;
     }
 
     public void PlaySoundtrack(AudioClip soundtrack)
     {
-        _audioSource.clip = soundtrack;
+        musicAudioSource.clip = soundtrack;
     }
 }
