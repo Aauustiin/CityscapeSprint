@@ -586,8 +586,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43f0740e2d67ad44d9afaea209be3ff4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  duration: 60
+  duration: 15
   timer: {fileID: 80609959}
+  extraTime: 0
 --- !u!4 &465611297
 Transform:
   m_ObjectHideFlags: 0
@@ -12044,7 +12045,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1830867335}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 71654d18bcb64a84eb82eb9770bf804e, type: 2}
   m_CullingMode: 0

@@ -7,6 +7,7 @@ public class Timer : MonoBehaviour
     [SerializeField] private TextMeshProUGUI timer;
     private float _startTime;
     private bool _timerOn = false;
+    public int extraTime;
 
     private void OnEnable()
     {
@@ -25,13 +26,14 @@ public class Timer : MonoBehaviour
 
     private void StartTimer()
     {
+        extraTime = 0;
         _startTime = Time.time;
         _timerOn = true;
     }
 
     private void Update()
     {
-        float displayTime = duration - (Time.time - _startTime);
+        float displayTime = duration + extraTime - (Time.time - _startTime);
         if (_timerOn && displayTime > 0)
         {
             int roundedTime = Mathf.RoundToInt(displayTime);
