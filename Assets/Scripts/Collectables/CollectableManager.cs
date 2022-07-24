@@ -37,21 +37,14 @@ public class CollectableManager : MonoBehaviour
     {
         if (_timerUnderway && (_comboBuffer > Time.time - _startTime))
         {
-            // The timer is on and it hasn't yet ran out
-            // Maybe we need to update graphic?
             float timePassedRatio = (_comboBuffer + _startTime - Time.time) / _comboBuffer;
             scoreTextParent.transform.localScale = Vector3.one * timePassedRatio;
         }
         else if (_timerUnderway && (_comboBuffer <= Time.time - _startTime))
         {
-            // The timer is on but it has just ran out, we need to turn off the timer and do relevant things
             _combo = 0;
             _timerUnderway = false;
             scoreTextParent.SetActive(false);
-        }
-        else
-        {
-            // Timer is off
         }
     }
 
@@ -63,6 +56,9 @@ public class CollectableManager : MonoBehaviour
     private void Restart()
     {
         score = 0;
+        _combo = 0;
+        _timerUnderway = false;
+        scoreTextParent.SetActive(false);
     }
 
     public void OnCollectableGrabbed(Vector2 location, Collectable c)
@@ -94,7 +90,10 @@ public class CollectableManager : MonoBehaviour
     {
         scoreTextParent.SetActive(true);
         scoreText.text = _combo.ToString();
-        scoreTextParent.GetComponent<RectTransform>().position = Camera.main.WorldToScreenPoint((Vector2)c.transform.position + new Vector2(0f, 0.5f));
+        RectTransform sTPRT = scoreTextParent.GetComponent<RectTransform>();
+        sTPRT.position = Camera.main.WorldToScreenPoint((Vector2)c.transform.position + new Vector2(0f, 0.5f));
+        sTPRT.LeanMoveY(sTPRT.localPosition.y + 50f, 0.25f);
+        //LTDescr thing = sTPRT.LeanScale(new Vector3(1, 1, 1), 5f);
     }
 
     private IEnumerator ActivateScoreText(Collectable c)
