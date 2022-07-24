@@ -12,7 +12,7 @@ public class CollectableManager : MonoBehaviour
     [SerializeField] private AudioClip collectSfx;
     [SerializeField] private ParticleSystem p;
     private int _combo = 0;
-    private float _comboBuffer = 5f;
+    private float _comboBuffer = 10f;
     private bool _timerUnderway = false;
     private float _startTime;
 
@@ -66,7 +66,7 @@ public class CollectableManager : MonoBehaviour
         StartTimer();
         score += _combo;
         Vector2 spawnLocation = PickRandomSpawnLocation();
-        FindObjectOfType<Timer>().extraTime += _combo;
+        FindObjectOfType<Timer>().AddExtraTime(_combo);
 
         ActivateComboText(c);
         p.transform.position = location;
@@ -92,18 +92,9 @@ public class CollectableManager : MonoBehaviour
         scoreText.text = _combo.ToString();
         RectTransform sTPRT = scoreTextParent.GetComponent<RectTransform>();
         sTPRT.position = Camera.main.WorldToScreenPoint((Vector2)c.transform.position + new Vector2(0f, 0.5f));
-        sTPRT.LeanMoveY(sTPRT.localPosition.y + 50f, 0.25f);
-        //LTDescr thing = sTPRT.LeanScale(new Vector3(1, 1, 1), 5f);
-    }
-
-    private IEnumerator ActivateScoreText(Collectable c)
-    {
-        scoreTextParent.SetActive(true);
-        scoreText.text = score.ToString();
-        scoreTextParent.GetComponent<RectTransform>().position = Camera.main.WorldToScreenPoint((Vector2)c.transform.position + new Vector2(0f, 0.5f));
-        scoreTextParent.GetComponent<Animator>().Play("Base Layer.score", 0, 0);
-        yield return new WaitForSeconds(0.5f);
-        scoreTextParent.SetActive(false);
+        sTPRT.LeanMoveY(sTPRT.localPosition.y + 50f, 1f).setEase(LeanTweenType.easeOutElastic);
+        sTPRT.LeanScale(new Vector3(0f, 0f, 0f), 0f);
+        sTPRT.LeanScale(new Vector3(1f, 1f, 1f), 1f).setEase(LeanTweenType.easeOutElastic);
     }
 
     private Vector2 PickRandomSpawnLocation()

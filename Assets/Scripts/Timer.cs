@@ -7,7 +7,7 @@ public class Timer : MonoBehaviour
     [SerializeField] private TextMeshProUGUI timer;
     private float _startTime;
     private bool _timerOn = false;
-    public int extraTime;
+    public float extraTime;
 
     private void OnEnable()
     {
@@ -43,6 +43,19 @@ public class Timer : MonoBehaviour
         {
             _timerOn = false;
             EventManager.TriggerGameOver();
+        }
+    }
+
+    public void AddExtraTime(int time)
+    {
+        if ((duration + extraTime + time - (Time.time - _startTime)) <= duration)
+        {
+            extraTime += time;
+        }
+        else
+        {
+            _startTime = Time.time;
+            extraTime = 0;
         }
     }
 
