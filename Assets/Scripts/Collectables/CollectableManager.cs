@@ -38,12 +38,7 @@ public class CollectableManager : MonoBehaviour
 
     private void Update()
     {
-        if (_timerUnderway && (_comboBuffer > Time.time - _startTime))
-        {
-            float timePassedRatio = (_comboBuffer + _startTime - Time.time) / _comboBuffer;
-            //comboText.gameObject.transform.localScale = Vector3.one * timePassedRatio;
-        }
-        else if (_timerUnderway && (_comboBuffer <= Time.time - _startTime))
+        if (_timerUnderway && (_comboBuffer <= Time.time - _startTime))
         {
             _combo = 0;
             _timerUnderway = false;
@@ -95,12 +90,12 @@ public class CollectableManager : MonoBehaviour
         comboText.text = _combo.ToString();
         RectTransform comboTextRectTransform = comboText.gameObject.GetComponent<RectTransform>();
         comboTextRectTransform.position = Camera.main.WorldToScreenPoint((Vector2)c.transform.position + new Vector2(0f, 0.5f));
-        comboTextRectTransform.LeanScale(Vector3.zero, 0f);
-        comboTextRectTransform.LeanMoveY(comboTextRectTransform.localPosition.y + 50f, 1f).setEase(LeanTweenType.easeOutElastic);
+        
         LeanTween.cancel(comboTextRectTransform);
+        comboTextRectTransform.LeanScale(Vector3.zero, 0f);
         comboTextAnimation = LeanTween.sequence();
-        comboTextAnimation.append(comboTextRectTransform.LeanScale(Vector3.one, 0.5f).setEase(LeanTweenType.easeOutElastic));
-        comboTextAnimation.append(comboTextRectTransform.LeanScale(Vector3.zero, _comboBuffer - 0.5f).setEase(LeanTweenType.easeInCubic));
+        comboTextAnimation.append(comboTextRectTransform.LeanScale(Vector3.one, 1f).setEase(LeanTweenType.easeOutElastic));
+        comboTextAnimation.append(comboTextRectTransform.LeanScale(Vector3.zero, _comboBuffer - 1f).setEase(LeanTweenType.easeInCubic));
     }
 
     private Vector2 PickRandomSpawnLocation()
