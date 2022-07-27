@@ -1,7 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 
 // Collectable spawner
 // Score tracker
@@ -11,11 +10,12 @@ public class CollectableManager : MonoBehaviour
 {
     [SerializeField] private List<Vector2> spawnLocations;
     [SerializeField] private TextMeshProUGUI comboText;
+    private LTSeq comboTextAnimation;
     [SerializeField] private AudioClip collectSfx;
     [SerializeField] private ParticleSystem p;
     private int score;
     private int _combo = 0;
-    private float _comboBuffer = 10f;
+    private float _comboBuffer = 5f;
     private bool _timerUnderway = false;
     private float _startTime;
 
@@ -41,7 +41,7 @@ public class CollectableManager : MonoBehaviour
         if (_timerUnderway && (_comboBuffer > Time.time - _startTime))
         {
             float timePassedRatio = (_comboBuffer + _startTime - Time.time) / _comboBuffer;
-            comboText.gameObject.transform.localScale = Vector3.one * timePassedRatio;
+            //comboText.gameObject.transform.localScale = Vector3.one * timePassedRatio;
         }
         else if (_timerUnderway && (_comboBuffer <= Time.time - _startTime))
         {
@@ -93,11 +93,14 @@ public class CollectableManager : MonoBehaviour
     {
         comboText.gameObject.SetActive(true);
         comboText.text = _combo.ToString();
-        RectTransform sTPRT = comboText.gameObject.GetComponent<RectTransform>();
-        sTPRT.position = Camera.main.WorldToScreenPoint((Vector2)c.transform.position + new Vector2(0f, 0.5f));
-        sTPRT.LeanMoveY(sTPRT.localPosition.y + 50f, 1f).setEase(LeanTweenType.easeOutElastic);
-        sTPRT.LeanScale(new Vector3(0f, 0f, 0f), 0f);
-        sTPRT.LeanScale(new Vector3(1f, 1f, 1f), 0.5f).setEase(LeanTweenType.easeOutElastic);
+        RectTransform comboTextRectTransform = comboText.gameObject.GetComponent<RectTransform>();
+        comboTextRectTransform.position = Camera.main.WorldToScreenPoint((Vector2)c.transform.position + new Vector2(0f, 0.5f));
+        comboTextRectTransform.LeanScale(Vector3.zero, 0f);
+        comboTextRectTransform.LeanMoveY(comboTextRectTransform.localPosition.y + 50f, 1f).setEase(LeanTweenType.easeOutElastic);
+        LeanTween.cancel(comboTextRectTransform);
+        comboTextAnimation = LeanTween.sequence();
+        comboTextAnimation.append(comboTextRectTransform.LeanScale(Vector3.one, 0.5f).setEase(LeanTweenType.easeOutElastic));
+        comboTextAnimation.append(comboTextRectTransform.LeanScale(Vector3.zero, _comboBuffer - 0.5f).setEase(LeanTweenType.easeInCubic));
     }
 
     private Vector2 PickRandomSpawnLocation()
