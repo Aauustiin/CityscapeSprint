@@ -67,7 +67,7 @@ public class CollectableManager : MonoBehaviour
         FindObjectOfType<Timer>().AddExtraTime(_combo);
 
         ActivateComboText(c);
-        p.transform.position = location;
+        p.transform.position = location + new Vector2(0f, 0.25f);
         p.Play();
         EventManager.TriggerSoundEffect(collectSfx);
 
@@ -89,8 +89,9 @@ public class CollectableManager : MonoBehaviour
         comboText.gameObject.SetActive(true);
         comboText.text = _combo.ToString();
         RectTransform comboTextRectTransform = comboText.gameObject.GetComponent<RectTransform>();
-        comboTextRectTransform.position = Camera.main.WorldToScreenPoint((Vector2)c.transform.position + new Vector2(0f, 0.5f));
-        
+        comboTextRectTransform.position = Camera.main.WorldToScreenPoint((Vector2)c.transform.position + new Vector2(0f, 0.25f));
+        //comboTextRectTransform.position = Camera.main.WorldToScreenPoint((Vector2)c.transform.position);
+
         LeanTween.cancel(comboTextRectTransform);
         comboTextRectTransform.LeanScale(Vector3.zero, 0f);
         comboTextAnimation = LeanTween.sequence();
