@@ -10,6 +10,7 @@ public class CollectableManager : MonoBehaviour
 {
     [SerializeField] private List<Vector2> spawnLocations;
     [SerializeField] private TextMeshProUGUI comboText;
+    [SerializeField] private TextMeshProUGUI scoreText;
     private LTSeq _comboTextAnimation;
     [SerializeField] private AudioClip collectSfx;
     [SerializeField] private ParticleSystem p;
@@ -22,6 +23,7 @@ public class CollectableManager : MonoBehaviour
     private void Start()
     {
         _score = 0;
+        scoreText.text = "0";
     }
 
     private void OnEnable()
@@ -55,6 +57,7 @@ public class CollectableManager : MonoBehaviour
     private void Restart()
     {
         _score = 0;
+        scoreText.text = "0";
         _combo = 0;
         _timerUnderway = false;
         comboText.gameObject.SetActive(false);
@@ -64,11 +67,13 @@ public class CollectableManager : MonoBehaviour
     {
         StartTimer();
         _score += _combo;
+        scoreText.text = _score.ToString();
         Vector2 spawnLocation = PickRandomSpawnLocation();
         FindObjectOfType<Timer>().AddExtraTime(_combo);
 
         ActivateComboText(c);
         p.transform.position = location + new Vector2(0f, 0.25f);
+        p.Clear();
         p.Play();
         EventManager.TriggerSoundEffect(collectSfx);
 
