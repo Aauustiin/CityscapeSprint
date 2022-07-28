@@ -25459,13 +25459,14 @@ GameObject:
   - component: {fileID: 1837884857}
   - component: {fileID: 1837884856}
   - component: {fileID: 1837884859}
+  - component: {fileID: 1837884860}
   m_Layer: 5
   m_Name: Combo Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1837884856
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25486,7 +25487,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 3
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a10fff7193f152944b707f2c0d88db2b, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: e4c069972a8a8d442b85ba8cdfee4d21, type: 2}
@@ -25513,8 +25514,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 100
-  m_fontSizeBase: 100
+  m_fontSize: 50
+  m_fontSizeBase: 50
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -25594,8 +25595,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ece8166ebe94734cae3f6cb5b1f648a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  offset: {x: 0, y: 1}
+  offset: {x: 0, y: 1, z: 0}
   target: {fileID: 1164523222}
+  speed: 1000
+--- !u!50 &1837884860
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1837884855}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &1880388000
 GameObject:
   m_ObjectHideFlags: 0

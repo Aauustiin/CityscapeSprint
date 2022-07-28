@@ -7,8 +7,10 @@ namespace UI
     [RequireComponent(typeof(RectTransform))]
     public class UiOffsetFollow : MonoBehaviour
     {
-        [SerializeField] private Vector2 offset;
+        [SerializeField] private Vector3 offset;
         [SerializeField] private Transform target;
+        [SerializeField] private float speed;
+        
         private RectTransform _rt;
 
         private void Start()
@@ -18,7 +20,9 @@ namespace UI
 
         private void Update()
         {
-            _rt.position = Camera.main.WorldToScreenPoint((Vector2)target.position + offset);
+            Vector2 direction = (Vector2)(target.position + offset - Camera.main.ScreenToWorldPoint(_rt.position)).normalized;
+            GetComponent<Rigidbody2D>().velocity = direction * speed;
+            //_rt.position = Camera.main.WorldToScreenPoint((Vector2)target.position + offset);
         }
     }
 }

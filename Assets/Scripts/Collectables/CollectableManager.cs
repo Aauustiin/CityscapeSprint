@@ -42,7 +42,8 @@ public class CollectableManager : MonoBehaviour
         {
             _combo = 0;
             _timerUnderway = false;
-            comboText.gameObject.SetActive(false);
+            comboText.text = "";
+            //comboText.gameObject.SetActive(false);
         }
     }
 
@@ -89,7 +90,8 @@ public class CollectableManager : MonoBehaviour
         comboText.gameObject.SetActive(true);
         comboText.text = _combo.ToString();
         RectTransform comboTextRectTransform = comboText.gameObject.GetComponent<RectTransform>();
-        //comboTextRectTransform.position = Camera.main.WorldToScreenPoint((Vector2)c.transform.position + new Vector2(0f, 0.25f));
+        if (_combo == 1)
+            comboText.GetComponent<Rigidbody2D>().position = Camera.main.WorldToScreenPoint((Vector2)c.transform.position + new Vector2(0f, 0.25f));
         //comboTextRectTransform.position = Camera.main.WorldToScreenPoint((Vector2)c.transform.position);
 
         LeanTween.cancel(comboTextRectTransform);
