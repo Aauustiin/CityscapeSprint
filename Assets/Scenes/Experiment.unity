@@ -25462,6 +25462,7 @@ GameObject:
   - component: {fileID: 1837884856}
   - component: {fileID: 1837884859}
   - component: {fileID: 1837884860}
+  - component: {fileID: 1837884861}
   m_Layer: 5
   m_Name: Combo Text
   m_TagString: Untagged
@@ -25621,6 +25622,22 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &1837884861
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1837884855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0fbccd29ee3846449fffc15665a6dd4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 1164523222}
+  offset: {x: 0, y: 0, z: 0}
+  targetIsUi: 0
+  iAmUi: 1
 --- !u!1 &1880388000
 GameObject:
   m_ObjectHideFlags: 0
