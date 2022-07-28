@@ -10,10 +10,10 @@ public class CollectableManager : MonoBehaviour
 {
     [SerializeField] private List<Vector2> spawnLocations;
     [SerializeField] private TextMeshProUGUI comboText;
-    private LTSeq comboTextAnimation;
+    private LTSeq _comboTextAnimation;
     [SerializeField] private AudioClip collectSfx;
     [SerializeField] private ParticleSystem p;
-    private int score;
+    private int _score;
     private int _combo = 0;
     private float _comboBuffer = 5f;
     private bool _timerUnderway = false;
@@ -21,7 +21,7 @@ public class CollectableManager : MonoBehaviour
 
     private void Start()
     {
-        score = 0;
+        _score = 0;
     }
 
     private void OnEnable()
@@ -53,7 +53,7 @@ public class CollectableManager : MonoBehaviour
     
     private void Restart()
     {
-        score = 0;
+        _score = 0;
         _combo = 0;
         _timerUnderway = false;
         comboText.gameObject.SetActive(false);
@@ -62,7 +62,7 @@ public class CollectableManager : MonoBehaviour
     public void OnCollectableGrabbed(Vector2 location, Collectable c)
     {
         StartTimer();
-        score += _combo;
+        _score += _combo;
         Vector2 spawnLocation = PickRandomSpawnLocation();
         FindObjectOfType<Timer>().AddExtraTime(_combo);
 
@@ -89,14 +89,14 @@ public class CollectableManager : MonoBehaviour
         comboText.gameObject.SetActive(true);
         comboText.text = _combo.ToString();
         RectTransform comboTextRectTransform = comboText.gameObject.GetComponent<RectTransform>();
-        comboTextRectTransform.position = Camera.main.WorldToScreenPoint((Vector2)c.transform.position + new Vector2(0f, 0.25f));
+        //comboTextRectTransform.position = Camera.main.WorldToScreenPoint((Vector2)c.transform.position + new Vector2(0f, 0.25f));
         //comboTextRectTransform.position = Camera.main.WorldToScreenPoint((Vector2)c.transform.position);
 
         LeanTween.cancel(comboTextRectTransform);
         comboTextRectTransform.LeanScale(Vector3.zero, 0f);
-        comboTextAnimation = LeanTween.sequence();
-        comboTextAnimation.append(comboTextRectTransform.LeanScale(Vector3.one, 1f).setEase(LeanTweenType.easeOutElastic));
-        comboTextAnimation.append(comboTextRectTransform.LeanScale(Vector3.zero, _comboBuffer - 1f).setEase(LeanTweenType.easeInCubic));
+        _comboTextAnimation = LeanTween.sequence();
+        _comboTextAnimation.append(comboTextRectTransform.LeanScale(Vector3.one, 1f).setEase(LeanTweenType.easeOutElastic));
+        _comboTextAnimation.append(comboTextRectTransform.LeanScale(Vector3.zero, _comboBuffer - 1f).setEase(LeanTweenType.easeInCubic));
     }
 
     private Vector2 PickRandomSpawnLocation()
@@ -113,7 +113,7 @@ public class CollectableManager : MonoBehaviour
 
     public int GetCollectablesGrabbed()
     {
-        return score;
+        return _score;
     }
 }
 

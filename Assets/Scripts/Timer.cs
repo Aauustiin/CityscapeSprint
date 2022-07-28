@@ -4,7 +4,6 @@ using TMPro;
 public class Timer : MonoBehaviour
 {
     [SerializeField] private int duration;
-    [SerializeField] private TextMeshProUGUI timer;
     [SerializeField] private UnityEngine.UI.Slider timeBar;
     private float _startTime;
     private bool _timerOn = false;
@@ -13,16 +12,12 @@ public class Timer : MonoBehaviour
     private void OnEnable()
     {
         EventManager.Restart += Restart;
-        EventManager.MenuOpen += OnMenuOpen;
-        EventManager.MenuClose += OnMenuClose;
         StartTimer();
     }
 
     private void OnDisable()
     {
         EventManager.Restart -= Restart;
-        EventManager.MenuOpen -= OnMenuOpen;
-        EventManager.MenuClose -= OnMenuClose;
     }
 
     private void StartTimer()
@@ -35,12 +30,9 @@ public class Timer : MonoBehaviour
     private void Update()
     {
         float displayTime = duration + extraTime - (Time.time - _startTime);
-        float fractionTimeLeft = displayTime / duration;
         if (_timerOn && displayTime > 0)
         {
-            timeBar.value = fractionTimeLeft;
-            int roundedTime = Mathf.RoundToInt(displayTime);
-            timer.text = roundedTime.ToString();
+            timeBar.value = displayTime/duration;
         }
         else if (_timerOn && displayTime < 0)
         {
@@ -62,16 +54,6 @@ public class Timer : MonoBehaviour
         }
     }
 
-    private void OnMenuOpen()
-    {
-        timer.gameObject.SetActive(false);
-    }
-
-    private void OnMenuClose()
-    {
-        timer.gameObject.SetActive(true);
-    }
-    
     private void Restart()
     {
         StartTimer();
