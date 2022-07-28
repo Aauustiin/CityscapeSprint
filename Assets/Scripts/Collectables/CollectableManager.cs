@@ -11,6 +11,7 @@ public class CollectableManager : MonoBehaviour
     [SerializeField] private List<Vector2> spawnLocations;
     [SerializeField] private TextMeshProUGUI comboText;
     [SerializeField] private TextMeshProUGUI scoreText;
+    [SerializeField] private RectTransform scoreImage;
     private LTSeq _comboTextAnimation;
     [SerializeField] private AudioClip collectSfx;
     [SerializeField] private ParticleSystem p;
@@ -68,6 +69,8 @@ public class CollectableManager : MonoBehaviour
         StartTimer();
         _score += _combo;
         scoreText.text = _score.ToString();
+
+        scoreImage.sizeDelta = new Vector2(scoreText.GetRenderedValues().x + 50f, scoreImage.sizeDelta.y);
         Vector2 spawnLocation = PickRandomSpawnLocation();
         FindObjectOfType<Timer>().AddExtraTime(_combo);
 
