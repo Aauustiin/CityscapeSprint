@@ -5,6 +5,7 @@ public class Timer : MonoBehaviour
 {
     [SerializeField] private int duration;
     [SerializeField] private TextMeshProUGUI timer;
+    [SerializeField] private UnityEngine.UI.Slider timeBar;
     private float _startTime;
     private bool _timerOn = false;
     public float extraTime;
@@ -34,8 +35,10 @@ public class Timer : MonoBehaviour
     private void Update()
     {
         float displayTime = duration + extraTime - (Time.time - _startTime);
+        float fractionTimeLeft = displayTime / duration;
         if (_timerOn && displayTime > 0)
         {
+            timeBar.value = fractionTimeLeft;
             int roundedTime = Mathf.RoundToInt(displayTime);
             timer.text = roundedTime.ToString();
         }
