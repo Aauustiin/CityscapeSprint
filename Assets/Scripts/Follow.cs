@@ -1,11 +1,11 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class Avoid : MonoBehaviour
+public class Follow : MonoBehaviour
 {
     [SerializeField] private Transform target;
     [SerializeField] private Vector3 offset;
-    [SerializeField] private float strength = 100f;
+    [SerializeField] private float strength = 1f;
     [SerializeField] private bool targetIsUi;
     [SerializeField] private bool iAmUi;
     private Rigidbody2D _rb;
@@ -29,10 +29,10 @@ public class Avoid : MonoBehaviour
         else
             targetPos = target.position;
         
-        Vector2 displacement = pos - offset - targetPos;
+        Vector2 displacement = targetPos - offset - pos;
         Vector2 direction = displacement.normalized;
         float distance = displacement.magnitude;
-        Vector2 force = direction * (1 / distance);
-        _rb.AddForce(force * strength);
+        Vector2 force = direction * (strength * distance);
+        _rb.AddForce(force, ForceMode2D.Impulse);
     }
 }

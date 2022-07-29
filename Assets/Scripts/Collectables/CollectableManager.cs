@@ -9,10 +9,9 @@ using UnityEngine;
 public class CollectableManager : MonoBehaviour
 {
     [SerializeField] private List<Vector2> spawnLocations;
-    [SerializeField] private TextMeshProUGUI comboText;
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private RectTransform scoreImage;
-    private LTSeq _comboTextAnimation;
+    [SerializeField] private List<GameObject> comboIcons;
     [SerializeField] private AudioClip collectSfx;
     [SerializeField] private ParticleSystem p;
     private int _score;
@@ -43,16 +42,14 @@ public class CollectableManager : MonoBehaviour
     {
         if (_timerUnderway && (_comboBuffer <= Time.time - _startTime))
         {
-            _combo = 0;
+            _combo--;
             _timerUnderway = false;
-            comboText.text = "";
-            //comboText.gameObject.SetActive(false);
+            comboIcons[_combo].SetActive(false);
         }
     }
 
     private void GameOver()
     {
-        comboText.gameObject.SetActive(false);
     }
     
     private void Restart()
@@ -61,12 +58,13 @@ public class CollectableManager : MonoBehaviour
         scoreText.text = "0";
         _combo = 0;
         _timerUnderway = false;
-        comboText.gameObject.SetActive(false);
     }
 
     public void OnCollectableGrabbed(Vector2 location, Collectable c)
     {
         StartTimer();
+        comboIcons[_combo  - 1].SetActive(true);
+        comboIcons[_combo - 1].GetComponent<Rigidbody2D>().position = Camera.main.WorldToScreenPoint(c.transform.position);
         _score += _combo;
         scoreText.text = _score.ToString();
 
@@ -74,7 +72,6 @@ public class CollectableManager : MonoBehaviour
         Vector2 spawnLocation = PickRandomSpawnLocation();
         FindObjectOfType<Timer>().AddExtraTime(_combo);
 
-        ActivateComboText(c);
         p.transform.position = location + new Vector2(0f, 0.25f);
         p.Clear();
         p.Play();
@@ -91,22 +88,6 @@ public class CollectableManager : MonoBehaviour
         if (_combo != 3) _combo++;
         _startTime = Time.time;
         _timerUnderway = true;
-    }
-
-    private void ActivateComboText(Collectable c)
-    {
-        comboText.gameObject.SetActive(true);
-        comboText.text = _combo.ToString();
-        RectTransform comboTextRectTransform = comboText.gameObject.GetComponent<RectTransform>();
-        if (_combo == 1)
-            comboText.GetComponent<Rigidbody2D>().position = Camera.main.WorldToScreenPoint((Vector2)c.transform.position + new Vector2(0f, 0.25f));
-        //comboTextRectTransform.position = Camera.main.WorldToScreenPoint((Vector2)c.transform.position);
-
-        LeanTween.cancel(comboTextRectTransform);
-        comboTextRectTransform.LeanScale(Vector3.zero, 0f);
-        _comboTextAnimation = LeanTween.sequence();
-        _comboTextAnimation.append(comboTextRectTransform.LeanScale(Vector3.one, 1f).setEase(LeanTweenType.easeOutElastic));
-        _comboTextAnimation.append(comboTextRectTransform.LeanScale(Vector3.zero, _comboBuffer - 1f).setEase(LeanTweenType.easeInCubic));
     }
 
     private Vector2 PickRandomSpawnLocation()
@@ -126,71 +107,3 @@ public class CollectableManager : MonoBehaviour
         return _score;
     }
 }
-
-//public class Spawner
-//{
-//    private List<Vector2> _spawnLocations;
-//    private IObjectPool _pool;
-//
-//    public Spawner(Pool pool, GameObject subject, List<Vector2> spawnLocations)
-//    {
-//        _spawnLocations = spawnLocations;
-//        _pool = pool;
-//    }
-//
-//    public void Spawn()
-//    {
-//        GameObject spawned = _pool.Instantiate();
-//        spawned.transform.position = PickRandomSpawnLocation();
-//    }
-//
-//    private Vector2 PickRandomSpawnLocation()
-//    {
-//        System.Random random = new System.Random();
-//        int index = random.Next(_spawnLocations.Count);
-//        return _spawnLocations[index];
-//    }
-//}
-//
-//public class Pool : MonoBehaviour
-//{
-//    private GameObject[] _objects;
-//    private int _activeCount;
-//    private bool _destroyIfFull = false;
-//
-//    public Pool(GameObject subject, int size, bool destroyIfFull)
-//    {
-//        _objects = new GameObject[size];
-//        for (int i = 0; i < size; i++)
-//        {
-//            _objects[i] = GameObject.Instantiate(subject, transform);
-//            _objects[i].SetActive(false);
-//        }
-//        _activeCount = 0;
-//        _destroyIfFull = destroyIfFull;
-//    }
-//
-//    public GameObject Instantiate()
-//    {
-//        if (_activeCount < _objects.Length)
-//        {
-//            _objects[_activeCount].SetActive(true);
-//            _activeCount++;
-//            return _objects[_activeCount - 1];
-//        }
-//        else if (_destroyIfFull)
-//        {
-//            Destroy(_objects[0]);
-//            return Instantiate();
-//        }
-//        else return null;
-//    }
-//
-//    public void Destroy(GameObject victim)
-//    {
-//        int victimIndex = System.Array.IndexOf(_objects, victim);
-//        (_objects[victimIndex], _objects[_activeCount - 1]) = (_objects[_activeCount - 1], _objects[victimIndex]);
-//        _activeCount--;
-//        victim.SetActive(false);
-//    }
-//}

@@ -22,7 +22,6 @@ namespace UI
         {
             Vector2 direction = (Vector2)(target.position + offset - Camera.main.ScreenToWorldPoint(_rt.position)).normalized;
             GetComponent<Rigidbody2D>().velocity = direction * speed;
-            //_rt.position = Camera.main.WorldToScreenPoint((Vector2)target.position + offset);
         }
     }
 }
