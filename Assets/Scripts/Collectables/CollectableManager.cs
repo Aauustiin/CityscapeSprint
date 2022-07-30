@@ -5,14 +5,24 @@ using UnityEngine;
 public class CollectableManager : MonoBehaviour
 {
     [SerializeField] private List<Vector2> spawnLocations;
+    [SerializeField] private float comboBuffer = 5f;
+    
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private RectTransform scoreImage;
-    [SerializeField] private TextMeshProUGUI comboText;
     [SerializeField] private AudioClip collectSfx;
     [SerializeField] private ParticleSystem p;
+
+    [SerializeField] private TextMeshProUGUI[] comboText;
+    [SerializeField] private GameObject[] comboObject;
+    [SerializeField] private GameObject comboMask;
+    [SerializeField] private GameObject outlinedComboText;
+
+    [SerializeField] private float moveStrength;
+
+    private LTDescr maskMove, textMove;
+    
     private int _score;
-    private int _combo = 0;
-    private float _comboBuffer = 5f;
+    private int _combo;
     private bool _timerUnderway = false;
     private float _startTime;
 
@@ -20,58 +30,84 @@ public class CollectableManager : MonoBehaviour
     {
         _score = 0;
         scoreText.text = "0";
+        _combo = 0;
+        foreach (var o in comboObject)
+        {
+            o.SetActive(false);
+            o.transform.position = new Vector3(0f, 600f);
+        }
     }
 
     private void OnEnable()
     {
         EventManager.Restart += Restart;
-        EventManager.GameOver += GameOver;
     }
 
     private void OnDisable()
     {
         EventManager.Restart -= Restart;
-        EventManager.GameOver -= GameOver;
     }
 
     private void Update()
     {
-        if (_timerUnderway && (_comboBuffer <= Time.time - _startTime))
+        // If combo runs out
+        if (_timerUnderway && (comboBuffer <= Time.time - _startTime))
         {
             _combo = 0;
-            comboText.transform.parent.gameObject.SetActive(false);
+            foreach (var cT in comboText)
+            {
+                cT.text = "0";
+            }
+            foreach (var o in comboObject)
+            {
+                o.SetActive(false);
+                o.transform.position = new Vector3(0f, 600f);
+            }
             _timerUnderway = false;
         }
     }
 
-    private void GameOver()
-    {
-    }
-    
     private void Restart()
     {
         _score = 0;
         scoreText.text = "0";
         _combo = 0;
-        comboText.text = "0";
         _timerUnderway = false;
+        foreach (var cT in comboText)
+        {
+            cT.text = "0";
+        }
+        foreach (var o in comboObject)
+        {
+            o.SetActive(false);
+            o.transform.position = new Vector3(0f, 600f);
+        }
     }
 
     public void OnCollectableGrabbed(Vector2 location, Collectable c)
     {
         StartTimer();
-        if (_combo == 1)
-        {
-            Rigidbody2D[] rbs = comboText.transform.parent.GetComponentsInChildren<Rigidbody2D>();
-            Vector2 cPos = Camera.main.WorldToScreenPoint(c.transform.position);
-            foreach (Rigidbody2D rb in rbs)
-            {
-                rb.position = cPos;
-            }
-        }
-        
         _score += _combo;
-        comboText.text = _combo.ToString();
+        foreach (var cT in comboText)
+        {
+            cT.text = _combo.ToString();
+        }
+
+        bool flag = _combo == 1;
+        foreach (var o in comboObject)
+        {
+            o.SetActive(true);
+            if (flag)
+                o.GetComponent<Rigidbody2D>().position = Camera.main.WorldToScreenPoint(c.transform.position);
+        }
+
+        LeanTween.cancel(comboMask);
+        LeanTween.cancel(outlinedComboText);
+        comboMask.LeanMoveLocal(Vector3.zero, 0f);
+        outlinedComboText.LeanMoveLocal(Vector3.zero, 0f);
+        maskMove = comboMask.LeanMoveLocal(Vector3.down * moveStrength, comboBuffer);
+        textMove = outlinedComboText.LeanMoveLocal(Vector3.up * moveStrength, comboBuffer);
+        
         scoreText.text = _score.ToString();
 
         scoreImage.sizeDelta = new Vector2(scoreText.GetRenderedValues().x + 50f, scoreImage.sizeDelta.y);
@@ -80,7 +116,7 @@ public class CollectableManager : MonoBehaviour
 
         p.transform.position = location + new Vector2(0f, 0.25f);
         p.Clear();
-        p.Play();
+        //p.Play();
         EventManager.TriggerSoundEffect(collectSfx);
 
         SpawnCollectable(spawnLocation, c);
@@ -91,8 +127,6 @@ public class CollectableManager : MonoBehaviour
 
     private void StartTimer()
     {
-        comboText.transform.parent.gameObject.SetActive(true);
-        
         _combo++;
         _startTime = Time.time;
         _timerUnderway = true;
