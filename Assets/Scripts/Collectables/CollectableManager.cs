@@ -2,16 +2,12 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-// Collectable spawner
-// Score tracker
-// Combo system
-
 public class CollectableManager : MonoBehaviour
 {
     [SerializeField] private List<Vector2> spawnLocations;
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private RectTransform scoreImage;
-    [SerializeField] private List<GameObject> comboIcons;
+    [SerializeField] private TextMeshProUGUI comboText;
     [SerializeField] private AudioClip collectSfx;
     [SerializeField] private ParticleSystem p;
     private int _score;
@@ -42,9 +38,9 @@ public class CollectableManager : MonoBehaviour
     {
         if (_timerUnderway && (_comboBuffer <= Time.time - _startTime))
         {
-            _combo--;
+            _combo = 0;
+            comboText.transform.parent.gameObject.SetActive(false);
             _timerUnderway = false;
-            comboIcons[_combo].SetActive(false);
         }
     }
 
@@ -57,20 +53,30 @@ public class CollectableManager : MonoBehaviour
         _score = 0;
         scoreText.text = "0";
         _combo = 0;
+        comboText.text = "0";
         _timerUnderway = false;
     }
 
     public void OnCollectableGrabbed(Vector2 location, Collectable c)
     {
         StartTimer();
-        comboIcons[_combo  - 1].SetActive(true);
-        comboIcons[_combo - 1].GetComponent<Rigidbody2D>().position = Camera.main.WorldToScreenPoint(c.transform.position);
+        if (_combo == 1)
+        {
+            Rigidbody2D[] rbs = comboText.transform.parent.GetComponentsInChildren<Rigidbody2D>();
+            Vector2 cPos = Camera.main.WorldToScreenPoint(c.transform.position);
+            foreach (Rigidbody2D rb in rbs)
+            {
+                rb.position = cPos;
+            }
+        }
+        
         _score += _combo;
+        comboText.text = _combo.ToString();
         scoreText.text = _score.ToString();
 
         scoreImage.sizeDelta = new Vector2(scoreText.GetRenderedValues().x + 50f, scoreImage.sizeDelta.y);
         Vector2 spawnLocation = PickRandomSpawnLocation();
-        FindObjectOfType<Timer>().AddExtraTime(_combo);
+        FindObjectOfType<Timer>().AddExtraTime(3);
 
         p.transform.position = location + new Vector2(0f, 0.25f);
         p.Clear();
@@ -85,7 +91,9 @@ public class CollectableManager : MonoBehaviour
 
     private void StartTimer()
     {
-        if (_combo != 3) _combo++;
+        comboText.transform.parent.gameObject.SetActive(true);
+        
+        _combo++;
         _startTime = Time.time;
         _timerUnderway = true;
     }
