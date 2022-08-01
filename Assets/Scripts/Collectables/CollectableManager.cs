@@ -19,8 +19,6 @@ public class CollectableManager : MonoBehaviour
 
     [SerializeField] private float moveStrength;
 
-    private LTDescr maskMove, textMove;
-    
     private int _score;
     private int _combo;
     private bool _timerUnderway = false;
@@ -34,7 +32,7 @@ public class CollectableManager : MonoBehaviour
         foreach (var o in comboObject)
         {
             o.SetActive(false);
-            o.transform.position = new Vector3(0f, 600f);
+            //o.transform.position = new Vector3(0f, 600f);
         }
     }
 
@@ -61,7 +59,7 @@ public class CollectableManager : MonoBehaviour
             foreach (var o in comboObject)
             {
                 o.SetActive(false);
-                o.transform.position = new Vector3(0f, 600f);
+                //o.transform.position = new Vector3(0f, 600f);
             }
             _timerUnderway = false;
         }
@@ -80,7 +78,7 @@ public class CollectableManager : MonoBehaviour
         foreach (var o in comboObject)
         {
             o.SetActive(false);
-            o.transform.position = new Vector3(0f, 600f);
+            //o.transform.position = new Vector3(0f, 600f);
         }
     }
 
@@ -97,16 +95,16 @@ public class CollectableManager : MonoBehaviour
         foreach (var o in comboObject)
         {
             o.SetActive(true);
-            if (flag)
-                o.GetComponent<Rigidbody2D>().position = Camera.main.WorldToScreenPoint(c.transform.position);
+            //if (flag)
+                //o.GetComponent<Rigidbody2D>().position = Camera.main.WorldToScreenPoint(c.transform.position);
         }
 
         LeanTween.cancel(comboMask);
         LeanTween.cancel(outlinedComboText);
         comboMask.LeanMoveLocal(Vector3.zero, 0f);
         outlinedComboText.LeanMoveLocal(Vector3.zero, 0f);
-        maskMove = comboMask.LeanMoveLocal(Vector3.down * moveStrength, comboBuffer);
-        textMove = outlinedComboText.LeanMoveLocal(Vector3.up * moveStrength, comboBuffer);
+        comboMask.LeanMoveLocal(Vector3.down * moveStrength, comboBuffer);
+        outlinedComboText.LeanMoveLocal(Vector3.up * moveStrength, comboBuffer);
         
         scoreText.text = _score.ToString();
 
