@@ -7,7 +7,7 @@ public class CollectableManager : MonoBehaviour
 {
     [SerializeField] private List<Vector2> spawnLocations;
     [SerializeField] private TextMeshProUGUI scoreText;
-    [SerializeField] private RectTransform scoreImage;
+    [SerializeField] private RectTransform timerMask;
 
     private int _score;
     private Vector2 _startingPosition;
@@ -42,7 +42,7 @@ public class CollectableManager : MonoBehaviour
     {
         _score++;
         scoreText.text = _score.ToString();
-        scoreImage.sizeDelta = new Vector2(scoreText.GetRenderedValues().x + 50f, scoreImage.sizeDelta.y);
+        timerMask.sizeDelta = new Vector2(scoreText.GetRenderedValues().x + 50f, timerMask.sizeDelta.y);
         
         FindObjectOfType<Timer>().AddExtraTime(3);
 
@@ -65,7 +65,7 @@ public class CollectableManager : MonoBehaviour
     {
         _score = 0;
         scoreText.text = "0";
-        scoreImage.sizeDelta = new Vector2(100f, scoreImage.sizeDelta.y);
+        timerMask.sizeDelta = new Vector2(100f, timerMask.sizeDelta.y);
     }
 
     public int GetCollectablesGrabbed()
