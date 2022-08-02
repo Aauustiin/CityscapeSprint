@@ -27308,7 +27308,7 @@ MonoBehaviour:
   - {x: 8.75, y: 2.75}
   - {x: -8.75, y: -4.25}
   scoreText: {fileID: 772928945}
-  timerMask: {fileID: 2090039475}
+  scoreMask: {fileID: 2090039475}
 --- !u!4 &2027439504
 Transform:
   m_ObjectHideFlags: 0
