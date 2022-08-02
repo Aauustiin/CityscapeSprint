@@ -10,9 +10,13 @@ public class CollectableManager : MonoBehaviour
     [SerializeField] private RectTransform scoreImage;
 
     private int _score;
+    private Vector2 _startingPosition;
+    private Transform _collectableParent;
 
     private void Start()
     {
+        _collectableParent = GetComponentInChildren<Collectable>().transform.parent;
+        _startingPosition = _collectableParent.position;
         ResetScore();
     }
 
@@ -28,6 +32,9 @@ public class CollectableManager : MonoBehaviour
 
     private void Restart()
     {
+        spawnLocations.Add(_collectableParent.position);
+        spawnLocations.Remove(_startingPosition);
+        _collectableParent.position = _startingPosition;
         ResetScore();
     }
 

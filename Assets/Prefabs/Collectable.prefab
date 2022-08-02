@@ -168,6 +168,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: Explosion
       objectReference: {fileID: 0}
+    - target: {fileID: 4178795682472755814, guid: e10646debe6c3054195caa87cb7fd9fc, type: 3}
+      propertyPath: ClampVelocityModule.enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4178795682472755814, guid: e10646debe6c3054195caa87cb7fd9fc, type: 3}
+      propertyPath: VelocityModule.radial.scalar
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4178795682472755814, guid: e10646debe6c3054195caa87cb7fd9fc, type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key1.b
+      value: 0.92549026
+      objectReference: {fileID: 0}
+    - target: {fileID: 4178795682472755814, guid: e10646debe6c3054195caa87cb7fd9fc, type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key1.g
+      value: 0.9686275
+      objectReference: {fileID: 0}
+    - target: {fileID: 4178795682472755814, guid: e10646debe6c3054195caa87cb7fd9fc, type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key1.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8555922739457735590, guid: e10646debe6c3054195caa87cb7fd9fc, type: 3}
       propertyPath: m_RootOrder
       value: 1
