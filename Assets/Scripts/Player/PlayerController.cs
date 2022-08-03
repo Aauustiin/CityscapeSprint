@@ -127,7 +127,6 @@ namespace Player
                     else if (collisionNormal == -runDirection)
                     {
                         HitSide?.Invoke();
-                        EventManager.TriggerSoundEffect(grabSfx);
                     }
                     break;
                 }

@@ -39,15 +39,9 @@ namespace Player
             _player.SwapState(new JumpingState(_player, _player.jumpVelocity));
         }
 
-        private void OnHitSide()
-        {
-            _player.Flip();
-        }
-
         public void OnEntry()
         {
             _player.LeftGround += OnFall;
-            _player.HitSide += OnHitSide;
 
             if (!_slid)
             {
@@ -68,7 +62,6 @@ namespace Player
         public void OnExit()
         {
             _player.LeftGround -= OnFall;
-            _player.HitSide -= OnHitSide;
             _player.GetComponent<BoxCollider2D>().size = new Vector2(0.08f, 0.08f);
             _player.GetComponent<BoxCollider2D>().offset = new Vector2(0f, 0f);
         }

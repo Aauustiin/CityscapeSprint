@@ -37,15 +37,9 @@ namespace Player
             _player.SwapState(new JumpingState(_player, 0f));
         }
 
-        private void OnHitSide()
-        {
-            _player.Flip();
-        }
-
         public void OnEntry()
         {
             _player.LeftGround += OnFall;
-            _player.HitSide += OnHitSide;
             _player.GetComponent<Animator>().Play("Base Layer.run", 0, 0);
             _player.StartCoroutine(Utils.ExecuteAfterSeconds(() => _player.dust.Stop(), 0.5f));
         }
@@ -53,7 +47,6 @@ namespace Player
         public void OnExit()
         {
             _player.LeftGround -= OnFall;
-            _player.HitSide -= OnHitSide;
         }
     }
 }

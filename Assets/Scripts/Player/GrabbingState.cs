@@ -45,16 +45,9 @@ namespace Player
             return (float)dGravity;
         }
 
-        private void OnHitGround()
-        {
-            _player.Flip();
-            _player.SwapState(new RunningState(_player));
-        }
-
         public void OnEntry()
         {
             _player.LeftSide += OnLeftSide;
-            _player.HitGround += OnHitGround;
             _startTime = Time.time;
             _player.GetComponent<Animator>().Play("Base Layer.grab", 0, 0);
             _player.rb.velocity = Vector2.zero;
@@ -63,7 +56,6 @@ namespace Player
         public void OnExit()
         {
             _player.LeftSide -= OnLeftSide;
-            _player.HitGround -= OnHitGround;
             _player.rb.gravityScale = 1;
         }
     }
