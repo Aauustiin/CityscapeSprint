@@ -19,8 +19,8 @@ namespace UI
         private void Start()
         {
             StartCoroutine(Utils.ExecuteWhenTrue(() => {
-                musicSlider.value = SaveSystem.Instance.Data.MusicVolume;
-                sfxSlider.value = SaveSystem.Instance.Data.EffectsVolume;
+                musicSlider.value = SaveSystem.Instance.data.musicVolume;
+                sfxSlider.value = SaveSystem.Instance.data.effectsVolume;
                 _finishedInitialising = true;
             },
             SaveSystem.Instance.finishedInitialising));

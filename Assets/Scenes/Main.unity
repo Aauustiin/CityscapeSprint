@@ -2506,11 +2506,9 @@ MonoBehaviour:
   controlsMenu: {fileID: 746032938}
   pauseMenu: {fileID: 127933781}
   finishMenu: {fileID: 673781718}
-  levelSelectMenu: {fileID: 0}
-  namePrompt: {fileID: 0}
   leaderboardMenu: {fileID: 2076984594}
-  demoEndMenu: {fileID: 0}
   commonBackground: {fileID: 392575996}
+  hud: {fileID: 1573763722}
   selectSound: {fileID: 8300000, guid: ab4ce81fc477fa24fa410bf57569f389, type: 3}
   interactSound: {fileID: 8300000, guid: bd8c80c7b13ca5949b68ff1b8e14edbe, type: 3}
 --- !u!4 &188781920
@@ -6535,7 +6533,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1485583035}
         m_TargetAssemblyTypeName: LevelLoader, Assembly-CSharp
-        m_MethodName: UnloadLevel
+        m_MethodName: EndGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7375,17 +7373,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   finishedInitialising: 0
   audioPlayer: {fileID: 290161793}
-  uiManager: {fileID: 188781919}
-  Data:
-    ResolutionX: 0
-    ResolutionY: 0
-    Windowed: 0
-    Borderless: 0
-    MusicVolume: 0
-    EffectsVolume: 0
-    Bindings: 
-    HighScore: 0
-    PlayerId: 
+  data:
+    resolutionX: 0
+    resolutionY: 0
+    windowed: 0
+    borderless: 0
+    musicVolume: 0
+    effectsVolume: 0
+    bindings: 
+    highScore: 0
+    playerId: 
 --- !u!4 &669823588
 Transform:
   m_ObjectHideFlags: 0
@@ -13095,6 +13092,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1485583035}
+        m_TargetAssemblyTypeName: LevelLoader, Assembly-CSharp
+        m_MethodName: StartGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1233518766
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15407,7 +15416,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c54717af50711394c90ff6d3c9a4fe98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coreLevelComponents: {fileID: 0}
+  coreLevelComponents: {fileID: 1762008499}
+  level: {fileID: 816082128}
 --- !u!1 &1540856213
 GameObject:
   m_ObjectHideFlags: 0
@@ -19657,7 +19667,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1485583035}
         m_TargetAssemblyTypeName: LevelLoader, Assembly-CSharp
-        m_MethodName: UnloadLevel
+        m_MethodName: EndGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

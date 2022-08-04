@@ -10,8 +10,8 @@ public class AudioPlayer : MonoBehaviour
     private void Start()
     {
         StartCoroutine(Utils.ExecuteWhenTrue(() => {
-            SetEffectsVolume(SaveSystem.Instance.Data.EffectsVolume);
-            SetMusicVolume(SaveSystem.Instance.Data.MusicVolume);
+            SetEffectsVolume(SaveSystem.Instance.data.effectsVolume);
+            SetMusicVolume(SaveSystem.Instance.data.musicVolume);
         },
         SaveSystem.Instance.finishedInitialising));
     }

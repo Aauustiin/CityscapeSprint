@@ -7,10 +7,7 @@ public class SaveSystem : MonoBehaviour
     public static SaveSystem Instance;
 
     public bool finishedInitialising;
-
     [SerializeField] private AudioPlayer audioPlayer;
-    [SerializeField] private UI.UiManager uiManager;
-
     private string _path;
     private string _persistentPath;
 
@@ -26,17 +23,16 @@ public class SaveSystem : MonoBehaviour
         {
             using StreamReader reader = new StreamReader(_path);
             string json = reader.ReadToEnd();
-            Data = JsonUtility.FromJson<SaveData>(json);
+            data = JsonUtility.FromJson<SaveData>(json);
         }
         else
         {
             SaveDefaultData();
-            uiManager.OpenNamePrompt();
         }
         finishedInitialising = true;
     }
 
-    public SaveData Data;
+    public SaveData data;
 
     private void SetPaths()
     {
@@ -44,63 +40,61 @@ public class SaveSystem : MonoBehaviour
         _persistentPath = Application.persistentDataPath + Path.AltDirectorySeparatorChar + "SaveData.json";
     }
 
-    public void SaveDefaultData()
+    private void SaveDefaultData()
     {
-        Data.ResolutionX = Screen.currentResolution.width;
-        Data.ResolutionY = Screen.currentResolution.height;
-        Data.Windowed = false;
-        Data.Borderless = false;
+        data.resolutionX = Screen.currentResolution.width;
+        data.resolutionY = Screen.currentResolution.height;
+        data.windowed = false;
+        data.borderless = false;
 
-        Data.MusicVolume = audioPlayer.defaultMusicVolume;
-        Data.EffectsVolume = audioPlayer.defaultEffectsVolume;
+        data.musicVolume = audioPlayer.defaultMusicVolume;
+        data.effectsVolume = audioPlayer.defaultEffectsVolume;
 
-        Data.Bindings = "";
-
-        Data.PlayerId = "";
-
-        Data.HighScore = 0;
+        data.bindings = "";
+        data.playerId = "";
+        data.highScore = 0;
 
         SaveData();
     }
 
-    public void SaveSoundSettings(float MusicVolume, float EffectsVolume)
+    public void SaveSoundSettings(float musicVolume, float effectsVolume)
     {
-        Data.MusicVolume = MusicVolume;
-        Data.EffectsVolume = EffectsVolume;
+        data.musicVolume = musicVolume;
+        data.effectsVolume = effectsVolume;
         SaveData();
     }
 
-    public void SaveVideoSettings(int ResolutionX, int ResolutionY, bool Windowed, bool Borderless)
+    public void SaveVideoSettings(int resolutionX, int resolutionY, bool windowed, bool borderless)
     {
-        Data.ResolutionX = ResolutionX;
-        Data.ResolutionY = ResolutionY;
-        Data.Windowed = Windowed;
-        Data.Borderless = Borderless;
+        data.resolutionX = resolutionX;
+        data.resolutionY = resolutionY;
+        data.windowed = windowed;
+        data.borderless = borderless;
         SaveData();
     }
 
     public void SaveControlSettings(string bindings)
     {
-        Data.Bindings = bindings;
+        data.bindings = bindings;
         SaveData();
     }
 
     public void SaveHighScore(int score)
     {
-        Data.HighScore = score;
+        data.highScore = score;
         SaveData();
     }
 
     public void SavePlayerId(string playerId)
     {
-        Data.PlayerId = playerId;
+        data.playerId = playerId;
         SaveData();
     }
 
     private void SaveData()
     {
         string savePath = _path;
-        string json = JsonUtility.ToJson(Data);
+        string json = JsonUtility.ToJson(data);
         using StreamWriter writer = new StreamWriter(savePath);
         writer.Write(json);
     }
@@ -108,17 +102,15 @@ public class SaveSystem : MonoBehaviour
 
 [Serializable] public class SaveData 
 {
-    public int ResolutionX;
-    public int ResolutionY;
-    public bool Windowed;
-    public bool Borderless;
+    public int resolutionX;
+    public int resolutionY;
+    public bool windowed;
+    public bool borderless;
 
-    public float MusicVolume;
-    public float EffectsVolume;
+    public float musicVolume;
+    public float effectsVolume;
 
-    public string Bindings;
-
-    public int HighScore;
-
-    public string PlayerId;
+    public string bindings;
+    public int highScore;
+    public string playerId;
 }

@@ -17,11 +17,9 @@ namespace UI
         [SerializeField] private GameObject controlsMenu;
         [SerializeField] private GameObject pauseMenu;
         [SerializeField] private GameObject finishMenu;
-        [SerializeField] private GameObject levelSelectMenu;
-        [SerializeField] private GameObject namePrompt;
         [SerializeField] private GameObject leaderboardMenu;
-        [SerializeField] private GameObject demoEndMenu;
         [SerializeField] private GameObject commonBackground;
+        [SerializeField] private GameObject hud;
 
         [SerializeField] private AudioClip selectSound;
         [SerializeField] private AudioClip interactSound;
@@ -56,6 +54,7 @@ namespace UI
             {
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
+                hud.SetActive(false);
                 EventManager.TriggerMenuOpen();
             }
             menu.SetActive(true);
@@ -72,6 +71,7 @@ namespace UI
             commonBackground.SetActive(false);
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
+            hud.SetActive(true);
             EventManager.TriggerMenuClose();
         }
 
@@ -82,6 +82,20 @@ namespace UI
                 CloseMenu();
             else
                 _menuHistory.Peek().SetActive(true);
+        }
+        
+        public void OnPause()
+        {
+            EventManager.TriggerSoundEffect(interactSound);
+
+            if (_menuHistory.Count == 0)
+                OpenMenu(pauseMenu);
+            else if (_menuHistory.Peek() == pauseMenu)
+                CloseMenu();
+            else if (_menuHistory.Peek() == mainMenu)
+                Application.Quit();
+            else if (_menuHistory.Count > 1)
+                Back();
         }
         
         public void OpenSettingsMenu()
@@ -109,38 +123,9 @@ namespace UI
             OpenMenu(controlsMenu);
         }
 
-        public void OpenNamePrompt()
-        {
-            OpenMenu(namePrompt);
-        }
-
         public void OpenLeaderboardMenu()
         {
             OpenMenu(leaderboardMenu);
-        }
-
-        public void OpenDemoEndMenu()
-        {
-            OpenMenu(demoEndMenu);
-        }
-
-        public void OnPause()
-        {
-            EventManager.TriggerSoundEffect(interactSound);
-
-            if (_menuHistory.Count == 0)
-                OpenMenu(pauseMenu);
-            else if (_menuHistory.Peek() == pauseMenu)
-                CloseMenu();
-            else if (_menuHistory.Peek() == mainMenu)
-                Application.Quit();
-            else if (_menuHistory.Count > 1)
-                Back();
-        }
-
-        public void OpenLevelSelect()
-        {
-            OpenMenu(levelSelectMenu);
         }
         
         public void OpenFinishMenu()

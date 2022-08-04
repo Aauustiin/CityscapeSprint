@@ -17,7 +17,7 @@ namespace UI
             CollectableManager collectableManager = FindObjectOfType<CollectableManager>();
             int score = collectableManager.GetCollectablesGrabbed();
             scoreText.text = score.ToString();
-            int oldHighScore = SaveSystem.Instance.Data.HighScore;
+            int oldHighScore = SaveSystem.Instance.data.highScore;
             int newHighScore;
             if (score > oldHighScore) newHighScore = score;
             else newHighScore = oldHighScore;

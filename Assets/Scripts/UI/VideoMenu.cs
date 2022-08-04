@@ -27,10 +27,10 @@ namespace UI
             InitialiseDropdown();
 
             StartCoroutine(Utils.ExecuteWhenTrue(() => {
-                windowedToggle.isOn = SaveSystem.Instance.Data.Windowed;
+                windowedToggle.isOn = SaveSystem.Instance.data.windowed;
                 if (windowedToggle.isOn) EnableBorderlessOption();
                 else DisableBorderlessOption();
-                borderlessToggle.isOn = SaveSystem.Instance.Data.Borderless;
+                borderlessToggle.isOn = SaveSystem.Instance.data.borderless;
             },
             SaveSystem.Instance.finishedInitialising));
         }

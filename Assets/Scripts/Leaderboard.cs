@@ -29,7 +29,7 @@ public class Leaderboard : MonoBehaviour
     public IEnumerator SubmitPlayerScore(int score)
     {
         bool done = false;
-        string playerID = SaveSystem.Instance.Data.PlayerId;
+        string playerID = SaveSystem.Instance.data.playerId;
         LootLockerSDKManager.SubmitScore(playerID, score, leaderboardId, (response) =>
         {
             if (response.success)

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Collectables;
 using TMPro;
@@ -17,6 +18,8 @@ public class CollectableManager : MonoBehaviour
     {
         _collectableParent = GetComponentInChildren<Collectable>().transform.parent;
         _startingPosition = _collectableParent.position;
+        Debug.Log("Collectable parent: "  + _collectableParent.name);
+        Debug.Log("Starting Position: " + _startingPosition);
         ResetScore();
     }
 
