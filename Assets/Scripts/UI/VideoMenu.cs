@@ -15,6 +15,7 @@ namespace UI
         [SerializeField] private TextMeshProUGUI borderlessLabel;
         [SerializeField] private Image borderlessBackground;
         [SerializeField] private Image borderlessCheckmark;
+        [SerializeField] private Button applyButton;
 
         private void OnEnable()
         {
@@ -36,6 +37,13 @@ namespace UI
 
         private void DisableBorderlessOption()
         {
+            borderlessToggle.enabled = false;
+            Navigation wN = windowedToggle.navigation;
+            wN.selectOnDown = applyButton;
+            windowedToggle.navigation = wN;
+            Navigation aN = applyButton.navigation;
+            aN.selectOnUp = windowedToggle;
+            applyButton.navigation = aN;
             borderlessToggle.interactable = false;
             borderlessLabel.alpha = 0.5f;
             borderlessBackground.color = new Color(borderlessBackground.color.r, borderlessBackground.color.g, borderlessBackground.color.b, 0.5f);
@@ -44,6 +52,13 @@ namespace UI
 
         private void EnableBorderlessOption()
         {
+            borderlessToggle.enabled = true;
+            Navigation wN = windowedToggle.navigation;
+            wN.selectOnDown = borderlessToggle;
+            windowedToggle.navigation = wN;
+            Navigation aN = applyButton.navigation;
+            aN.selectOnUp = borderlessToggle;
+            applyButton.navigation = aN;
             borderlessToggle.interactable = true;
             borderlessLabel.alpha = 1f;
             borderlessBackground.color = new Color(borderlessBackground.color.r, borderlessBackground.color.g, borderlessBackground.color.b, 1f);

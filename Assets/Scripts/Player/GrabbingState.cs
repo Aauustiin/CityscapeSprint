@@ -50,6 +50,7 @@ namespace Player
             _player.LeftSide += OnLeftSide;
             _startTime = Time.time;
             _player.GetComponent<Animator>().Play("Base Layer.grab", 0, 0);
+            EventManager.TriggerSoundEffect(_player.grabSfx);
             _player.rb.velocity = Vector2.zero;
         }
 
