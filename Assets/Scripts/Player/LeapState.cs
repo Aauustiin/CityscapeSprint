@@ -67,7 +67,9 @@ namespace Player
             _player.HitGround += OnLand;
             _player.HitSide += OnHitSide;
             _player.rb.drag = 0;
-            _player.GetComponent<Animator>().Play("Base Layer.jump", 0, 0);
+            Animator anim = _player.GetComponent<Animator>();
+            if (anim.isActiveAndEnabled)
+                _player.GetComponent<Animator>().Play("Base Layer.jump", 0, 0);
             if (!_jumped)
             {
                 _player.rb.AddForce(_player.runDirection * -_player.leapForce);

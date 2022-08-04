@@ -40,7 +40,9 @@ namespace Player
         public void OnEntry()
         {
             _player.LeftGround += OnFall;
-            _player.GetComponent<Animator>().Play("Base Layer.run", 0, 0);
+            Animator anim = _player.GetComponent<Animator>();
+            if (anim.isActiveAndEnabled)
+                _player.GetComponent<Animator>().Play("Base Layer.run", 0, 0);
             _player.StartCoroutine(Utils.ExecuteAfterSeconds(() => _player.dust.Stop(), 0.5f));
         }
 

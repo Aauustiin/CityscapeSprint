@@ -35,10 +35,13 @@ public class CollectableManager : MonoBehaviour
 
     private void Restart()
     {
-        spawnLocations.Add(_collectableParent.position);
-        spawnLocations.Remove(_startingPosition);
-        _collectableParent.position = _startingPosition;
-        ResetScore();
+        StartCoroutine(Utils.ExecuteWhenTrue(() =>
+        {
+            spawnLocations.Add(_collectableParent.position);
+            spawnLocations.Remove(_startingPosition);
+            _collectableParent.position = _startingPosition;
+            ResetScore();
+        }, _collectableParent != null));
     }
 
     public void OnCollectableGrabbed(Collectable c)
