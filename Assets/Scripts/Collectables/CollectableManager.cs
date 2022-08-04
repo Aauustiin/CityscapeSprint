@@ -74,4 +74,9 @@ public class CollectableManager : MonoBehaviour
     {
         return _score;
     }
+
+    public void SetSpawnLocations(List<Vector2> locations)
+    {
+        spawnLocations = locations;
+    }
 }

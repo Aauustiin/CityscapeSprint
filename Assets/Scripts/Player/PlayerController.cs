@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -69,7 +68,7 @@ namespace Player
             EventManager.ActionInput -= OnAction;
         }
 
-        public void Restart()
+        private void Restart()
         {
             rb.velocity = Vector2.zero;
             rb.position = _startPosition;
@@ -96,7 +95,7 @@ namespace Player
             StartCoroutine(Utils.ExecuteAfterSeconds(() => inputCancelledBuff = false, slideWindow));
         }
 
-        public void OnAction(InputAction.CallbackContext value)
+        private void OnAction(InputAction.CallbackContext value)
         {
             IPlayerState newState = _currentState.HandleAction(value);
             SwapState(newState);
@@ -107,6 +106,13 @@ namespace Player
             _currentState.OnExit();
             _currentState = newState;
             _currentState.OnEntry();
+        }
+        
+        private void Flip()
+        {
+            runDirection = -runDirection;
+            sprite.flipX = !sprite.flipX;
+            rb.velocity = new Vector2(-_velocityLastFrame.x, _velocityLastFrame.y);
         }
 
         private void OnCollisionEnter2D(Collision2D collision)
@@ -162,13 +168,6 @@ namespace Player
                     LeftSide?.Invoke();
                 }
             }
-        }
-
-        public void Flip()
-        {
-            runDirection = -runDirection;
-            sprite.flipX = !sprite.flipX;
-            rb.velocity = new Vector2(-_velocityLastFrame.x, _velocityLastFrame.y);
         }
     }
 }
