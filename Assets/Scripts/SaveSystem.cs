@@ -1,17 +1,14 @@
 using UnityEngine;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using UnityEngine.InputSystem;
 
 public class SaveSystem : MonoBehaviour
 {
     public static SaveSystem Instance;
 
-    public bool FinishedInitialising;
+    public bool finishedInitialising;
 
     [SerializeField] private AudioPlayer audioPlayer;
-    [SerializeField] private LevelLoader levelLoader;
     [SerializeField] private UI.UiManager uiManager;
 
     private string _path;
@@ -23,7 +20,7 @@ public class SaveSystem : MonoBehaviour
             Destroy(gameObject);
         else Instance = this;
 
-        FinishedInitialising = false;
+        finishedInitialising = false;
         SetPaths();
         if (File.Exists(_path))
         {
@@ -36,7 +33,7 @@ public class SaveSystem : MonoBehaviour
             SaveDefaultData();
             uiManager.OpenNamePrompt();
         }
-        FinishedInitialising = true;
+        finishedInitialising = true;
     }
 
     public SaveData Data;
@@ -61,13 +58,7 @@ public class SaveSystem : MonoBehaviour
 
         Data.PlayerId = "";
 
-        List<int> highScores = new List<int>() { };
-        int levelCount = levelLoader.GetLevelCount();
-        for(int i = 0; i < levelCount; i++)
-        {
-            highScores.Add(0);
-        }
-        Data.HighScores = highScores.ToArray();
+        Data.HighScore = 0;
 
         SaveData();
     }
@@ -94,9 +85,9 @@ public class SaveSystem : MonoBehaviour
         SaveData();
     }
 
-    public void SaveHighScore(int level, int score)
+    public void SaveHighScore(int score)
     {
-        Data.HighScores[level] = score;
+        Data.HighScore = score;
         SaveData();
     }
 
@@ -127,7 +118,7 @@ public class SaveSystem : MonoBehaviour
 
     public string Bindings;
 
-    public int[] HighScores;
+    public int HighScore;
 
     public string PlayerId;
 }

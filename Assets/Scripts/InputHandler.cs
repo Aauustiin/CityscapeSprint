@@ -14,7 +14,7 @@ public class InputHandler : MonoBehaviour
         StartCoroutine(Utils.ExecuteWhenTrue(() => {
             inputActionAsset.LoadBindingOverridesFromJson(SaveSystem.Instance.Data.Bindings);
         },
-        SaveSystem.Instance.FinishedInitialising));
+        SaveSystem.Instance.finishedInitialising));
     }
 
     public void OnAction(InputAction.CallbackContext value)

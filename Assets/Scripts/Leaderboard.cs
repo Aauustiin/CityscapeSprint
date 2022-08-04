@@ -6,6 +6,7 @@ using LootLocker.Requests;
 public class Leaderboard : MonoBehaviour
 {
     [SerializeField] private LevelLoader levelLoader;
+    [SerializeField] private int leaderboardId;
 
     private void OnEnable()
     {
@@ -28,9 +29,8 @@ public class Leaderboard : MonoBehaviour
     public IEnumerator SubmitPlayerScore(int score)
     {
         bool done = false;
-        int LeaderboardID = levelLoader.GetLeaderboardId();
         string playerID = SaveSystem.Instance.Data.PlayerId;
-        LootLockerSDKManager.SubmitScore(playerID, score, LeaderboardID, (response) =>
+        LootLockerSDKManager.SubmitScore(playerID, score, leaderboardId, (response) =>
         {
             if (response.success)
             {
@@ -87,8 +87,7 @@ public class Leaderboard : MonoBehaviour
     public IEnumerator FetchLeaderboardHighScores(int numEntries, LeaderboardResponse lResponse)
     {
         bool done = false;
-        int LeaderboardID = levelLoader.GetLeaderboardId();
-        LootLockerSDKManager.GetScoreListMain(LeaderboardID, numEntries, 0, (response) => 
+        LootLockerSDKManager.GetScoreListMain(leaderboardId, numEntries, 0, (response) => 
         {
             if (response.success)
             {

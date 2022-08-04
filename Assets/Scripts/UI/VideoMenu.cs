@@ -32,7 +32,7 @@ namespace UI
                 else DisableBorderlessOption();
                 borderlessToggle.isOn = SaveSystem.Instance.Data.Borderless;
             },
-            SaveSystem.Instance.FinishedInitialising));
+            SaveSystem.Instance.finishedInitialising));
         }
 
         private void DisableBorderlessOption()

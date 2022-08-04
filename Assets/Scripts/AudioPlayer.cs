@@ -13,7 +13,7 @@ public class AudioPlayer : MonoBehaviour
             SetEffectsVolume(SaveSystem.Instance.Data.EffectsVolume);
             SetMusicVolume(SaveSystem.Instance.Data.MusicVolume);
         },
-        SaveSystem.Instance.FinishedInitialising));
+        SaveSystem.Instance.finishedInitialising));
     }
     
     private void OnEnable()

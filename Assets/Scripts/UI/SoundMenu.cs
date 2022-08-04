@@ -23,7 +23,7 @@ namespace UI
                 sfxSlider.value = SaveSystem.Instance.Data.EffectsVolume;
                 _finishedInitialising = true;
             },
-            SaveSystem.Instance.FinishedInitialising));
+            SaveSystem.Instance.finishedInitialising));
         }
 
         public void ResetVolume()
