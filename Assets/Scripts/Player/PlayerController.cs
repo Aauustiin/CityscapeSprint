@@ -70,13 +70,16 @@ namespace Player
 
         private void Restart()
         {
-            rb.velocity = Vector2.zero;
-            rb.position = _startPosition;
-            rb.drag = drag;
-            sprite.flipX = false;
-            _velocityLastFrame = Vector2.zero;
-            runDirection = Vector2.right;
-            SwapState(new RunningState(this));
+            StartCoroutine(Utils.ExecuteWhenTrue(() =>
+            {
+                rb.velocity = Vector2.zero;
+                rb.position = _startPosition;
+                rb.drag = drag;
+                sprite.flipX = false;
+                _velocityLastFrame = Vector2.zero;
+                runDirection = Vector2.right;
+                SwapState(new RunningState(this));
+            }, sprite != null));
         }
 
         private void FixedUpdate()
