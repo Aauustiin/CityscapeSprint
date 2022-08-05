@@ -6,9 +6,7 @@ namespace Player
     public class JumpingState : IPlayerState
     {
         private readonly PlayerController _player;
-        private bool _actionBuffer;
         private bool _jumped;
-        private bool _actionCommitted;
         private readonly float _jumpVelocity;
 
         public JumpingState(PlayerController player, float jumpVelocity = 7.5f)
@@ -16,11 +14,10 @@ namespace Player
             _player = player;
             _jumpVelocity = jumpVelocity;
             _jumped = false;
-            _actionCommitted = false;
         }
 
-        public void StateFixedUpdate() {}
-
+        public void StateFixedUpdate() { }
+        
         public IPlayerState HandleAction(InputAction.CallbackContext value)
         {
             if (value.started)
@@ -28,12 +25,6 @@ namespace Player
                 if (Time.time - _player.timeLastGrounded < _player.coyoteThreshold)
                 {
                     return new JumpingState(_player);
-                }
-                if (!_actionCommitted)
-                {
-                    _actionBuffer = true;
-                    _actionCommitted = true;
-                    _player.StartCoroutine(Utils.ExecuteAfterSeconds(() => _actionBuffer = false, _player.slideWindow));
                 }
             }
             else if (value.canceled)
@@ -46,11 +37,6 @@ namespace Player
                 }
 
                 _player.rb.velocity = velocity;
-
-                if (_actionCommitted)
-                {
-                    _player.SetInputCancelledBuff();
-                }
             }
 
             return this;
@@ -59,7 +45,7 @@ namespace Player
         private void OnLand()
         {
             IPlayerState newState;
-            if (_actionBuffer)
+            if (_player.actionIsHeld)
             {
                 newState = new SlidingState(_player);
             }
@@ -80,10 +66,9 @@ namespace Player
         {
             _player.HitGround += OnLand;
             _player.HitSide += OnHitSide;
-            _player.rb.drag = 0;
-            Animator anim = _player.GetComponent<Animator>();
-            if (anim.isActiveAndEnabled)
-                _player.GetComponent<Animator>().Play("Base Layer.jump", 0, 0);
+            
+            _player.GetComponent<Animator>().Play("Base Layer.jump", 0, 0);
+            _player.rb.drag = 0f;
 
             if (_jumped) return;
 
@@ -101,7 +86,6 @@ namespace Player
             _player.HitGround -= OnLand;
             _player.HitSide -= OnHitSide;
             _player.rb.drag = _player.drag;
-            ;
         }
     }
 }

@@ -49,9 +49,7 @@ namespace Player
         {
             _player.LeftSide += OnLeftSide;
             _startTime = Time.time;
-            Animator anim = _player.GetComponent<Animator>();
-            if (anim.isActiveAndEnabled)
-                _player.GetComponent<Animator>().Play("Base Layer.grab", 0, 0);
+            _player.GetComponent<Animator>().Play("Base Layer.grab", 0, 0);
             EventManager.TriggerSoundEffect(_player.grabSfx);
             _player.rb.velocity = Vector2.zero;
         }

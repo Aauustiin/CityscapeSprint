@@ -6,7 +6,6 @@ namespace Player
     public class LeapState : IPlayerState
     {
         private readonly PlayerController _player;
-        private bool _actionBuffer;
         private bool _jumped;
 
         public LeapState(PlayerController player)
@@ -22,12 +21,7 @@ namespace Player
 
         public IPlayerState HandleAction(InputAction.CallbackContext value)
         {
-            if (value.started)
-            {
-                _actionBuffer = true;
-                _player.StartCoroutine(Utils.ExecuteAfterSeconds(() => _actionBuffer = false, _player.slideWindow));
-            }
-            else if (value.canceled)
+            if (value.canceled)
             {
                 Vector2 velocity = _player.rb.velocity;
 
@@ -45,7 +39,7 @@ namespace Player
         private void OnLand()
         {
             IPlayerState newState;
-            if (_actionBuffer)
+            if (_player.actionIsHeld)
             {
                 newState = new SlidingState(_player);
             }
@@ -66,10 +60,10 @@ namespace Player
         {
             _player.HitGround += OnLand;
             _player.HitSide += OnHitSide;
+            
             _player.rb.drag = 0;
-            Animator anim = _player.GetComponent<Animator>();
-            if (anim.isActiveAndEnabled)
-                _player.GetComponent<Animator>().Play("Base Layer.jump", 0, 0);
+            _player.GetComponent<Animator>().Play("Base Layer.jump", 0, 0);
+            
             if (!_jumped)
             {
                 _player.rb.AddForce(_player.runDirection * -_player.leapForce);

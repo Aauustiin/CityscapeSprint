@@ -48,16 +48,9 @@ namespace Player
                 _player.GetComponent<BoxCollider2D>().size = new Vector2(0.08f, 0.04f);
                 _player.GetComponent<BoxCollider2D>().offset = new Vector2(0f, -0.02f);
                 _player.rb.AddForce(_player.runDirection * _player.rollImpulse, ForceMode2D.Impulse);
-                Animator anim = _player.GetComponent<Animator>();
-                if (anim.isActiveAndEnabled)
-                    _player.GetComponent<Animator>().Play("Base Layer.slide", 0, 0);
+                _player.GetComponent<Animator>().Play("Base Layer.slide", 0, 0);
                 EventManager.TriggerSoundEffect(_player.slideSfx);
                 _slid = true;
-            }
-
-            if (_player.inputCancelledBuff)
-            {
-                _player.SwapState(new RunningState(_player));
             }
         }
 

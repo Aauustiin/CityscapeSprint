@@ -30,7 +30,7 @@ namespace Player
         private Collision2D _lastSurfaceTouched;
         public Vector2 runDirection;
         public float timeLastGrounded;
-        public bool inputCancelledBuff;
+        public bool actionIsHeld = false;
 
         // Assets
         public ParticleSystem dust;
@@ -92,14 +92,13 @@ namespace Player
             _velocityLastFrame = rb.velocity;
         }
 
-        public void SetInputCancelledBuff()
-        {
-            inputCancelledBuff = true;
-            StartCoroutine(Utils.ExecuteAfterSeconds(() => inputCancelledBuff = false, slideWindow));
-        }
-
         private void OnAction(InputAction.CallbackContext value)
         {
+            if (value.performed)
+                actionIsHeld = true;
+            else if (value.canceled)
+                actionIsHeld = false;
+            
             IPlayerState newState = _currentState.HandleAction(value);
             SwapState(newState);
         }
