@@ -134,9 +134,10 @@ MonoBehaviour:
   coyoteThreshold: 0.1
   slideWindow: 0.2
   maxSpeed: 50
+  bumpVelocity: 2.5
   runDirection: {x: 0, y: 0}
   timeLastGrounded: 0
-  inputCancelledBuff: 0
+  actionIsHeld: 0
   dust: {fileID: 7591472620426003354}
   jumpSfx: {fileID: 8300000, guid: a4a09fd30386a104786a6ea4022ed9cd, type: 3}
   slideSfx: {fileID: 8300000, guid: bd8c80c7b13ca5949b68ff1b8e14edbe, type: 3}

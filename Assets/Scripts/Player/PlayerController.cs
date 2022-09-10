@@ -21,8 +21,8 @@ namespace Player
         public float rollImpulse;
         public float drag;
         public float coyoteThreshold;
-        public float slideWindow;
         [SerializeField] private float maxSpeed;
+        [SerializeField] private float bumpVelocity;
 
         // Mutable state.
         private IPlayerState _currentState;
@@ -140,8 +140,21 @@ namespace Player
                 }
                 case "Wall":
                 {
-                    if (collisionNormal != Vector2.down)
+                    if (collisionNormal == -runDirection)
                         Flip();
+                    else if (collisionNormal == Vector2.up)
+                    {
+                        HitGround?.Invoke();
+                        EventManager.TriggerSoundEffect(landSfx);
+                        dust.Play();
+                    }
+                    break;
+                }
+                case "Enemy":
+                {
+                    Vector2 direction = (transform.position - collision.collider.gameObject.transform.position);
+                    direction = direction.normalized;
+                    rb.velocity = direction * bumpVelocity;
                     break;
                 }
             }
@@ -168,6 +181,14 @@ namespace Player
                          (collisionNormal.y < 0f))
                 {
                     LeftSide?.Invoke();
+                }
+            }
+            else if (layerName == "Wall")
+            {
+                if ((collisionNormal == Vector2.up) || (collisionNormal.y > 0f))
+                {
+                    timeLastGrounded = Time.time;
+                    LeftGround?.Invoke();
                 }
             }
         }
