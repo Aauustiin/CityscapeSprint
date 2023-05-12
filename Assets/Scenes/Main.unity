@@ -5097,6 +5097,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1762008500}
     m_Modifications:
+    - target: {fileID: 1596599418587505591, guid: 7bbb8ac8484045440b0533e17ba8253c, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4344812722454846824, guid: 7bbb8ac8484045440b0533e17ba8253c, type: 3}
       propertyPath: m_Name
       value: Player
@@ -9040,7 +9044,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &816082129
 Transform:
   m_ObjectHideFlags: 0
@@ -19459,7 +19463,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1837149919
 Transform:
   m_ObjectHideFlags: 0
