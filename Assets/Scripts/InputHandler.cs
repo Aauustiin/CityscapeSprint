@@ -1,11 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class InputHandler : MonoBehaviour
 {
+    private UiManager _uiManager;
+
     private void Start()
     {
         PlayerInput playerInput = GetComponent<PlayerInput>();
@@ -15,6 +15,8 @@ public class InputHandler : MonoBehaviour
             inputActionAsset.LoadBindingOverridesFromJson(SaveSystem.Instance.data.bindings);
         },
         SaveSystem.Instance.finishedInitialising));
+
+        _uiManager = FindObjectOfType<UiManager>();
     }
 
     public void OnAction(InputAction.CallbackContext value)
@@ -24,7 +26,6 @@ public class InputHandler : MonoBehaviour
 
     public void OnPause(InputAction.CallbackContext value)
     {
-        if (value.performed)
-            FindObjectOfType<UiManager>().OnPause();
+        if (value.performed) _uiManager.OnPause();
     }
 }

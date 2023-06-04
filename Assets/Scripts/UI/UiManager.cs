@@ -10,12 +10,14 @@ namespace UI
     {
         private Stack<GameObject> _menuHistory;
 
+        [Header("UI Elements")]
         [SerializeField] private GameObject mainMenu;
         [SerializeField] private GameObject pauseMenu;
         [SerializeField] private GameObject finishMenu;
         [SerializeField] private GameObject commonBackground;
         [SerializeField] private GameObject hud;
 
+        [Header("Sounds")]
         [SerializeField] private AudioClip selectSound;
         [SerializeField] private AudioClip interactSound;
 

@@ -40,6 +40,7 @@ namespace Player
         [CanBeNull] private Coroutine _slideCancelCoroutine;
         private IPlayerState _currentState;
         private Vector2 _velocityLastFrame;
+        private bool _isPaused;
 
         // Events
         public event System.Action HitGround;
@@ -62,12 +63,26 @@ namespace Player
         {
             EventManager.Restart += Restart;
             EventManager.ActionInput += OnAction;
+            EventManager.MenuOpen += OnMenuOpen;
+            EventManager.MenuClose += OnMenuClose;
         }
 
         private void OnDisable()
         {
             EventManager.Restart -= Restart;
             EventManager.ActionInput -= OnAction;
+            EventManager.MenuOpen -= OnMenuOpen;
+            EventManager.MenuClose -= OnMenuClose;
+        }
+
+        private void OnMenuOpen()
+        {
+            _isPaused = true;
+        }
+
+        private void OnMenuClose()
+        {
+            _isPaused = false;
         }
 
         private void Restart()
@@ -96,8 +111,11 @@ namespace Player
 
         private void OnAction(InputAction.CallbackContext value)
         {
-            IPlayerState newState = _currentState.HandleAction(value);
-            SwapState(newState);
+            if (!_isPaused)
+            {
+                IPlayerState newState = _currentState.HandleAction(value);
+                SwapState(newState);
+            }
         }
 
         public void SwapState(IPlayerState newState)
