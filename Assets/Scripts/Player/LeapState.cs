@@ -21,6 +21,8 @@ namespace Player
 
         public IPlayerState HandleAction(InputAction.CallbackContext value)
         {
+            if (value.started) _player.AttemptSlide();
+            
             if (value.canceled)
             {
                 Vector2 velocity = _player.rb.velocity;
@@ -39,7 +41,7 @@ namespace Player
         private void OnLand()
         {
             IPlayerState newState;
-            if (_player.actionIsHeld)
+            if (_player.GetAttemptingSlide())
             {
                 newState = new SlidingState(_player);
             }

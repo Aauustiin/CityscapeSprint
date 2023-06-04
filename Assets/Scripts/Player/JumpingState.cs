@@ -22,6 +22,8 @@ namespace Player
         {
             if (value.started)
             {
+                _player.AttemptSlide();
+                
                 if (Time.time - _player.timeLastGrounded < _player.coyoteThreshold)
                 {
                     return new JumpingState(_player);
@@ -45,7 +47,7 @@ namespace Player
         private void OnLand()
         {
             IPlayerState newState;
-            if (_player.actionIsHeld)
+            if (_player.GetAttemptingSlide())
             {
                 newState = new SlidingState(_player);
             }

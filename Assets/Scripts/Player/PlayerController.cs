@@ -23,6 +23,7 @@ namespace Player
         public float coyoteThreshold;
         [SerializeField] private float maxSpeed;
         [SerializeField] private float bumpVelocity;
+        [SerializeField] private float slideWindow;
 
         // Mutable state.
         private IPlayerState _currentState;
@@ -31,6 +32,7 @@ namespace Player
         public Vector2 runDirection;
         public float timeLastGrounded;
         public bool actionIsHeld = false;
+        private bool _attemptingSlide;
 
         // Assets
         public ParticleSystem dust;
@@ -115,6 +117,17 @@ namespace Player
             runDirection = -runDirection;
             sprite.flipX = !sprite.flipX;
             rb.velocity = new Vector2(-_velocityLastFrame.x, _velocityLastFrame.y);
+        }
+
+        public void AttemptSlide()
+        {
+            _attemptingSlide = true;
+            StartCoroutine(Utils.ExecuteAfterSeconds(() => _attemptingSlide = false, slideWindow));
+        }
+
+        public bool GetAttemptingSlide()
+        {
+            return _attemptingSlide;
         }
 
         private void OnCollisionEnter2D(Collision2D collision)
