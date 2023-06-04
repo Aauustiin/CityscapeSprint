@@ -5,12 +5,7 @@ namespace Player
 {
     public class PlayerController : MonoBehaviour
     {
-        // Immutable state
-        public Rigidbody2D rb;
-        public SpriteRenderer sprite;
-        private Vector2 _startPosition;
-
-        // Movement parameters
+        [Header("Movement Parameters")]
         public float jumpVelocity;
         public float leapVelocity;
         public float jumpFalloff;
@@ -25,21 +20,24 @@ namespace Player
         [SerializeField] private float bumpVelocity;
         [SerializeField] private float slideWindow;
 
-        // Mutable state.
-        private IPlayerState _currentState;
-        private Vector2 _velocityLastFrame;
-        private Collision2D _lastSurfaceTouched;
-        public Vector2 runDirection;
-        public float timeLastGrounded;
-        public bool actionIsHeld = false;
-        private bool _attemptingSlide;
-
-        // Assets
+        [Header("Assets")]
         public ParticleSystem dust;
         public AudioClip jumpSfx;
         public AudioClip slideSfx;
         public AudioClip landSfx;
         public AudioClip grabSfx;
+        
+        [Header("Immutable State")]
+        public Rigidbody2D rb;
+        public SpriteRenderer sprite;
+        private Vector2 _startPosition;
+        
+        [Header("Mutable State")]
+        public Vector2 runDirection;
+        public float timeLastGrounded;
+        private bool _attemptingSlide;
+        private IPlayerState _currentState;
+        private Vector2 _velocityLastFrame;
 
         // Events
         public event System.Action HitGround;
@@ -96,11 +94,6 @@ namespace Player
 
         private void OnAction(InputAction.CallbackContext value)
         {
-            if (value.performed)
-                actionIsHeld = true;
-            else if (value.canceled)
-                actionIsHeld = false;
-            
             IPlayerState newState = _currentState.HandleAction(value);
             SwapState(newState);
         }
@@ -153,14 +146,7 @@ namespace Player
                 }
                 case "Wall":
                 {
-                    if (collisionNormal == -runDirection)
-                        Flip();
-                    else if (collisionNormal == Vector2.up)
-                    {
-                        HitGround?.Invoke();
-                        EventManager.TriggerSoundEffect(landSfx);
-                        dust.Play();
-                    }
+                    if (collisionNormal == -runDirection) Flip();
                     break;
                 }
                 case "Enemy":
@@ -171,14 +157,11 @@ namespace Player
                     break;
                 }
             }
-
-            _lastSurfaceTouched = collision;
         }
 
         private void OnCollisionExit2D(Collision2D collision)
         {
-
-            string layerName = LayerMask.LayerToName(_lastSurfaceTouched.collider.gameObject.layer);
+            string layerName = LayerMask.LayerToName(collision.collider.gameObject.layer);
 
             Vector2 pos = rb.position;
             Vector2 collisionNormal = (pos - collision.collider.ClosestPoint(pos)).normalized;
@@ -194,14 +177,6 @@ namespace Player
                          (collisionNormal.y < 0f))
                 {
                     LeftSide?.Invoke();
-                }
-            }
-            else if (layerName == "Wall")
-            {
-                if ((collisionNormal == Vector2.up) || (collisionNormal.y > 0f))
-                {
-                    timeLastGrounded = Time.time;
-                    LeftGround?.Invoke();
                 }
             }
         }
