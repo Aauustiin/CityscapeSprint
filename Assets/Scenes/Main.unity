@@ -2754,13 +2754,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainMenu: {fileID: 57415569}
-  settingsMenu: {fileID: 1745759381}
-  soundMenu: {fileID: 300325005}
-  videoMenu: {fileID: 1398493423}
-  controlsMenu: {fileID: 746032938}
   pauseMenu: {fileID: 127933781}
   finishMenu: {fileID: 673781718}
-  leaderboardMenu: {fileID: 2076984594}
   commonBackground: {fileID: 392575996}
   hud: {fileID: 1573763722}
   selectSound: {fileID: 8300000, guid: ab4ce81fc477fa24fa410bf57569f389, type: 3}
@@ -5287,8 +5282,8 @@ MonoBehaviour:
   m_Navigation:
     m_Mode: 4
     m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
+    m_SelectOnUp: {fileID: 1008050356}
+    m_SelectOnDown: {fileID: 1008050356}
     m_SelectOnLeft: {fileID: 993013180}
     m_SelectOnRight: {fileID: 1807704466}
   m_Transition: 1
@@ -10365,8 +10360,8 @@ MonoBehaviour:
   m_Navigation:
     m_Mode: 4
     m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
+    m_SelectOnUp: {fileID: 1008050356}
+    m_SelectOnDown: {fileID: 1008050356}
     m_SelectOnLeft: {fileID: 1807704466}
     m_SelectOnRight: {fileID: 438698379}
   m_Transition: 1
@@ -10686,8 +10681,8 @@ MonoBehaviour:
   m_Navigation:
     m_Mode: 4
     m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 1254526202}
+    m_SelectOnUp: {fileID: 1807704466}
+    m_SelectOnDown: {fileID: 993013180}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
@@ -19267,8 +19262,8 @@ MonoBehaviour:
   m_Navigation:
     m_Mode: 4
     m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
+    m_SelectOnUp: {fileID: 1008050356}
+    m_SelectOnDown: {fileID: 1008050356}
     m_SelectOnLeft: {fileID: 438698379}
     m_SelectOnRight: {fileID: 993013180}
   m_Transition: 1
