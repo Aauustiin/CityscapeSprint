@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -36,6 +37,7 @@ namespace Player
         public Vector2 runDirection;
         public float timeLastGrounded;
         private bool _attemptingSlide;
+        [CanBeNull] private Coroutine _slideCancelCoroutine;
         private IPlayerState _currentState;
         private Vector2 _velocityLastFrame;
 
@@ -115,10 +117,16 @@ namespace Player
         public void AttemptSlide()
         {
             _attemptingSlide = true;
-            StartCoroutine(Utils.ExecuteAfterSeconds(() => _attemptingSlide = false, slideWindow));
+            _slideCancelCoroutine = StartCoroutine(Utils.ExecuteAfterSeconds(() => _attemptingSlide = false, slideWindow));
         }
 
-        public bool GetAttemptingSlide()
+        public void CancelSlide()
+        {
+            _attemptingSlide = false;
+            if (_slideCancelCoroutine != null) StopCoroutine(_slideCancelCoroutine);
+        }
+
+        public bool IsAttemptingSlide()
         {
             return _attemptingSlide;
         }

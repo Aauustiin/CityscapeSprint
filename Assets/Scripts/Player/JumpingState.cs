@@ -31,6 +31,8 @@ namespace Player
             }
             else if (value.canceled)
             {
+                _player.CancelSlide();
+                
                 Vector2 velocity = _player.rb.velocity;
 
                 if (velocity.y > 0f)
@@ -47,7 +49,7 @@ namespace Player
         private void OnLand()
         {
             IPlayerState newState;
-            if (_player.GetAttemptingSlide())
+            if (_player.IsAttemptingSlide())
             {
                 newState = new SlidingState(_player);
             }

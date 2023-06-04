@@ -11,13 +11,8 @@ namespace UI
         private Stack<GameObject> _menuHistory;
 
         [SerializeField] private GameObject mainMenu;
-        [SerializeField] private GameObject settingsMenu;
-        [SerializeField] private GameObject soundMenu;
-        [SerializeField] private GameObject videoMenu;
-        [SerializeField] private GameObject controlsMenu;
         [SerializeField] private GameObject pauseMenu;
         [SerializeField] private GameObject finishMenu;
-        [SerializeField] private GameObject leaderboardMenu;
         [SerializeField] private GameObject commonBackground;
         [SerializeField] private GameObject hud;
 
@@ -46,7 +41,7 @@ namespace UI
             EventManager.TriggerSoundEffect(interactSound);
         }
 
-        private void OpenMenu(GameObject menu)
+        public void OpenMenu(GameObject menu)
         {
             if (_menuHistory.Count > 0) 
                 _menuHistory.Peek().SetActive(false);
@@ -98,37 +93,7 @@ namespace UI
                 Back();
         }
         
-        public void OpenSettingsMenu()
-        {
-            OpenMenu(settingsMenu);
-        }
-
-        public void OpenMainMenu()
-        {
-            OpenMenu(mainMenu);
-        }
-
-        public void OpenSoundMenu()
-        {
-            OpenMenu(soundMenu);
-        }
-
-        public void OpenVideoMenu()
-        {
-            OpenMenu(videoMenu);
-        }
-
-        public void OpenControlsMenu()
-        {
-            OpenMenu(controlsMenu);
-        }
-
-        public void OpenLeaderboardMenu()
-        {
-            OpenMenu(leaderboardMenu);
-        }
-        
-        public void OpenFinishMenu()
+        private void OpenFinishMenu()
         {
             OpenMenu(finishMenu);
         }
