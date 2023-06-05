@@ -159,9 +159,9 @@ namespace UI
             EventManager.TriggerMenuClose();
             if (menuToClose == pauseMenu) EventManager.TriggerUnPause();
             
-            LeanTween.moveY(commonBackground[0], -1080, curtainDrawDuration)
+            LeanTween.moveY(commonBackground[0], 1080, curtainDrawDuration)
                 .setIgnoreTimeScale(true).setEaseOutExpo();;
-            LeanTween.moveY(menuToClose, -270, curtainDrawDuration).
+            LeanTween.moveY(menuToClose, 675, curtainDrawDuration).
                 setIgnoreTimeScale(true).setEaseOutExpo();
             LeanTween.scaleX(commonBackground[1].gameObject, 0f, curtainDrawDuration).
                 setIgnoreTimeScale(true).setEaseOutExpo();
