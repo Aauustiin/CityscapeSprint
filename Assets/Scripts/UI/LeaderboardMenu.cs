@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -39,14 +38,22 @@ public class LeaderboardMenu : MonoBehaviour
     {
         yield return new WaitUntil(() => response.done == true);
 
-        if (!response.error)
+        if (response.error) yield break;
+        
+        for(var i = 0; i < ranks.Length; i++)
         {
-            for(int i = 0; i < response.data.Length; i++)
+            if (i < response.data.Length)
             {
                 ranks[i].text = response.data[i].rank.ToString() + ".";
                 string playerName = response.data[i].player.name;
                 names[i].text = playerName == "" ? response.data[i].member_id : playerName;
                 scores[i].text = response.data[i].score.ToString();
+            }
+            else
+            {
+                ranks[i].text = "";
+                names[i].text = "";
+                scores[i].text = "";
             }
         }
     }
