@@ -78,7 +78,9 @@ namespace UI
             
             foreach (var r in resolutions)
             {
-                resolutionOptions.Add(r.width + "x" + r.height);
+                var optionText = r.width + "x" + r.height;
+                if (!resolutionOptions.Contains(optionText))
+                    resolutionOptions.Add(optionText);
             }
             
             resolutionDropdown.AddOptions(resolutionOptions);
