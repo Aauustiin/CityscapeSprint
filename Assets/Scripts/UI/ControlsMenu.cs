@@ -38,7 +38,7 @@ namespace UI
         
         public void Reset()
         {
-            SaveSystem.Instance.SaveControlSettings("");
+            SaveSystem.instance.SaveControlSettings("");
             inputActionAsset.LoadBindingOverridesFromJson("");
 
             _action = inputActionAsset.FindAction("Action");
@@ -62,7 +62,7 @@ namespace UI
             actionText.text = _action.controls[0].name;
             pauseText.text = _pause.controls[0].name;
             rebindOperation.Dispose();
-            SaveSystem.Instance.SaveControlSettings(inputActionAsset.SaveBindingOverridesAsJson());
+            SaveSystem.instance.SaveControlSettings(inputActionAsset.SaveBindingOverridesAsJson());
         }
     }
 }

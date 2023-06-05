@@ -19,11 +19,11 @@ namespace UI
         private void Start()
         {
             StartCoroutine(Utils.ExecuteWhenTrue(() => {
-                musicSlider.value = SaveSystem.Instance.data.musicVolume;
-                sfxSlider.value = SaveSystem.Instance.data.effectsVolume;
+                musicSlider.value = SaveSystem.instance.data.musicVolume;
+                sfxSlider.value = SaveSystem.instance.data.effectsVolume;
                 _finishedInitialising = true;
             },
-            SaveSystem.Instance.finishedInitialising));
+            SaveSystem.instance.finishedInitialising));
         }
 
         public void ResetVolume()
@@ -39,7 +39,7 @@ namespace UI
         {
             if (_finishedInitialising)
             {
-                SaveSystem.Instance.SaveSoundSettings(musicSlider.value, sfxSlider.value);
+                SaveSystem.instance.SaveSoundSettings(musicSlider.value, sfxSlider.value);
                 audioPlayer.SetMusicVolume(musicSlider.value);
                 audioPlayer.SetEffectsVolume(sfxSlider.value);
             }

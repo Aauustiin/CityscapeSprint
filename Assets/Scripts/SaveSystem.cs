@@ -4,7 +4,7 @@ using System.IO;
 
 public class SaveSystem : MonoBehaviour
 {
-    public static SaveSystem Instance;
+    public static SaveSystem instance;
 
     public bool finishedInitialising;
     [SerializeField] private AudioPlayer audioPlayer;
@@ -13,9 +13,9 @@ public class SaveSystem : MonoBehaviour
 
     private void OnEnable()
     {
-        if (Instance != null)
+        if (instance != null)
             Destroy(gameObject);
-        else Instance = this;
+        else instance = this;
 
         finishedInitialising = false;
         SetPaths();
@@ -40,7 +40,7 @@ public class SaveSystem : MonoBehaviour
         _persistentPath = Application.persistentDataPath + Path.AltDirectorySeparatorChar + "SaveData.json";
     }
 
-    private void SaveDefaultData()
+    public void SaveDefaultData()
     {
         data.resolutionX = Screen.currentResolution.width;
         data.resolutionY = Screen.currentResolution.height;

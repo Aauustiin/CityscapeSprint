@@ -12,9 +12,9 @@ public class InputHandler : MonoBehaviour
         InputActionAsset inputActionAsset = playerInput.actions;
 
         StartCoroutine(Utils.ExecuteWhenTrue(() => {
-            inputActionAsset.LoadBindingOverridesFromJson(SaveSystem.Instance.data.bindings);
+            inputActionAsset.LoadBindingOverridesFromJson(SaveSystem.instance.data.bindings);
         },
-        SaveSystem.Instance.finishedInitialising));
+        SaveSystem.instance.finishedInitialising));
 
         _uiManager = FindObjectOfType<UiManager>();
     }

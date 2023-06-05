@@ -27,12 +27,12 @@ namespace UI
             InitialiseDropdown();
 
             StartCoroutine(Utils.ExecuteWhenTrue(() => {
-                windowedToggle.isOn = SaveSystem.Instance.data.windowed;
+                windowedToggle.isOn = SaveSystem.instance.data.windowed;
                 if (windowedToggle.isOn) EnableBorderlessOption();
                 else DisableBorderlessOption();
-                borderlessToggle.isOn = SaveSystem.Instance.data.borderless;
+                borderlessToggle.isOn = SaveSystem.instance.data.borderless;
             },
-            SaveSystem.Instance.finishedInitialising));
+            SaveSystem.instance.finishedInitialising));
         }
 
         private void DisableBorderlessOption()
@@ -113,7 +113,7 @@ namespace UI
         {
             Vector2 res = GetSelectedResolution();
 
-            SaveSystem.Instance.SaveVideoSettings((int)res.x, (int)res.y, windowedToggle.isOn, borderlessToggle.isOn);
+            SaveSystem.instance.SaveVideoSettings((int)res.x, (int)res.y, windowedToggle.isOn, borderlessToggle.isOn);
 
             FullScreenMode fullScreenMode;
             
