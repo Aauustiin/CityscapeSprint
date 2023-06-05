@@ -2760,6 +2760,10 @@ MonoBehaviour:
   hud: {fileID: 1573763722}
   selectSound: {fileID: 8300000, guid: ab4ce81fc477fa24fa410bf57569f389, type: 3}
   interactSound: {fileID: 8300000, guid: bd8c80c7b13ca5949b68ff1b8e14edbe, type: 3}
+  uiNavigateAction: {fileID: -8784545083839296357, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  uiSubmitAction: {fileID: 392368643174621059, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  uiCancelAction: {fileID: -165692271494380293, guid: a3a0c4d830c10294ba71a53e9089aa8c, type: 3}
+  uiPointAction: {fileID: -1654692200621890270, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
 --- !u!4 &188781920
 Transform:
   m_ObjectHideFlags: 0

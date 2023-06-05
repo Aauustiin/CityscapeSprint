@@ -1,8 +1,6 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Data;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace UI
 {
@@ -21,6 +19,12 @@ namespace UI
         [SerializeField] private AudioClip selectSound;
         [SerializeField] private AudioClip interactSound;
 
+        [Header("Input Actions")]
+        [SerializeField] private InputActionReference uiNavigateAction;
+        [SerializeField] private InputActionReference uiSubmitAction;
+        [SerializeField] private InputActionReference uiCancelAction;
+        [SerializeField] private InputActionReference uiPointAction;
+
         private void OnEnable()
         {
             EventManager.GameOver += OpenFinishMenu;
@@ -31,6 +35,24 @@ namespace UI
         private void OnDisable()
         {
             EventManager.GameOver -= OpenFinishMenu;
+        }
+
+        private void Update()
+        {
+            if (_menuHistory.Count <= 0) return;
+            
+            if (uiNavigateAction.action.WasPerformedThisFrame() |
+                uiSubmitAction.action.WasPerformedThisFrame() |
+                uiCancelAction.action.WasPerformedThisFrame())
+            {
+                Cursor.visible = false;
+                Cursor.lockState = CursorLockMode.Locked;
+            }
+            else if (uiPointAction.action.WasPerformedThisFrame())
+            {
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
+            }
         }
 
         public void PlaySelectSound()
