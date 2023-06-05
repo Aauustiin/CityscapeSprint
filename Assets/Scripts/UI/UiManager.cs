@@ -1,4 +1,6 @@
+using System.Collections;
 using System.Collections.Generic;
+using System.Security;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,12 +9,17 @@ namespace UI
     public class UiManager : MonoBehaviour
     {
         private Stack<GameObject> _menuHistory;
+        private bool _transitioning;
+
+        [Header("Animation Settings")]
+        [SerializeField] private float curtainDrawDuration;
+        [SerializeField] private float curtainClosedDuration;
 
         [Header("UI Elements")]
         [SerializeField] private GameObject mainMenu;
         [SerializeField] private GameObject pauseMenu;
         [SerializeField] private GameObject finishMenu;
-        [SerializeField] private GameObject commonBackground;
+        [SerializeField] private RectTransform[] commonBackground;
         [SerializeField] private GameObject hud;
 
         [Header("Sounds")]
@@ -67,43 +74,148 @@ namespace UI
 
         public void OpenMenu(GameObject menu)
         {
-            if (_menuHistory.Count > 0) 
-                _menuHistory.Peek().SetActive(false);
+            if (_transitioning) return;
+
+            if (_menuHistory.Count > 0)
+            {
+                StartCoroutine(MenuSwitchTransition(menu));
+            }
             else
             {
-                Cursor.visible = true;
-                Cursor.lockState = CursorLockMode.None;
-                hud.SetActive(false);
-                EventManager.TriggerMenuOpen();
-                if (menu == pauseMenu) EventManager.TriggerPause();
+                StartCoroutine(OpenMenuTransition(menu));
+            }
+        }
+
+        private IEnumerator OpenMenuTransition(GameObject menu)
+        {
+            _transitioning = true;
+            Time.timeScale = 0f;
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+            hud.SetActive(false);
+            EventManager.TriggerMenuOpen();
+            if (menu == pauseMenu) EventManager.TriggerPause();
+            
+            foreach (var bg in commonBackground)
+            {
+                bg.gameObject.SetActive(true);
             }
             menu.SetActive(true);
             _menuHistory.Push(menu);
-            Time.timeScale = 0f;
-            commonBackground.SetActive(true);
+            
+            LeanTween.moveY(menu, -270, 0f);
+            LeanTween.moveY(commonBackground[0], -1080, 0f);
+            LeanTween.scaleX(commonBackground[1].gameObject, 0f, 0f);
+            LeanTween.scaleX(commonBackground[2].gameObject, 0f, 0f);
+            
+            LeanTween.moveY(menu, 270, curtainDrawDuration).
+                setIgnoreTimeScale(true).setEaseOutExpo();
+            LeanTween.moveY(commonBackground[0], 0, curtainDrawDuration).
+                setIgnoreTimeScale(true).setEaseOutExpo();
+            LeanTween.scaleX(commonBackground[1].gameObject, 1f, curtainDrawDuration).
+                setIgnoreTimeScale(true).setEaseOutExpo();
+            LeanTween.scaleX(commonBackground[2].gameObject, 1f, curtainDrawDuration).
+                setIgnoreTimeScale(true).setEaseOutExpo();
+            
+            yield return new WaitForSecondsRealtime(curtainDrawDuration);
+            _transitioning = false;
         }
 
+        private IEnumerator MenuSwitchTransition(GameObject newMenu)
+        {
+            _transitioning = true;
+            LeanTween.scaleX(commonBackground[1].gameObject, 2.1f, curtainDrawDuration).
+                setIgnoreTimeScale(true).setEaseOutExpo();
+            LeanTween.scaleX(commonBackground[2].gameObject, 2.1f, curtainDrawDuration).
+                setIgnoreTimeScale(true).setEaseOutExpo();
+            yield return new WaitForSecondsRealtime(curtainDrawDuration + curtainClosedDuration);
+            _menuHistory.Peek().SetActive(false);
+            newMenu.SetActive(true);
+            _menuHistory.Push(newMenu);
+            LeanTween.scaleX(commonBackground[1].gameObject, 1f, curtainDrawDuration).
+                setIgnoreTimeScale(true).setEaseOutExpo();
+            LeanTween.scaleX(commonBackground[2].gameObject, 1f, curtainDrawDuration).
+                setIgnoreTimeScale(true).setEaseOutExpo();
+            _transitioning = false;
+        }
+
+        // This is for when you want to close all menus (Gameplay is starting).
         public void CloseMenu()
         {
+            if (_transitioning) return;
+
+            StartCoroutine(CloseMenuTransition());
+        }
+
+        private IEnumerator CloseMenuTransition()
+        {
+            _transitioning = true;
+
             var menuToClose = _menuHistory.Pop();
-            menuToClose.SetActive(false);
-            _menuHistory = new Stack<GameObject>();
+            hud.SetActive(true);
             Time.timeScale = 1f;
-            commonBackground.SetActive(false);
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
-            hud.SetActive(true);
             EventManager.TriggerMenuClose();
             if (menuToClose == pauseMenu) EventManager.TriggerUnPause();
+            
+            LeanTween.moveY(commonBackground[0], -1080, curtainDrawDuration)
+                .setIgnoreTimeScale(true).setEaseOutExpo();;
+            LeanTween.moveY(menuToClose, -270, curtainDrawDuration).
+                setIgnoreTimeScale(true).setEaseOutExpo();
+            LeanTween.scaleX(commonBackground[1].gameObject, 0f, curtainDrawDuration).
+                setIgnoreTimeScale(true).setEaseOutExpo();
+            LeanTween.scaleX(commonBackground[2].gameObject, 0f, curtainDrawDuration).
+                setIgnoreTimeScale(true).setEaseOutExpo();
+            
+            yield return new WaitForSecondsRealtime(curtainDrawDuration);
+            
+            LeanTween.moveY(commonBackground[0], 0, 0)
+                .setIgnoreTimeScale(true).setEaseOutExpo();;
+            LeanTween.moveY(menuToClose, 270, 0).
+                setIgnoreTimeScale(true).setEaseOutExpo();
+            LeanTween.scaleX(commonBackground[1].gameObject, 1f, 0).
+                setIgnoreTimeScale(true).setEaseOutExpo();
+            LeanTween.scaleX(commonBackground[2].gameObject, 1f, 0).
+                setIgnoreTimeScale(true).setEaseOutExpo();
+            
+            foreach (var bg in commonBackground)
+            {
+                bg.gameObject.SetActive(false);
+            }
+            menuToClose.SetActive(false);
+            _menuHistory = new Stack<GameObject>();
+
+            _transitioning = false;
         }
 
         public void Back()
         {
-            _menuHistory.Pop().SetActive(false);
-            if (_menuHistory.Count == 0)
+            if (_transitioning) return;
+            
+            if (_menuHistory.Count == 1)
                 CloseMenu();
             else
-                _menuHistory.Peek().SetActive(true);
+            {
+                StartCoroutine(BackTransition());
+            }
+        }
+
+        private IEnumerator BackTransition()
+        {
+            _transitioning = true;
+            LeanTween.scaleX(commonBackground[1].gameObject, 2.1f, curtainDrawDuration).
+                setIgnoreTimeScale(true).setEaseOutExpo();
+            LeanTween.scaleX(commonBackground[2].gameObject, 2.1f, curtainDrawDuration).
+                setIgnoreTimeScale(true).setEaseOutExpo();
+            yield return new WaitForSecondsRealtime(curtainDrawDuration + curtainClosedDuration);
+            _menuHistory.Pop().SetActive(false);
+            _menuHistory.Peek().SetActive(true);
+            LeanTween.scaleX(commonBackground[1].gameObject, 1f, curtainDrawDuration).
+                setIgnoreTimeScale(true).setEaseOutExpo();
+            LeanTween.scaleX(commonBackground[2].gameObject, 1f, curtainDrawDuration).
+                setIgnoreTimeScale(true).setEaseOutExpo();
+            _transitioning = false;
         }
         
         public void OnPause()

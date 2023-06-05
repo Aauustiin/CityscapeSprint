@@ -34,12 +34,11 @@ public class WaveyTextAnimation : MonoBehaviour
             if (!charInfo.isVisible) continue;
             
             var vertices = _text.textInfo.meshInfo[charInfo.materialReferenceIndex].vertices;
-
             for (var j = 0; j < 4; j++)
             {
                 var original = vertices[charInfo.vertexIndex + j];
                 vertices[charInfo.vertexIndex + j] = 
-                    original + new Vector3(0, math.sin(Time.time * speed + i * characterDesync) * magnitude, 0);
+                    original + new Vector3(0, math.sin(Time.realtimeSinceStartup * speed + i * characterDesync) * magnitude, 0);
             }
         }
 
