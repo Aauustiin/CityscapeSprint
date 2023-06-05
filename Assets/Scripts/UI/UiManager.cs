@@ -75,6 +75,7 @@ namespace UI
                 Cursor.lockState = CursorLockMode.None;
                 hud.SetActive(false);
                 EventManager.TriggerMenuOpen();
+                if (menu == pauseMenu) EventManager.TriggerPause();
             }
             menu.SetActive(true);
             _menuHistory.Push(menu);
@@ -84,7 +85,8 @@ namespace UI
 
         public void CloseMenu()
         {
-            _menuHistory.Pop().SetActive(false);
+            var menuToClose = _menuHistory.Pop();
+            menuToClose.SetActive(false);
             _menuHistory = new Stack<GameObject>();
             Time.timeScale = 1f;
             commonBackground.SetActive(false);
@@ -92,6 +94,7 @@ namespace UI
             Cursor.lockState = CursorLockMode.Locked;
             hud.SetActive(true);
             EventManager.TriggerMenuClose();
+            if (menuToClose == pauseMenu) EventManager.TriggerUnPause();
         }
 
         public void Back()

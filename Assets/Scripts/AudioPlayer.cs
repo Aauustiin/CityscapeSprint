@@ -4,8 +4,9 @@ public class AudioPlayer : MonoBehaviour
 {
     [SerializeField] private AudioSource musicAudioSource;
     [SerializeField] private AudioSource effectsAudioSource;
-    private float _sfxVolume;
+    [SerializeField] private AudioLowPassFilter musicMuffler;
     [SerializeField] public float defaultMusicVolume, defaultEffectsVolume;
+    private float _sfxVolume;
     
     private void Start()
     {
@@ -19,11 +20,20 @@ public class AudioPlayer : MonoBehaviour
     private void OnEnable()
     {
         EventManager.SoundEffectEvent += HandleSoundEffect;
+        EventManager.Pause += ToggleMusicMuffle;
+        EventManager.UnPause += ToggleMusicMuffle;
     }
 
     private void OnDisable()
     {
         EventManager.SoundEffectEvent -= HandleSoundEffect;
+        EventManager.Pause -= ToggleMusicMuffle;
+        EventManager.UnPause -= ToggleMusicMuffle;
+    }
+
+    private void ToggleMusicMuffle()
+    {
+        musicMuffler.enabled = !musicMuffler.enabled;
     }
 
     private void HandleSoundEffect(AudioClip soundEffect)

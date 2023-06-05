@@ -1,10 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public static class EventManager
 {
+    public static event System.Action Pause;
+
+    public static void TriggerPause()
+    {
+        Pause?.Invoke();
+    }
+    
+    public static event System.Action UnPause;
+
+    public static void TriggerUnPause()
+    {
+        UnPause?.Invoke();
+    }
+    
     public static event System.Action GameOver;
 
     public static void TriggerGameOver()
