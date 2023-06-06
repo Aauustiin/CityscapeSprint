@@ -57,6 +57,13 @@ public class SaveSystem : MonoBehaviour
         SaveData();
     }
 
+    public void ClearSaveData()
+    {
+        data.highScore = 0;
+        
+        SaveData();
+    }
+
     public void SaveSoundSettings(float musicVolume, float effectsVolume)
     {
         data.musicVolume = musicVolume;

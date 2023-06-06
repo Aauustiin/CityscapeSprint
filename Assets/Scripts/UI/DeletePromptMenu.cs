@@ -12,6 +12,6 @@ public class DeletePromptMenu : MonoBehaviour
     
     public void DeleteSaveData()
     {
-        SaveSystem.instance.SaveDefaultData();
+        SaveSystem.instance.ClearSaveData();
     }
 }
