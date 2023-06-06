@@ -44,18 +44,4 @@ public static class EventManager
     {
         ActionInput?.Invoke(value);
     }
-
-    public static event System.Action MenuOpen;
-    
-    public static void TriggerMenuOpen()
-    {
-        MenuOpen?.Invoke();
-    }
-    
-    public static event System.Action MenuClose;
-    
-    public static void TriggerMenuClose()
-    {
-        MenuClose?.Invoke();
-    }
 }

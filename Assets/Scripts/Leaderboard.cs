@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using LootLocker.Requests;
 
@@ -78,6 +77,26 @@ public class Leaderboard : MonoBehaviour
             else
             {
                 Debug.Log("Error setting player name: " + response.Error);
+                done = true;
+            }
+        });
+        yield return new WaitWhile(() => done == false);
+    }
+
+    public static IEnumerator IsPlayerNameSet(System.Action<bool> callback)
+    {
+        var done = false;
+        LootLockerSDKManager.GetPlayerName((response) =>
+        {
+            if (response.success)
+            {
+                Debug.Log("Successfully fetched player name.");
+                if (response.name != "") callback.Invoke(true);
+                done = true;
+            }
+            else
+            {
+                Debug.Log("Error fetching player name: " + response.Error);
                 done = true;
             }
         });

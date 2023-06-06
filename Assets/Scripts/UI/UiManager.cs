@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Security;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -19,6 +18,7 @@ namespace UI
         [SerializeField] private GameObject mainMenu;
         [SerializeField] private GameObject pauseMenu;
         [SerializeField] private GameObject finishMenu;
+        [SerializeField] private GameObject nameMenu;
         [SerializeField] private RectTransform[] commonBackground;
         [SerializeField] private GameObject hud;
 
@@ -37,6 +37,10 @@ namespace UI
             EventManager.GameOver += OpenFinishMenu;
             _menuHistory = new Stack<GameObject>();
             _menuHistory.Push(mainMenu);
+            StartCoroutine(Leaderboard.IsPlayerNameSet((result) =>
+            {
+                if (!result) OpenMenu(nameMenu);
+            }));
         }
 
         private void OnDisable()
@@ -93,7 +97,6 @@ namespace UI
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
             hud.SetActive(false);
-            EventManager.TriggerMenuOpen();
             if (menu == pauseMenu) EventManager.TriggerPause();
             
             foreach (var bg in commonBackground)
@@ -156,7 +159,6 @@ namespace UI
             Time.timeScale = 1f;
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
-            EventManager.TriggerMenuClose();
             if (menuToClose == pauseMenu) EventManager.TriggerUnPause();
             
             LeanTween.moveY(commonBackground[0], 1080, curtainDrawDuration)
@@ -171,13 +173,13 @@ namespace UI
             yield return new WaitForSecondsRealtime(curtainDrawDuration);
             
             LeanTween.moveY(commonBackground[0], 0, 0)
-                .setIgnoreTimeScale(true).setEaseOutExpo();;
+                .setIgnoreTimeScale(true);
             LeanTween.moveY(menuToClose, 270, 0).
-                setIgnoreTimeScale(true).setEaseOutExpo();
+                setIgnoreTimeScale(true);
             LeanTween.scaleX(commonBackground[1].gameObject, 1f, 0).
-                setIgnoreTimeScale(true).setEaseOutExpo();
+                setIgnoreTimeScale(true);
             LeanTween.scaleX(commonBackground[2].gameObject, 1f, 0).
-                setIgnoreTimeScale(true).setEaseOutExpo();
+                setIgnoreTimeScale(true);
             
             foreach (var bg in commonBackground)
             {
@@ -211,6 +213,34 @@ namespace UI
             yield return new WaitForSecondsRealtime(curtainDrawDuration + curtainClosedDuration);
             _menuHistory.Pop().SetActive(false);
             _menuHistory.Peek().SetActive(true);
+            LeanTween.scaleX(commonBackground[1].gameObject, 1f, curtainDrawDuration).
+                setIgnoreTimeScale(true).setEaseOutExpo();
+            LeanTween.scaleX(commonBackground[2].gameObject, 1f, curtainDrawDuration).
+                setIgnoreTimeScale(true).setEaseOutExpo();
+            _transitioning = false;
+        }
+
+        public void ReturnToMainMenu()
+        {
+            if (!_transitioning) StartCoroutine(ReturnToMainMenuTransition());
+        }
+
+        private IEnumerator ReturnToMainMenuTransition()
+        {
+            _transitioning = true;
+            var menuToClose = _menuHistory.Pop();
+            if (menuToClose == pauseMenu) EventManager.TriggerUnPause();
+            LeanTween.scaleX(commonBackground[1].gameObject, 2.1f, curtainDrawDuration).
+                setIgnoreTimeScale(true).setEaseOutExpo();
+            LeanTween.scaleX(commonBackground[2].gameObject, 2.1f, curtainDrawDuration).
+                setIgnoreTimeScale(true).setEaseOutExpo();
+            yield return new WaitForSecondsRealtime(curtainDrawDuration + curtainClosedDuration);
+            menuToClose.SetActive(false);
+            _menuHistory = new Stack<GameObject>();
+            mainMenu.SetActive(true);
+            _menuHistory.Push(mainMenu);
+            LeanTween.moveY(mainMenu, 270, 0).
+                setIgnoreTimeScale(true);
             LeanTween.scaleX(commonBackground[1].gameObject, 1f, curtainDrawDuration).
                 setIgnoreTimeScale(true).setEaseOutExpo();
             LeanTween.scaleX(commonBackground[2].gameObject, 1f, curtainDrawDuration).

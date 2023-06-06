@@ -63,16 +63,16 @@ namespace Player
         {
             EventManager.Restart += Restart;
             EventManager.ActionInput += OnAction;
-            EventManager.MenuOpen += OnMenuOpen;
-            EventManager.MenuClose += OnMenuClose;
+            EventManager.Pause += OnMenuOpen;
+            EventManager.UnPause += OnMenuClose;
         }
 
         private void OnDisable()
         {
             EventManager.Restart -= Restart;
             EventManager.ActionInput -= OnAction;
-            EventManager.MenuOpen -= OnMenuOpen;
-            EventManager.MenuClose -= OnMenuClose;
+            EventManager.Pause -= OnMenuOpen;
+            EventManager.UnPause -= OnMenuClose;
         }
 
         private void OnMenuOpen()
