@@ -125,7 +125,7 @@ namespace Player
             _currentState.OnEntry();
         }
         
-        private void Flip()
+        public void Flip()
         {
             runDirection = -runDirection;
             sprite.flipX = !sprite.flipX;

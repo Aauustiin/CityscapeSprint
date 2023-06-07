@@ -1,43 +1,86 @@
-using System;
-using System.Collections;
-using JetBrains.Annotations;
 using UnityEngine;
 
 public class Dog : MonoBehaviour
 {
-    [SerializeField] private float minX, maxX, speed;
-    private float _distance, _duration;
-    [CanBeNull] private Coroutine _movementCoroutine;
+    [SerializeField] private float minX, maxX, speed, runSpeed, bumpForce;
+    
+    [Header("Immutable State")]
+    private float _duration, _y;
+    private Transform _transform;
+    private SpriteRenderer _spriteRenderer;
+    private Animator _animator;
+    
+    [Header("Mutable State")]
+    private LTDescr _movementTween;
+    private bool _defeated;
 
     private void OnEnable()
     {
-        transform.position = new Vector3(minX, transform.position.y, 0f);
-        _distance = Mathf.Abs(maxX - minX);
-        _duration = _distance / speed;
-        _movementCoroutine = StartCoroutine(LoopMovement());
+        _animator = GetComponent<Animator>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        _transform = transform;
+        _y = _transform.position.y;
+        _transform.position = new Vector3(minX,_y, 0f);
+        var distance = Mathf.Abs(maxX - minX);
+        _duration = distance / speed;
+        MoveRight();
+    }
+    
+    private void MoveRight()
+    {
+        _movementTween = _transform.LeanMoveLocal(new Vector3(maxX, _y, 0f), _duration);
+        _spriteRenderer.flipX = false;
+        _movementTween.setOnComplete(MoveLeft);
     }
 
-    private IEnumerator LoopMovement()
+    private void MoveLeft()
     {
-        while (true)
+        _movementTween = _transform.LeanMoveLocal(new Vector3(minX, _y, 0f), _duration);
+        _spriteRenderer.flipX = true;
+        _movementTween.setOnComplete(MoveRight);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        var obj = collision.collider.gameObject;
+        if (obj.layer != LayerMask.NameToLayer("Player")) return;
+
+        var vec =  (obj.transform.position - _transform.position).normalized;
+        var playerRb = obj.GetComponent<Rigidbody2D>();
+        _animator.Play("dog_idle");
+        
+        if (Vector2.Dot(_transform.up, vec) < 0)
         {
-            transform.LeanMoveLocal(new Vector3(maxX, transform.position.y, 0f), _duration);
-            yield return new WaitForSeconds(_duration);
-            GetComponent<SpriteRenderer>().flipX = true;
-            transform.LeanMoveLocal(new Vector3(minX, transform.position.y, 0f), _duration);
-            yield return new WaitForSeconds(_duration);
-            GetComponent<SpriteRenderer>().flipX = false;
+            playerRb.AddForce(((vec + _transform.up)/2) * bumpForce, ForceMode2D.Impulse);
+            _movementTween.pause();
+            StartCoroutine(Utils.ExecuteAfterSeconds(() =>
+            {
+                _movementTween.resume();
+                _animator.Play("dog_run");
+            }, 2));
         }
-    }
-
-    private IEnumerator Pounce()
-    {
-        if (_movementCoroutine != null) StopCoroutine(_movementCoroutine);
-        // Go to stationary pose
-        // Wait a moment
-        yield return new WaitForSeconds(0.2f);
-        // Go to jump pose
-        // Do Jump
-        // When I land, Pause a moment and then go back to moving normally.
+        else
+        {
+            GetComponent<BoxCollider2D>().enabled = false;
+            LeanTween.cancel(_movementTween.id);
+            var playerSprite = obj.GetComponent<SpriteRenderer>();
+            
+            var force =  !playerSprite.flipX ? _transform.right : -_transform.right;
+            force = (force + _transform.up) / 2;
+            playerRb.AddForce(force * bumpForce * 0.8f, ForceMode2D.Impulse);
+            
+            var destination = playerSprite.flipX ? maxX + 5 : minX - 5;
+            var distance = Mathf.Abs(_transform.position.x - destination);
+            var duration = distance / runSpeed;
+            _movementTween = _transform.LeanMoveLocal(new Vector3(destination, _y, 0f), duration);
+            _movementTween.setDelay(1);
+            
+            StartCoroutine(Utils.ExecuteAfterSeconds(() =>
+            {
+                _animator.Play("dog_run");
+                _spriteRenderer.flipX = !playerSprite.flipX;
+            }, 1));
+            _movementTween.setOnComplete(() => Destroy(gameObject));
+        }
     }
 }

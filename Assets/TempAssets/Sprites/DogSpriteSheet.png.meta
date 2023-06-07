@@ -11,6 +11,12 @@ TextureImporter:
   - first:
       213: -6212364046878851043
     second: DogSpriteSheet_2
+  - first:
+      213: 3982249724695832056
+    second: DogSpriteSheet_3
+  - first:
+      213: 747404578593701689
+    second: DogSpriteSheet_4
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -104,7 +110,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 16
+        y: 32
         width: 16
         height: 8
       alignment: 0
@@ -125,7 +131,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 8
+        y: 24
         width: 16
         height: 8
       alignment: 0
@@ -146,7 +152,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
+        y: 16
         width: 16
         height: 8
       alignment: 0
@@ -158,6 +164,48 @@ TextureImporter:
       bones: []
       spriteID: d10c06a50df39c9a0800000000000000
       internalID: -6212364046878851043
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DogSpriteSheet_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 8
+        width: 16
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8f56467960bc34730800000000000000
+      internalID: 3982249724695832056
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DogSpriteSheet_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 16
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 93ff39a11805f5a00800000000000000
+      internalID: 747404578593701689
       vertices: []
       indices: 
       edges: []

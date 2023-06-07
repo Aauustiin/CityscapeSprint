@@ -1980,7 +1980,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &139717485
 Transform:
   m_ObjectHideFlags: 0
@@ -1989,7 +1989,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 139717484}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 9.17, y: -4.41, z: 0}
+  m_LocalPosition: {x: 8.76, y: -4.41, z: 0}
   m_LocalScale: {x: 15, y: 15, z: 1}
   m_Children: []
   m_Father: {fileID: 279070386}
@@ -2036,6 +2036,8 @@ MonoBehaviour:
   minX: -10
   maxX: 10
   speed: 5
+  runSpeed: 7.5
+  bumpForce: 10
 --- !u!95 &139717488
 Animator:
   serializedVersion: 3
@@ -2046,7 +2048,7 @@ Animator:
   m_GameObject: {fileID: 139717484}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 9e701a25d0ba69640a0247146cf693a5, type: 2}
+  m_Controller: {fileID: 9100000, guid: 1b97690c4fe6fb546b788a200c638660, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -5675,6 +5677,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1762008500}
     m_Modifications:
+    - target: {fileID: 816688874432323105, guid: 7bbb8ac8484045440b0533e17ba8253c, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 1596599418587505591, guid: 7bbb8ac8484045440b0533e17ba8253c, type: 3}
       propertyPath: m_CollisionDetection
       value: 1
@@ -5684,8 +5690,16 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 4344812722454846824, guid: 7bbb8ac8484045440b0533e17ba8253c, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4344812722454846824, guid: 7bbb8ac8484045440b0533e17ba8253c, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8389152640376631054, guid: 7bbb8ac8484045440b0533e17ba8253c, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8580365794679323052, guid: 7bbb8ac8484045440b0533e17ba8253c, type: 3}
       propertyPath: m_RootOrder
@@ -5693,7 +5707,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8580365794679323052, guid: 7bbb8ac8484045440b0533e17ba8253c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -8.75
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8580365794679323052, guid: 7bbb8ac8484045440b0533e17ba8253c, type: 3}
       propertyPath: m_LocalPosition.y
@@ -18731,7 +18745,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coreLevelComponents: {fileID: 1762008499}
-  level: {fileID: 816082128}
+  level: {fileID: 279070385}
 --- !u!1 &1499844175
 GameObject:
   m_ObjectHideFlags: 0
