@@ -74,11 +74,13 @@ public class Dog : MonoBehaviour
             var duration = distance / runSpeed;
             _movementTween = _transform.LeanMoveLocal(new Vector3(destination, _y, 0f), duration);
             _movementTween.setDelay(1);
+
+            var newFlip = !playerSprite.flipX;
             
             StartCoroutine(Utils.ExecuteAfterSeconds(() =>
             {
                 _animator.Play("dog_run");
-                _spriteRenderer.flipX = !playerSprite.flipX;
+                _spriteRenderer.flipX = newFlip;
             }, 1));
             _movementTween.setOnComplete(() => Destroy(gameObject));
         }
