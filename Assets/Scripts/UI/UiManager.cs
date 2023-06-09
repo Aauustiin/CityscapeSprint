@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -12,7 +13,6 @@ namespace UI
 
         [Header("Animation Settings")]
         [SerializeField] private float curtainDrawDuration;
-        [SerializeField] private float curtainClosedDuration;
 
         [Header("UI Elements")]
         [SerializeField] private GameObject mainMenu;
@@ -93,6 +93,7 @@ namespace UI
         private IEnumerator OpenMenuTransition(GameObject menu)
         {
             _transitioning = true;
+            var menuTfm = menu.GetComponent<RectTransform>();
             Time.timeScale = 0f;
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
@@ -106,15 +107,23 @@ namespace UI
             menu.SetActive(true);
             _menuHistory.Push(menu);
             
-            LeanTween.moveY(menu, -270, 0f);
-            LeanTween.moveY(commonBackground[0], -1080, 0f);
-            LeanTween.scaleX(commonBackground[1].gameObject, 0f, 0f);
-            LeanTween.scaleX(commonBackground[2].gameObject, 0f, 0f);
+            menuTfm.anchoredPosition = new Vector2(0, -Screen.currentResolution.height);
+            commonBackground[0].anchoredPosition = new Vector2(0, -Screen.currentResolution.height);
+            commonBackground[1].localScale = new Vector3(0, 1, 1);
+            commonBackground[2].localScale = new Vector3(0, 1, 1);
             
-            LeanTween.moveY(menu, 270, curtainDrawDuration).
-                setIgnoreTimeScale(true).setEaseOutExpo();
-            LeanTween.moveY(commonBackground[0], 0, curtainDrawDuration).
-                setIgnoreTimeScale(true).setEaseOutExpo();
+            LeanTween.value(menu,  new Vector2(0, -Screen.currentResolution.height), Vector2.zero, curtainDrawDuration ).setOnUpdate( 
+                (Vector2 val)=>{
+                    menuTfm.anchoredPosition = val;
+                }
+            ).setIgnoreTimeScale(true).setEaseOutExpo();
+            
+            LeanTween.value(commonBackground[0].gameObject,  new Vector2(0, -Screen.currentResolution.height), Vector2.zero, curtainDrawDuration ).setOnUpdate( 
+                (Vector2 val)=>{
+                    commonBackground[0].anchoredPosition = val;
+                }
+            ).setIgnoreTimeScale(true).setEaseOutExpo();
+            
             LeanTween.scaleX(commonBackground[1].gameObject, 1f, curtainDrawDuration).
                 setIgnoreTimeScale(true).setEaseOutExpo();
             LeanTween.scaleX(commonBackground[2].gameObject, 1f, curtainDrawDuration).
@@ -131,7 +140,7 @@ namespace UI
                 setIgnoreTimeScale(true).setEaseOutExpo();
             LeanTween.scaleX(commonBackground[2].gameObject, 2.1f, curtainDrawDuration).
                 setIgnoreTimeScale(true).setEaseOutExpo();
-            yield return new WaitForSecondsRealtime(curtainDrawDuration + curtainClosedDuration);
+            yield return new WaitForSecondsRealtime(curtainDrawDuration);
             _menuHistory.Peek().SetActive(false);
             newMenu.SetActive(true);
             _menuHistory.Push(newMenu);
@@ -155,16 +164,25 @@ namespace UI
             _transitioning = true;
 
             var menuToClose = _menuHistory.Pop();
+            var menuToCloseTfm = menuToClose.GetComponent<RectTransform>();
             hud.SetActive(true);
             Time.timeScale = 1f;
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
             if (menuToClose == pauseMenu) EventManager.TriggerUnPause();
             
-            LeanTween.moveY(commonBackground[0], 1080, curtainDrawDuration)
-                .setIgnoreTimeScale(true).setEaseOutExpo();;
-            LeanTween.moveY(menuToClose, 675, curtainDrawDuration).
-                setIgnoreTimeScale(true).setEaseOutExpo();
+            LeanTween.value(commonBackground[0].gameObject,  Vector2.zero, new Vector2(0,Screen.currentResolution.height), curtainDrawDuration ).setOnUpdate( 
+                (Vector2 val)=>{
+                    commonBackground[0].anchoredPosition = val;
+                }
+            ).setIgnoreTimeScale(true).setEaseOutExpo();
+            
+            LeanTween.value(menuToClose,  Vector2.zero, new Vector2(0,Screen.currentResolution.height), curtainDrawDuration ).setOnUpdate( 
+                (Vector2 val)=>{
+                    menuToCloseTfm.anchoredPosition = val;
+                }
+            ).setIgnoreTimeScale(true).setEaseOutExpo();
+            
             LeanTween.scaleX(commonBackground[1].gameObject, 0f, curtainDrawDuration).
                 setIgnoreTimeScale(true).setEaseOutExpo();
             LeanTween.scaleX(commonBackground[2].gameObject, 0f, curtainDrawDuration).
@@ -172,14 +190,10 @@ namespace UI
             
             yield return new WaitForSecondsRealtime(curtainDrawDuration);
             
-            LeanTween.moveY(commonBackground[0], 0, 0)
-                .setIgnoreTimeScale(true);
-            LeanTween.moveY(menuToClose, 270, 0).
-                setIgnoreTimeScale(true);
-            LeanTween.scaleX(commonBackground[1].gameObject, 1f, 0).
-                setIgnoreTimeScale(true);
-            LeanTween.scaleX(commonBackground[2].gameObject, 1f, 0).
-                setIgnoreTimeScale(true);
+            commonBackground[0].anchoredPosition = Vector2.zero;
+            menuToCloseTfm.anchoredPosition = Vector2.zero;
+            commonBackground[1].localScale = new Vector3(1, 1, 1);
+            commonBackground[2].localScale = new Vector3(1, 1, 1);
             
             foreach (var bg in commonBackground)
             {
@@ -210,7 +224,7 @@ namespace UI
                 setIgnoreTimeScale(true).setEaseOutExpo();
             LeanTween.scaleX(commonBackground[2].gameObject, 2.1f, curtainDrawDuration).
                 setIgnoreTimeScale(true).setEaseOutExpo();
-            yield return new WaitForSecondsRealtime(curtainDrawDuration + curtainClosedDuration);
+            yield return new WaitForSecondsRealtime(curtainDrawDuration);
             _menuHistory.Pop().SetActive(false);
             _menuHistory.Peek().SetActive(true);
             LeanTween.scaleX(commonBackground[1].gameObject, 1f, curtainDrawDuration).
@@ -234,13 +248,12 @@ namespace UI
                 setIgnoreTimeScale(true).setEaseOutExpo();
             LeanTween.scaleX(commonBackground[2].gameObject, 2.1f, curtainDrawDuration).
                 setIgnoreTimeScale(true).setEaseOutExpo();
-            yield return new WaitForSecondsRealtime(curtainDrawDuration + curtainClosedDuration);
+            yield return new WaitForSecondsRealtime(curtainDrawDuration);
             menuToClose.SetActive(false);
             _menuHistory = new Stack<GameObject>();
             mainMenu.SetActive(true);
             _menuHistory.Push(mainMenu);
-            LeanTween.moveY(mainMenu, 270, 0).
-                setIgnoreTimeScale(true);
+            mainMenu.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
             LeanTween.scaleX(commonBackground[1].gameObject, 1f, curtainDrawDuration).
                 setIgnoreTimeScale(true).setEaseOutExpo();
             LeanTween.scaleX(commonBackground[2].gameObject, 1f, curtainDrawDuration).
