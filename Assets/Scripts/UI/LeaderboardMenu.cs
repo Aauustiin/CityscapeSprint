@@ -25,14 +25,11 @@ public class LeaderboardMenu : MonoBehaviour
         StartCoroutine(DisplayData(response));
     }
 
-    public void OnFriends()
-    {
-
-    }
-
     public void OnMe()
     {
-
+        LeaderboardResponse response = new LeaderboardResponse();
+        StartCoroutine(leaderboard.FetchLeaderboardMeScores(8, response));
+        StartCoroutine(DisplayData(response));
     }
 
     private IEnumerator DisplayData(LeaderboardResponse response)

@@ -6,6 +6,7 @@ public class Leaderboard : MonoBehaviour
 {
     [SerializeField] private LevelLoader levelLoader;
     [SerializeField] private int leaderboardId;
+    [SerializeField] private string leaderboardKey;
 
     private void OnEnable()
     {
@@ -29,7 +30,7 @@ public class Leaderboard : MonoBehaviour
     {
         bool done = false;
         string playerID = SaveSystem.instance.data.playerId;
-        LootLockerSDKManager.SubmitScore(playerID, score, leaderboardId, (response) =>
+        LootLockerSDKManager.SubmitScore(playerID, score, leaderboardKey, (response) =>
         {
             if (response.success)
             {
@@ -125,6 +126,57 @@ public class Leaderboard : MonoBehaviour
             }
         });
         yield return new WaitWhile(() => done == false);
+    }
+
+    public IEnumerator FetchLeaderboardMeScores(int numEntries, LeaderboardResponse lResponse)
+    {
+        var playerRank = 0;
+        bool done = false;
+        
+        LootLockerSDKManager.GetMemberRank(leaderboardKey, SaveSystem.instance.data.playerId, (response) =>
+        {
+            if (response.success)
+            {
+                Debug.Log("Successfully fetched player rank.");
+                playerRank = response.rank;
+                done = true;
+                lResponse.done = true;
+            }
+            else
+            {
+                Debug.Log("Error fetching player rank: " + response.Error);
+                lResponse.error = true;
+                lResponse.done = true;
+            }
+        });
+        yield return new WaitWhile(() => done == false);
+        
+        if (!lResponse.error)
+        {
+            done = false;
+            var playerPosition = (numEntries + 1) / 2; // Let's say we get 10 entries back, we want the player to be number 6
+            var rank = playerRank - playerPosition;
+            rank = rank < 0 ? 0 : rank;
+            LootLockerSDKManager.GetScoreListMain(leaderboardId, numEntries, rank, (response) =>
+            {
+                if (response.success)
+                {
+                    Debug.Log("Successfully fetched high scores from the leaderboard.");
+
+                    lResponse.data = response.items;
+                    done = true;
+                    lResponse.done = true;
+                }
+                else
+                {
+                    Debug.Log("Error fetching high scores from the leaderboard: " + response.Error);
+                    done = true;
+                    lResponse.error = true;
+                    lResponse.done = true;
+                }
+            });
+            yield return new WaitWhile(() => done == false);
+        }
     }
 }
 
