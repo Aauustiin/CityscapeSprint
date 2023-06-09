@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,7 +8,7 @@ namespace UI
     public class UiManager : MonoBehaviour
     {
         private Stack<GameObject> _menuHistory;
-        private bool _transitioning;
+        private IEnumerator _currentTransition;
 
         [Header("Animation Settings")]
         [SerializeField] private float curtainDrawDuration;
@@ -78,21 +77,13 @@ namespace UI
 
         public void OpenMenu(GameObject menu)
         {
-            if (_transitioning) return;
-
-            if (_menuHistory.Count > 0)
-            {
-                StartCoroutine(MenuSwitchTransition(menu));
-            }
-            else
-            {
-                StartCoroutine(OpenMenuTransition(menu));
-            }
+            if (_currentTransition != null) StopCoroutine(_currentTransition);
+            _currentTransition = _menuHistory.Count > 0 ? MenuSwitchTransition(menu) : OpenMenuTransition(menu);
+            StartCoroutine(_currentTransition);
         }
 
         private IEnumerator OpenMenuTransition(GameObject menu)
         {
-            _transitioning = true;
             var menuTfm = menu.GetComponent<RectTransform>();
             Time.timeScale = 0f;
             Cursor.visible = true;
@@ -130,12 +121,10 @@ namespace UI
                 setIgnoreTimeScale(true).setEaseOutExpo();
             
             yield return new WaitForSecondsRealtime(curtainDrawDuration);
-            _transitioning = false;
         }
 
         private IEnumerator MenuSwitchTransition(GameObject newMenu)
         {
-            _transitioning = true;
             LeanTween.scaleX(commonBackground[1].gameObject, 2.1f, curtainDrawDuration).
                 setIgnoreTimeScale(true).setEaseOutExpo();
             LeanTween.scaleX(commonBackground[2].gameObject, 2.1f, curtainDrawDuration).
@@ -148,21 +137,18 @@ namespace UI
                 setIgnoreTimeScale(true).setEaseOutExpo();
             LeanTween.scaleX(commonBackground[2].gameObject, 1f, curtainDrawDuration).
                 setIgnoreTimeScale(true).setEaseOutExpo();
-            _transitioning = false;
         }
 
         // This is for when you want to close all menus (Gameplay is starting).
         public void CloseMenu()
         {
-            if (_transitioning) return;
-
-            StartCoroutine(CloseMenuTransition());
+            if (_currentTransition != null) StopCoroutine(_currentTransition);
+            _currentTransition = CloseMenuTransition();
+            StartCoroutine(_currentTransition);
         }
 
         private IEnumerator CloseMenuTransition()
         {
-            _transitioning = true;
-
             var menuToClose = _menuHistory.Pop();
             var menuToCloseTfm = menuToClose.GetComponent<RectTransform>();
             hud.SetActive(true);
@@ -201,25 +187,22 @@ namespace UI
             }
             menuToClose.SetActive(false);
             _menuHistory = new Stack<GameObject>();
-
-            _transitioning = false;
         }
 
         public void Back()
         {
-            if (_transitioning) return;
-            
             if (_menuHistory.Count == 1)
                 CloseMenu();
             else
             {
-                StartCoroutine(BackTransition());
+                if (_currentTransition != null) StopCoroutine(_currentTransition);
+                _currentTransition = BackTransition();
+                StartCoroutine(_currentTransition);
             }
         }
 
         private IEnumerator BackTransition()
         {
-            _transitioning = true;
             LeanTween.scaleX(commonBackground[1].gameObject, 2.1f, curtainDrawDuration).
                 setIgnoreTimeScale(true).setEaseOutExpo();
             LeanTween.scaleX(commonBackground[2].gameObject, 2.1f, curtainDrawDuration).
@@ -231,17 +214,17 @@ namespace UI
                 setIgnoreTimeScale(true).setEaseOutExpo();
             LeanTween.scaleX(commonBackground[2].gameObject, 1f, curtainDrawDuration).
                 setIgnoreTimeScale(true).setEaseOutExpo();
-            _transitioning = false;
         }
 
         public void ReturnToMainMenu()
         {
-            if (!_transitioning) StartCoroutine(ReturnToMainMenuTransition());
+            if (_currentTransition != null) StopCoroutine(_currentTransition);
+            _currentTransition = ReturnToMainMenuTransition();
+            StartCoroutine(_currentTransition);
         }
 
         private IEnumerator ReturnToMainMenuTransition()
         {
-            _transitioning = true;
             var menuToClose = _menuHistory.Pop();
             if (menuToClose == pauseMenu) EventManager.TriggerUnPause();
             LeanTween.scaleX(commonBackground[1].gameObject, 2.1f, curtainDrawDuration).
@@ -258,7 +241,6 @@ namespace UI
                 setIgnoreTimeScale(true).setEaseOutExpo();
             LeanTween.scaleX(commonBackground[2].gameObject, 1f, curtainDrawDuration).
                 setIgnoreTimeScale(true).setEaseOutExpo();
-            _transitioning = false;
         }
         
         public void OnPause()
