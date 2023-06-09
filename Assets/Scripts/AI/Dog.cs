@@ -4,6 +4,7 @@ public class Dog : MonoBehaviour
 {
     [SerializeField] private float minX, maxX, speed, runSpeed, bumpForce;
     [SerializeField] private bool runOnDeath;
+    [SerializeField] private Sprite defeatPose;
     
     [Header("Immutable State")]
     private float _duration, _y;
@@ -13,7 +14,6 @@ public class Dog : MonoBehaviour
     
     [Header("Mutable State")]
     private LTDescr _movementTween;
-    private bool _defeated;
 
     private void OnEnable()
     {
@@ -90,7 +90,7 @@ public class Dog : MonoBehaviour
             }
             else
             {
-                _transform.LeanScale(Vector3.zero, 1).setDelay(1).setEaseInQuart()
+                _transform.LeanScale(Vector3.zero, 0.75f).setEaseInQuart()
                     .setOnComplete(() => Destroy(gameObject));
             }
         }

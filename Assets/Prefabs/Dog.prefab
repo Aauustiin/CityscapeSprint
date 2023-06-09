@@ -153,6 +153,7 @@ MonoBehaviour:
   runSpeed: 7.5
   bumpForce: 10
   runOnDeath: 0
+  defeatPose: {fileID: 4688217728946750846, guid: 81233d6b35a5a0e46a94b8f8d92c6137, type: 3}
 --- !u!61 &8498825170594560937
 BoxCollider2D:
   m_ObjectHideFlags: 0

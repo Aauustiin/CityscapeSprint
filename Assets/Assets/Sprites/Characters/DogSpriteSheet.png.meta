@@ -17,6 +17,9 @@ TextureImporter:
   - first:
       213: 747404578593701689
     second: DogSpriteSheet_4
+  - first:
+      213: 4688217728946750846
+    second: DogSpriteSheet_5
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -110,7 +113,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 32
+        y: 40
         width: 16
         height: 8
       alignment: 0
@@ -131,7 +134,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 24
+        y: 32
         width: 16
         height: 8
       alignment: 0
@@ -152,7 +155,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 16
+        y: 24
         width: 16
         height: 8
       alignment: 0
@@ -173,7 +176,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 8
+        y: 16
         width: 16
         height: 8
       alignment: 0
@@ -194,7 +197,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
+        y: 8
         width: 16
         height: 8
       alignment: 0
@@ -206,6 +209,27 @@ TextureImporter:
       bones: []
       spriteID: 93ff39a11805f5a00800000000000000
       internalID: 747404578593701689
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DogSpriteSheet_5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 16
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e754f8b6f25ef0140800000000000000
+      internalID: 4688217728946750846
       vertices: []
       indices: 
       edges: []
