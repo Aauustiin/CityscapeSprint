@@ -3,6 +3,7 @@ using UnityEngine;
 public class Dog : MonoBehaviour
 {
     [SerializeField] private float minX, maxX, speed, runSpeed, bumpForce;
+    [SerializeField] private bool runOnDeath;
     
     [Header("Immutable State")]
     private float _duration, _y;
@@ -16,8 +17,8 @@ public class Dog : MonoBehaviour
 
     private void OnEnable()
     {
-        _animator = GetComponent<Animator>();
-        _spriteRenderer = GetComponent<SpriteRenderer>();
+        _animator = GetComponentInChildren<Animator>();
+        _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         _transform = transform;
         _y = _transform.position.y;
         _transform.position = new Vector3(minX,_y, 0f);
@@ -72,17 +73,26 @@ public class Dog : MonoBehaviour
             var destination = playerSprite.flipX ? maxX + 5 : minX - 5;
             var distance = Mathf.Abs(_transform.position.x - destination);
             var duration = distance / runSpeed;
-            _movementTween = _transform.LeanMoveLocal(new Vector3(destination, _y, 0f), duration);
-            _movementTween.setDelay(1);
 
-            var newFlip = !playerSprite.flipX;
-            
-            StartCoroutine(Utils.ExecuteAfterSeconds(() =>
+            if (runOnDeath)
             {
-                _animator.Play("dog_run");
-                _spriteRenderer.flipX = newFlip;
-            }, 1));
-            _movementTween.setOnComplete(() => Destroy(gameObject));
+                _movementTween = _transform.LeanMoveLocal(new Vector3(destination, _y, 0f), duration);
+                _movementTween.setDelay(1);
+
+                var newFlip = !playerSprite.flipX;
+
+                StartCoroutine(Utils.ExecuteAfterSeconds(() =>
+                {
+                    _animator.Play("dog_run");
+                    _spriteRenderer.flipX = newFlip;
+                }, 1));
+                _movementTween.setOnComplete(() => Destroy(gameObject));
+            }
+            else
+            {
+                _transform.LeanScale(Vector3.zero, 1).setDelay(1).setEaseInQuart()
+                    .setOnComplete(() => Destroy(gameObject));
+            }
         }
     }
 }
