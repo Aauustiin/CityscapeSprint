@@ -40,12 +40,13 @@ public class SaveSystem : MonoBehaviour
         _persistentPath = Application.persistentDataPath + Path.AltDirectorySeparatorChar + "SaveData.json";
     }
 
-    public void SaveDefaultData()
+    private void SaveDefaultData()
     {
         data.resolutionX = Screen.currentResolution.width;
         data.resolutionY = Screen.currentResolution.height;
         data.windowed = false;
         data.borderless = false;
+        data.vSyncCount = 1;
 
         data.musicVolume = audioPlayer.defaultMusicVolume;
         data.effectsVolume = audioPlayer.defaultEffectsVolume;
@@ -71,12 +72,13 @@ public class SaveSystem : MonoBehaviour
         SaveData();
     }
 
-    public void SaveVideoSettings(int resolutionX, int resolutionY, bool windowed, bool borderless)
+    public void SaveVideoSettings(int resolutionX, int resolutionY, bool windowed, bool borderless, int vSyncCount)
     {
         data.resolutionX = resolutionX;
         data.resolutionY = resolutionY;
         data.windowed = windowed;
         data.borderless = borderless;
+        data.vSyncCount = vSyncCount;
         SaveData();
     }
 
@@ -113,6 +115,7 @@ public class SaveSystem : MonoBehaviour
     public int resolutionY;
     public bool windowed;
     public bool borderless;
+    public int vSyncCount;
 
     public float musicVolume;
     public float effectsVolume;

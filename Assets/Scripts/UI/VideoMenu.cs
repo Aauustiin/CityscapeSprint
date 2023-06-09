@@ -12,6 +12,7 @@ namespace UI
         [SerializeField] private Dropdown resolutionDropdown;
         [SerializeField] private Toggle windowedToggle;
         [SerializeField] private Toggle borderlessToggle;
+        [SerializeField] private Toggle vSyncToggle;
         [SerializeField] private TextMeshProUGUI borderlessLabel;
         [SerializeField] private Image borderlessBackground;
         [SerializeField] private Image borderlessCheckmark;
@@ -115,7 +116,7 @@ namespace UI
         {
             Vector2 res = GetSelectedResolution();
 
-            SaveSystem.instance.SaveVideoSettings((int)res.x, (int)res.y, windowedToggle.isOn, borderlessToggle.isOn);
+            SaveSystem.instance.SaveVideoSettings((int)res.x, (int)res.y, windowedToggle.isOn, borderlessToggle.isOn, vSyncToggle.isOn ? 1 : 0);
 
             FullScreenMode fullScreenMode;
             
